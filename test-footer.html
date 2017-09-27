@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="assets/css/myStyle.css">
+    <style>
+        html, body{
+            padding:0;
+            margin:0;
+        }
+        .div-wrapper{
+            position: relative;
+            top:0;
+        }
+        .front-image, .behind-image, .site-footer{
+            height: 100vh;
+            width:100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .front-image{
+            position: relative;
+            z-index: 1;
+        }
+
+        .behind-image:before{
+            height:100vh;
+        }
+        .behind-image{
+            position: absolute;
+            z-index: -1;
+            /*top:100%;*/
+        }
+
+        .site-footer {
+            overflow: hidden
+        }
+
+        .site-footer:after {
+            content: '';
+            display: block;
+            padding-top: 100%
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="div-wrapper">
+    <div class="front-image" style="background-image: url(assets/img/turkey.jpg);"></div>
+    <div class="site-footer" style="background:darkred;background-image: url(assets/img/footer.JPG);">
+        sdfsdfsdf
+    </div>
+</div>
+</body>
+</html>

@@ -170,9 +170,9 @@ $(document).ready(function () {
 
 
     $(window).scroll(function () {
-        var scrollTop = $('body').scrollTop();
-//        console.log(scrollTop - aOffset);
-// console.log(wOffset);
+        //bug cannot detect scroll pos
+        // var scrollTop = $('body').scrollTop; 
+        var scrollTop = $("html, body").scrollTop();
 
         var aboutL = "#aboutL"
         if (scrollTop - aOffset > 0) {

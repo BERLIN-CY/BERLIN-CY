@@ -11,6 +11,7 @@ $(document).ready(function () {
     var aOffset = aR.offset().top,
         wOffset = wR.offset().top,
         cOffset = cR.offset().top;
+    console.log(aOffset);
 
     var winHeight = $(window).height();
 
@@ -18,6 +19,25 @@ $(document).ready(function () {
         wContentHeight = wR.height(),
         cContentHeight = cR.height();
 
+// basicCalculationUpdate().init();
+    function basicCalculationUpdate() {
+        // console.log("updating")
+
+        aR = $('#aboutR');
+        wR = $('#workR');
+        cR = $('#contactR');
+
+        aOffset = aR.offset().top;
+        wOffset = wR.offset().top;
+        cOffset = cR.offset().top;
+
+        winHeight = $(window).height();
+        // console.log(winHeight);
+
+        aContentHeight = aR.height();
+        wContentHeight = wR.height();
+        cContentHeight = cR.height();
+    }
     // aL.css({"height":aContentHeight});
     // wL.css({"height":wContentHeight});
     // cL.css({"height":cContentHeight});
@@ -44,9 +64,10 @@ $(document).ready(function () {
         //display recover
         var project_list = [];
         project_list = $(".project");
-        $(".project").find(".project__content").css({"display":"none"});
-        $(".project").removeClass("disappear")
-        $(".project").find(".project__header").css({"height":"100vh"})
+        project_list.find(".project__content").css({"display":"none"});
+        project_list.removeClass("disappear")
+        project_list.find(".project__header").css({"height":"100vh"})
+        project_list.find(".project__header").find(".more-info").removeClass('disappear');
 
         //recalculate
         basicCalculationUpdate()
@@ -64,6 +85,9 @@ $(document).ready(function () {
     // $(".chapterTitle").
     $("div[id^='project-']").on("click", function () {
         // event.preventDefault();
+
+
+        //show close button
 
         //assign openProjectID
         openProjectID = this.id;
@@ -89,9 +113,12 @@ $(document).ready(function () {
         // basicCalculationUpdate();
 
         //image container cut to 50% height
-        currentProject.find(".project__header").css({"height":"70vh"})
+        currentProject.find(".project__header").css({"height":"70vh"});
 
         currentProject.find(".project__content").css({"display":"inline"});
+
+        //disappear next button
+        currentProject.find(".project__header").find(".more-info").addClass('disappear');
 
         basicCalculationUpdate();
         //container height to 100%
@@ -142,39 +169,22 @@ $(document).ready(function () {
         }
         // dest += $(hashName)
         //go to destination
-        $('html,body').animate({scrollTop: dest}, 1000, 'swing');
+        $('html,body').animate({scrollTop: dest}, 300, 'swing');
     }
 
 
 
 
-    // basicCalculationUpdate().init();
-    function basicCalculationUpdate() {
-        // console.log("updating")
 
-        aR = $('#aboutR');
-        wR = $('#workR');
-        cR = $('#contactR');
-
-        aOffset = aR.offset().top;
-        wOffset = wR.offset().top;
-        cOffset = cR.offset().top;
-
-        winHeight = $(window).height();
-        // console.log(winHeight);
-
-        aContentHeight = aR.height();
-        wContentHeight = wR.height();
-        cContentHeight = cR.height();
-    }
 
 
     $(window).scroll(function () {
-        //bug cannot detect scroll pos
-        // var scrollTop = $('body').scrollTop; 
+        // var scrollTop = $('body').scrollTop; //bug cannot detect scroll pos
         var scrollTop = $("html, body").scrollTop();
 
-        var aboutL = "#aboutL"
+        // console.log(scrollTop - aOffset);
+        // console.log(scrollTop);
+        var aboutL = "#aboutL";
         if (scrollTop - aOffset > 0) {
             startFix(aboutL);
             if ((scrollTop - aOffset) > (aContentHeight - winHeight)) {
@@ -261,7 +271,7 @@ $(document).ready(function () {
                     event.preventDefault();
                     $('html, body').animate({
                         scrollTop: target.offset().top
-                    }, 1000, function () {
+                    }, 300, function () {
                         // Callback after animation
                         // Must change focus!
                         var $target = $(target);

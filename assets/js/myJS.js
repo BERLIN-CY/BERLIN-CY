@@ -180,8 +180,10 @@ $(document).ready(function () {
 
     $(window).scroll(function () {
         // var scrollTop = $('body').scrollTop; //bug cannot detect scroll pos
-        var scrollTop = $("html, body").scrollTop();
-
+        // var scrollTop = $("html, body").scrollTop();
+        var scrollTop;
+        scrollTop = $(document).scrollTop();
+        console.log(scrollTop);
         // console.log(scrollTop - aOffset);
         // console.log(scrollTop);
         var aboutL = "#aboutL";

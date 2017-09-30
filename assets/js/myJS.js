@@ -207,7 +207,6 @@ $(document).ready(function () {
                 endFix(workL);
                 adjustTop(workL);
                 basicCalculationUpdate();
-
             }
         } else {
             endFix(workL)
@@ -222,10 +221,13 @@ $(document).ready(function () {
 
                 if(cContentHeight > winHeight){
                     adjustTop((contactL))
+                    $('.footer-page').css({"display":"inline"});
                 }
             }
         } else {
             endFix(contactL)
+            $('.footer-page').css({"display":"none"});
+
         }
 
     });

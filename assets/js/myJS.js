@@ -215,13 +215,15 @@ $(document).ready(function () {
 
         var contactL = "#contactL";
         if (scrollTop - cOffset > 0) {
-            startFix(contactL);
-            if ((scrollTop - cOffset) > (cContentHeight - winHeight)) {
-                endFix(contactL);
+            if(winHeight < cContentHeight){
+                startFix(contactL);
+                if ((scrollTop - cOffset) > (cContentHeight - winHeight)) {
+                    endFix(contactL);
 
-                if(cContentHeight > winHeight){
-                    adjustTop((contactL))
-                    $('.footer-page').css({"display":"inline"});
+                    if(cContentHeight > winHeight){
+                        adjustTop((contactL))
+                        $('.footer-page').css({"display":"inline"});
+                    }
                 }
             }
         } else {
@@ -229,7 +231,6 @@ $(document).ready(function () {
             // $('.footer-page').css({"display":"none"});
 
         }
-
     });
 
     function startFix(name) {

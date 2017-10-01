@@ -226,7 +226,7 @@ $(document).ready(function () {
             }
         } else {
             endFix(contactL)
-            $('.footer-page').css({"display":"none"});
+            // $('.footer-page').css({"display":"none"});
 
         }
 

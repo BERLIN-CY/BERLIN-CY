@@ -2,32 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9d2178d-ff49-46b5-a990-b1327ebc397d" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/img/cancel-img.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/img/jeju.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/img/portrait-1.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/img/portrait-rhombus-white-pink.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/img/portrait-rhombus-white.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/img/portrait-rhombus.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/img/portrait.JPG" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/img/portrait.psd" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/img/project/header-bangkok.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/img/turkey.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/img/文字.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/jquery.sticky.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/melaniedaveidDemo.js" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/doc/文字.docx" afterPath="$PROJECT_DIR$/assets/doc/document.docx" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/img/footer-web.jpg" afterPath="$PROJECT_DIR$/assets/img/footer-image.jpg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/img/icon/next.png" afterPath="$PROJECT_DIR$/assets/img/icon/next-right-white.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/img/project/header-bali-2.jpg" afterPath="$PROJECT_DIR$/assets/img/project/web-bali/header-bali-2.jpg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/img/project/header-bali.jpg" afterPath="$PROJECT_DIR$/assets/img/project/web-bali/header-bali.jpg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/img/project/header-jeju.jpg" afterPath="$PROJECT_DIR$/assets/img/project/web-jeju/header-jeju.jpg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/img/project/header-taipei.JPG" afterPath="$PROJECT_DIR$/assets/img/project/web-taipei/header-taipei.JPG" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/img/project/header-turkey.jpg" afterPath="$PROJECT_DIR$/assets/img/project/web-turkey/header-turkey.jpg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/css/meilaniedavidDemo.css" afterPath="$PROJECT_DIR$/assets/css/meilaniedavidDemo.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/css/myStyle.css" afterPath="$PROJECT_DIR$/assets/css/myStyle.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/js/myJS.js" afterPath="$PROJECT_DIR$/assets/js/myJS.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -47,8 +22,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-340">
-              <caret line="163" column="62" lean-forward="false" selection-start-line="163" selection-start-column="53" selection-end-line="163" selection-end-column="62" />
+            <state relative-caret-position="203">
+              <caret line="174" column="52" lean-forward="false" selection-start-line="174" selection-start-column="52" selection-end-line="174" selection-end-column="52" />
               <folding>
                 <element signature="n#script#0;n#body#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -78,8 +53,8 @@
       <file leaf-file-name="myJS.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/js/myJS.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="73">
-              <caret line="206" column="26" lean-forward="true" selection-start-line="206" selection-start-column="26" selection-end-line="206" selection-end-column="26" />
+            <state relative-caret-position="329">
+              <caret line="226" column="0" lean-forward="true" selection-start-line="226" selection-start-column="0" selection-end-line="226" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -124,9 +99,9 @@
       <find>portrait-1</find>
       <find>por</find>
       <find>chapterTitle</find>
-      <find>adjust</find>
       <find>leftside</find>
       <find>project-1</find>
+      <find>adjust</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -144,9 +119,9 @@
         <option value="$PROJECT_DIR$/test.html" />
         <option value="$PROJECT_DIR$/melaniedaveidDemo-expand.html" />
         <option value="$PROJECT_DIR$/assets/css/meilaniedavidDemo.css" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/assets/css/myStyle.css" />
         <option value="$PROJECT_DIR$/assets/js/myJS.js" />
+        <option value="$PROJECT_DIR$/index.html" />
       </list>
     </option>
   </component>
@@ -297,12 +272,12 @@
       <workItem from="1506564459024" duration="2599000" />
       <workItem from="1506747138857" duration="12427000" />
       <workItem from="1506872603231" duration="343000" />
-      <workItem from="1506911553396" duration="17503000" />
+      <workItem from="1506911553396" duration="18293000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="145203000" />
+    <option name="totallyTimeSpent" value="145993000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -324,7 +299,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27272728" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2494043" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.113663845" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42079806" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25394192" sideWeight="0.5058651" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -554,14 +529,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/myJS.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="73">
-          <caret line="206" column="26" lean-forward="true" selection-start-line="206" selection-start-column="26" selection-end-line="206" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/css/myStyle.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="502">
@@ -570,10 +537,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/assets/js/myJS.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="329">
+          <caret line="226" column="0" lean-forward="true" selection-start-line="226" selection-start-column="0" selection-end-line="226" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-340">
-          <caret line="163" column="62" lean-forward="false" selection-start-line="163" selection-start-column="53" selection-end-line="163" selection-end-column="62" />
+        <state relative-caret-position="203">
+          <caret line="174" column="52" lean-forward="false" selection-start-line="174" selection-start-column="52" selection-end-line="174" selection-end-column="52" />
           <folding>
             <element signature="n#script#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />

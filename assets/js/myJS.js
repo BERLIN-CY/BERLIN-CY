@@ -64,10 +64,10 @@ $(document).ready(function () {
         //display recover
         var project_list = [];
         project_list = $(".project");
-        project_list.find(".project__content").css({"display":"none"});
+        project_list.find(".project-content").css({"display":"none"});
         project_list.removeClass("disappear")
-        project_list.find(".project__header").css({"height":"100vh"})
-        project_list.find(".project__header").find(".more-info").removeClass('disappear');
+        project_list.find(".project-header").css({"height":"100vh"})
+        project_list.find(".project-header").find(".more-info").removeClass('disappear');
 
         //recalculate
         basicCalculationUpdate()
@@ -78,60 +78,67 @@ $(document).ready(function () {
         //remove transition for left Side
         // $("#work").find(".leftSide").removeClass("transitionEffect");
 
+        //
+        projectFire = false;
 
     });
     var openProjectID = "";
-
+    var projectFire = false;
     // $(".chapterTitle").
     $("div[id^='project-']").on("click", function () {
-        // event.preventDefault();
+
+        if (!projectFire){
+            projectFire = true;
+            // event.preventDefault();
 
 
-        //show close button
+            //show close button
 
-        //assign openProjectID
-        openProjectID = this.id;
-        // console.log(openProjectID);
+            //assign openProjectID
+            openProjectID = this.id;
+            // console.log(openProjectID);
 
-        //add transition Effect fo left side
-        $("#work").find(".leftSide").addClass("transitionEffect");
+            //add transition Effect fo left side
+            $("#work").find(".leftSide").addClass("transitionEffect");
 
-        //show the cancel expand button
-        $("#expand-close").css({"display":"inline"});
+            //show the cancel expand button
+            $("#expand-close").css({"display":"inline"});
 
-        var project_id = this.id.substring(8, this.id.length);
-        var currentProject = $("#project-"+project_id);
-        //disappear other projects
-        projectDisapper(project_id);
+            var project_id = this.id.substring(8, this.id.length);
+            var currentProject = $("#project-"+project_id);
+            //disappear other projects
+            projectDisapper(project_id);
 
-        //expand width 75% 25%
-        $("#workL").addClass("compress");
-        $("#workR").addClass("expand");
+            //expand width 75% 25%
+            $("#workL").addClass("compress");
+            $("#workR").addClass("expand");
 
-        // scrollToHash("#work");
-        //recalculate height
-        // basicCalculationUpdate();
+            scrollToHash("#work");
+            //recalculate height
+            // basicCalculationUpdate();
 
-        //image container cut to 50% height
-        currentProject.find(".project__header").css({"height":"70vh"});
+            //image container cut to 50% height
+            currentProject.find(".project-header").css({"height":"70vh"});
 
-        currentProject.find(".project__content").css({"display":"inline"});
+            currentProject.find(".project-content").css({"display":"inline"});
 
-        //disappear next button
-        currentProject.find(".project__header").find(".more-info").addClass('disappear');
+            //disappear next button
+            currentProject.find(".project-header").find(".more-info").addClass('disappear');
 
-        basicCalculationUpdate();
-        //container height to 100%
-        // $(".project .project__header").css({"height":"100vh"})
-        //fix left side
-        startFix("#workL");
+            basicCalculationUpdate();
+            //container height to 100%
+            // $(".project .project-header").css({"height":"100vh"})
+            //fix left side
+            startFix("#workL");
 
-        // $(".ancestors").find("span").css({"color": "red", "border": "2px solid red"});
+            // $(".ancestors").find("span").css({"color": "red", "border": "2px solid red"});
 
-        //add content to this projects
+            //add content to this projects
 
-        //remove transition for left Side
-        $("#work").find(".leftSide").removeClass("transitionEffect");
+            //remove transition for left Side
+            $("#work").find(".leftSide").removeClass("transitionEffect");
+        }
+
 
     });
 
@@ -169,7 +176,7 @@ $(document).ready(function () {
         }
         // dest += $(hashName)
         //go to destination
-        $('html,body').animate({scrollTop: dest}, 300, 'swing');
+        $('html,body').animate({scrollTop: dest}, 0, 'swing');
     }
 
 
@@ -192,7 +199,7 @@ $(document).ready(function () {
             if ((scrollTop - aOffset) > (aContentHeight - winHeight)) {
                 endFix(aboutL);
                 //if content height < winHeight
-                if(aContentHeight > winHeight){
+                if(aContentHeight >= winHeight){
                     adjustTop((aboutL))
                 }
             }
@@ -203,13 +210,19 @@ $(document).ready(function () {
         var workL = "#workL";
         if (scrollTop - wOffset > 0) {
             startFix(workL);
+
             if ((scrollTop - wOffset) > (wContentHeight - winHeight)) {
                 endFix(workL);
                 adjustTop(workL);
                 basicCalculationUpdate();
             }
+            //footer image only display when work is end
+            $('.footer-page').css({"display":"inline"});
+
         } else {
             endFix(workL)
+            $('.footer-page').css({"display":"none"});
+
         }
 
 
@@ -222,13 +235,11 @@ $(document).ready(function () {
 
                     if(cContentHeight > winHeight){
                         adjustTop((contactL))
-                        $('.footer-page').css({"display":"inline"});
                     }
                 }
             }
         } else {
             endFix(contactL)
-            // $('.footer-page').css({"display":"none"});
 
         }
     });
@@ -252,94 +263,6 @@ $(document).ready(function () {
             case "#workL": topHeight = wContentHeight-winHeight; break;
             case "#contactL": topHeight = cContentHeight-winHeight; break;
         }
-        $(name).css({"top":topHeight});
+        $(name).css({"top":topHeight})
     }
-
-    // Select all links with hashes
-    $('a[href*="#"]')
-    // Remove links that don't actually link to anything
-        .not('[href="#"]')
-        .not('[href="#0"]')
-        .click(function (event) {
-            // On-page links
-            if (
-                location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
-                &&
-                location.hostname == this.hostname
-            ) {
-                // Figure out element to scroll to
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                // Does a scroll target exist?
-                if (target.length) {
-                    // Only prevent default if animation is actually gonna happen
-                    event.preventDefault();
-                    $('html, body').animate({
-                        scrollTop: target.offset().top
-                    }, 300, function () {
-                        // Callback after animation
-                        // Must change focus!
-                        var $target = $(target);
-                        $target.focus();
-                        if ($target.is(":focus")) { // Checking if the target was focused
-                            return false;
-                        } else {
-                            $target.attr('tabindex', '-1'); // Adding tabindex for elements not focusable
-                            $target.focus(); // Set focus again
-                        }
-                        ;
-                    });
-                }
-            }
-        });
-
-
-//    var winScrollTo;
-//    var windowHeight = $(window).height();
-//
-//    $(window).scroll(function () {
-//        winScrollTo = $(window).scrollTop();
-//        console.log(winScrollTo);
-//
-//        $("#about").
-//    });
-
-//    $(".sticker1").sticky({ topSpacing: 0});
-//    $(".sticker2").sticky({ topSpacing: 0});
-//    $(".sticker3").sticky({ topSpacing: 0});
-//
-//    $('.sticker').on('sticky-start', function() {
-//        console.log("Sticky Started");
-//
-//        var aContentHeight = $(".aboutContent").outerHeight();
-//        console.log(aContentHeight);
-//        var contentScrollPos = $(".aboutContent").offset().top;
-//        console.log(contentScrollPos);
-//
-//        if((winScrollTo) > (aContentHeight)){
-//            $(".sticker").unstick();
-//        }
-//
-//
-//    });
-//    $('.sticker').on('sticky-end', function() { console.log("Ended"); });
-//    $('.sticker').on('sticky-update', function() { console.log("Update"); });
-//    $('.sticker').on('sticky-bottom-reached', function() { console.log("Bottom reached"); });
-//    $('.sticker').on('sticky-bottom-unreached', function() { console.log("Bottom unreached"); });
-
-//    $(window).scroll(function () {
-//        var scrollTo = $(window).scrollTop();
-//        var docHeight = $(document).height();
-//        var windowHeight = $(window).height();
-//
-//
-//        if (scrollTo <= windowHeight){
-//            $(".rightSide").scroll(function(event){
-//                console.log(scrollTo + " " + windowHeight);
-//
-//                event.preventDefault();
-//            });
-//        }
-////        $(".rightSide").scrollTop($(".leftSide").scrollTop());
-//    });
 });

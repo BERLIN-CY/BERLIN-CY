@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f9d2178d-ff49-46b5-a990-b1327ebc397d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,8 +23,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="181" column="61" lean-forward="false" selection-start-line="181" selection-start-column="61" selection-end-line="181" selection-end-column="61" />
+            <state relative-caret-position="135">
+              <caret line="158" column="59" lean-forward="false" selection-start-line="158" selection-start-column="54" selection-end-line="158" selection-end-column="59" />
               <folding>
                 <element signature="n#script#0;n#body#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -72,7 +73,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>contactPage</find>
       <find>z-index</find>
       <find>c</find>
       <find>conta</find>
@@ -102,6 +102,7 @@
       <find>leftside</find>
       <find>project-1</find>
       <find>adjust</find>
+      <find>workr</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -272,12 +273,12 @@
       <workItem from="1506564459024" duration="2599000" />
       <workItem from="1506747138857" duration="12427000" />
       <workItem from="1506872603231" duration="343000" />
-      <workItem from="1506911553396" duration="18396000" />
+      <workItem from="1506911553396" duration="18503000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="146096000" />
+    <option name="totallyTimeSpent" value="146203000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -546,8 +547,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="181" column="61" lean-forward="false" selection-start-line="181" selection-start-column="61" selection-end-line="181" selection-end-column="61" />
+        <state relative-caret-position="135">
+          <caret line="158" column="59" lean-forward="false" selection-start-line="158" selection-start-column="54" selection-end-line="158" selection-end-column="59" />
           <folding>
             <element signature="n#script#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />

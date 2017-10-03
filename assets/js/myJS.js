@@ -1,24 +1,29 @@
 $(document).ready(function () {
+    var aR,wR,cR,aOffset,
+        wOffset,cOffset,winHeight,
+        aContentHeight,wContentHeight,cContentHeight;
 
-    //dynamic sticky funciton
-    var aR = $('#aboutR'),
-        wR = $('#workR'),
-        cR = $('#contactR'),
-        aL = $('#aboutL'),
-        wL = $('#workL'),
-        cL = $('#contactL');
+    basicCalculationUpdate();
+    function basicCalculationUpdate() {
+        aR = $('#aboutR');
+        wR = $('#workR');
+        cR = $('#contactR');
 
-    var aOffset = aR.offset().top,
-        wOffset = wR.offset().top,
+        aOffset = aR.offset().top;
+        wOffset = wR.offset().top;
         cOffset = cR.offset().top;
-    console.log(aOffset);
 
-    var winHeight = $(window).height();
+        winHeight = $(window).height();
 
-    var aContentHeight = aR.height(),
-        wContentHeight = wR.height(),
+        aContentHeight = aR.height();
+        wContentHeight = wR.height();
         cContentHeight = cR.height();
-    console.log(aContentHeight);
+
+        $('.chapterTitle').css({"padding-top":winHeight*(1-0.618)});
+
+        console.log("aOffset:" + aOffset);
+        console.log("aContentHeight:" + aContentHeight);
+    }
 
     $(window).scroll(function () {
         // var scrollTop = $('body').scrollTop; //bug cannot detect scroll pos
@@ -84,10 +89,9 @@ $(document).ready(function () {
         }
     });
 
-    $('.chapterTitle').css({"padding-top":winHeight*(1-0.618)});
-
     /* go to top after refresh */
     $(window).scrollTop(0);
+
     $(window).resize(function () {
         basicCalculationUpdate();
     });
@@ -124,9 +128,11 @@ $(document).ready(function () {
         projectFire = false;
 
     });
+
     var openProjectID = "";
+
     var projectFire = false;
-    // $(".chapterTitle").
+
     $("div[id^='project-']").on("click", function () {
 
         if (!projectFire){
@@ -184,30 +190,6 @@ $(document).ready(function () {
 
     });
 
-    // basicCalculationUpdate().init();
-    function basicCalculationUpdate() {
-        // console.log("updating")
-
-        aR = $('#aboutR');
-        wR = $('#workR');
-        cR = $('#contactR');
-
-        aOffset = aR.offset().top;
-        wOffset = wR.offset().top;
-        cOffset = cR.offset().top;
-
-        winHeight = $(window).height();
-        // console.log(winHeight);
-
-        aContentHeight = aR.height();
-        wContentHeight = wR.height();
-        cContentHeight = cR.height();
-    }
-    // aL.css({"height":aContentHeight});
-    // wL.css({"height":wContentHeight});
-    // cL.css({"height":cContentHeight});
-    //
-
     function projectDisapper(project_id) {
         // console.log("project disappear")
         var project_list = [];
@@ -215,7 +197,7 @@ $(document).ready(function () {
         // console.log(object.id);
         // var project_id = object.id.substring(10, object.id.length);
         // console.log(project_id);
-        for (i = 1; i <= project_list.length; i++) {
+        for (var i = 1; i <= project_list.length; i++) {
             if (i != project_id) {
                 var project_id_disappear = "#project-" + i;
                 // console.log(project_id_disappear);
@@ -254,6 +236,7 @@ $(document).ready(function () {
 
     function endFix(name) {
         $(name).removeClass("fixed");
+        console.log("end fix")
         // $('.chapterTitle').css({"padding-top":"50%","padding-bottom":winHeight/2});
     }
 

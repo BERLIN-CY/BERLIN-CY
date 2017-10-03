@@ -68,9 +68,10 @@ $(document).ready(function () {
         if (scrollTop - cOffset > 0) {
             if(winHeight < cContentHeight){
                 startFix(contactL);
+                basicCalculationUpdate();
+
                 if ((scrollTop - cOffset) > (cContentHeight - winHeight)) {
                     endFix(contactL);
-                    basicCalculationUpdate();
 
                     if(cContentHeight > winHeight){
                         adjustTop((contactL))

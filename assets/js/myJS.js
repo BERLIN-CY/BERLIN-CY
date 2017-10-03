@@ -18,30 +18,70 @@ $(document).ready(function () {
     var aContentHeight = aR.height(),
         wContentHeight = wR.height(),
         cContentHeight = cR.height();
+    console.log(aContentHeight);
 
-// basicCalculationUpdate().init();
-    function basicCalculationUpdate() {
-        // console.log("updating")
+    $(window).scroll(function () {
+        // var scrollTop = $('body').scrollTop; //bug cannot detect scroll pos
+        // var scrollTop = $("html, body").scrollTop();
+        var scrollTop;
+        scrollTop = $(document).scrollTop();
+        console.log(scrollTop);
+        // console.log(scrollTop - aOffset);
+        // console.log(scrollTop);
+        var aboutL = "#aboutL";
+        if (scrollTop - aOffset > 0) {
+            startFix(aboutL);
+            basicCalculationUpdate();
 
-        aR = $('#aboutR');
-        wR = $('#workR');
-        cR = $('#contactR');
+            if ((scrollTop - aOffset) >= (aContentHeight - winHeight)) {
 
-        aOffset = aR.offset().top;
-        wOffset = wR.offset().top;
-        cOffset = cR.offset().top;
+                endFix(aboutL);
 
-        winHeight = $(window).height();
-        // console.log(winHeight);
+                //if content height < winHeight
+                if(aContentHeight >= winHeight){
+                    adjustTop((aboutL))
+                }
+            }
+        } else {
+            endFix(aboutL)
+        }
 
-        aContentHeight = aR.height();
-        wContentHeight = wR.height();
-        cContentHeight = cR.height();
-    }
-    // aL.css({"height":aContentHeight});
-    // wL.css({"height":wContentHeight});
-    // cL.css({"height":cContentHeight});
-    //
+        var workL = "#workL";
+        if (scrollTop - wOffset > 0) {
+            startFix(workL);
+
+            if ((scrollTop - wOffset) > (wContentHeight - winHeight)) {
+                endFix(workL);
+                adjustTop(workL);
+                basicCalculationUpdate();
+            }
+            //footer image only display when work is end
+            $('.footer-page').css({"display":"inline"});
+
+        } else {
+            endFix(workL)
+            $('.footer-page').css({"display":"none"});
+        }
+
+
+        var contactL = "#contactL";
+        if (scrollTop - cOffset > 0) {
+            if(winHeight < cContentHeight){
+                startFix(contactL);
+                if ((scrollTop - cOffset) > (cContentHeight - winHeight)) {
+                    endFix(contactL);
+
+                    if(cContentHeight > winHeight){
+                        adjustTop((contactL))
+                    }
+                }
+            }
+        } else {
+            endFix(contactL)
+
+        }
+    });
+
     $('.chapterTitle').css({"padding-top":winHeight*(1-0.618)});
 
     /* go to top after refresh */
@@ -142,6 +182,30 @@ $(document).ready(function () {
 
     });
 
+    // basicCalculationUpdate().init();
+    function basicCalculationUpdate() {
+        // console.log("updating")
+
+        aR = $('#aboutR');
+        wR = $('#workR');
+        cR = $('#contactR');
+
+        aOffset = aR.offset().top;
+        wOffset = wR.offset().top;
+        cOffset = cR.offset().top;
+
+        winHeight = $(window).height();
+        // console.log(winHeight);
+
+        aContentHeight = aR.height();
+        wContentHeight = wR.height();
+        cContentHeight = cR.height();
+    }
+    // aL.css({"height":aContentHeight});
+    // wL.css({"height":wContentHeight});
+    // cL.css({"height":cContentHeight});
+    //
+
     function projectDisapper(project_id) {
         // console.log("project disappear")
         var project_list = [];
@@ -178,71 +242,6 @@ $(document).ready(function () {
         //go to destination
         $('html,body').animate({scrollTop: dest}, 0, 'swing');
     }
-
-
-
-
-
-
-
-    $(window).scroll(function () {
-        // var scrollTop = $('body').scrollTop; //bug cannot detect scroll pos
-        // var scrollTop = $("html, body").scrollTop();
-        var scrollTop;
-        scrollTop = $(document).scrollTop();
-        console.log(scrollTop);
-        // console.log(scrollTop - aOffset);
-        // console.log(scrollTop);
-        var aboutL = "#aboutL";
-        if (scrollTop - aOffset > 0) {
-            startFix(aboutL);
-            if ((scrollTop - aOffset) > (aContentHeight - winHeight)) {
-                endFix(aboutL);
-                //if content height < winHeight
-                if(aContentHeight >= winHeight){
-                    adjustTop((aboutL))
-                }
-            }
-        } else {
-            endFix(aboutL)
-        }
-
-        var workL = "#workL";
-        if (scrollTop - wOffset > 0) {
-            startFix(workL);
-
-            if ((scrollTop - wOffset) > (wContentHeight - winHeight)) {
-                endFix(workL);
-                adjustTop(workL);
-                basicCalculationUpdate();
-            }
-            //footer image only display when work is end
-            $('.footer-page').css({"display":"inline"});
-
-        } else {
-            endFix(workL)
-            $('.footer-page').css({"display":"none"});
-
-        }
-
-
-        var contactL = "#contactL";
-        if (scrollTop - cOffset > 0) {
-            if(winHeight < cContentHeight){
-                startFix(contactL);
-                if ((scrollTop - cOffset) > (cContentHeight - winHeight)) {
-                    endFix(contactL);
-
-                    if(cContentHeight > winHeight){
-                        adjustTop((contactL))
-                    }
-                }
-            }
-        } else {
-            endFix(contactL)
-
-        }
-    });
 
     function startFix(name) {
         $(name).addClass("fixed");

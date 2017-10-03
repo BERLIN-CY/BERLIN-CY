@@ -70,6 +70,7 @@ $(document).ready(function () {
                 startFix(contactL);
                 if ((scrollTop - cOffset) > (cContentHeight - winHeight)) {
                     endFix(contactL);
+                    basicCalculationUpdate();
 
                     if(cContentHeight > winHeight){
                         adjustTop((contactL))

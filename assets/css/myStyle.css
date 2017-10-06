@@ -24,23 +24,23 @@ div {
     /*width: 100%;*/
     /*overflow: hidden*/
 }
-footer{
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100vh;
-    background: lightskyblue;
-    /*padding: 26px;*/
-    z-index: -1;
-}
+/*footer{*/
+    /*position: fixed;*/
+    /*bottom: 0;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*height: 100vh;*/
+    /*background: lightskyblue;*/
+    /*!*padding: 26px;*!*/
+    /*z-index: -1;*/
+/*}*/
 
 .site-main{
     position: relative;
     top:0;
     height: 100%;
 
-    margin-bottom: 100vh;
+    /*margin-bottom: 100vh;*/
 
 }
 
@@ -80,6 +80,8 @@ footer{
 .welcome-page{
     position:relative;
     z-index: 300;
+
+    background-image: url("../../assets/img/footer-image.jpg");
 }
 
 .split-page{
@@ -89,7 +91,7 @@ footer{
 }
 
 .contact-page{
-    margin-bottom: 100vh;
+    /*margin-bottom: 100vh;*/
 }
 
 
@@ -104,7 +106,7 @@ footer{
     /*color: #999999;*/
     /*padding: 26px;*/
     z-index: -1;
-    display: none;
+    /*display: none;*/
 }
 
 
@@ -114,35 +116,114 @@ footer{
     /*top:0;*/
 }
 
-.leftSide{
-    position: absolute;
-    /*height:100vh;*/
-    min-height: 100vh;
-    width: 50%;
-    top: 0;
-    left: 0;
-    z-index: 200;
+/*@media (min-width: 1px) {*/
+    .leftSide{
+        position: relative;
 
-    text-align:center;
+        /*height:100vh;*/
+        min-height: 100vh;
+        width: 100%;
+        /*top: 0;*/
+        /*left: 0;*/
+        z-index: 200;
 
-    /*display:table;*/
+        text-align:center;
+    }
 
-    /*animation*/
-    /*transition: 1s;*/
-    /*-webkit-transition: 1s;*/
+    .rightSide{
+        position: relative;
+        top:0;
+        /*left: 50%;*/
+        width: 100%;
+        z-index: 100;
+        height:100%;
+        min-height:100vh;
+
+        /*transition: 0.3s;*/
+        /*-webkit-transition: 0.3s;*/
+    }
+
+    .portrait{
+        display: none;
+    }
+/*}*/
+#contactR{
+    margin-bottom: 100vh;
 
 }
+@media (min-width: 1200px) {
+    .welcome-page{
+        position:relative;
+        z-index: 300;
+
+        background-image: url("../../assets/img/header-image.jpg");
+    }
+    .contact-page{
+        margin-bottom: 100vh;
+    }
+
+    .leftSide{
+        position: absolute;
+        /*height:100vh;*/
+        min-height: 100vh;
+        width: 50%;
+        top: 0;
+        left: 0;
+        z-index: 200;
+
+        text-align:center;
+
+        /*display:table;*/
+
+        /*animation*/
+        /*transition: 1s;*/
+        /*-webkit-transition: 1s;*/
+        /*border-right: 1px solid #767475;*/
+
+    }
+
+    .rightSide{
+        position: relative;
+        top:0;
+        left: 50%;
+        width: 50%;
+        z-index: 100;
+        height:100%;
+        min-height:100vh;
+
+        /*transition: 0.3s;*/
+        /*-webkit-transition: 0.3s;*/
+    }
+
+    .portrait{
+        display: inline;
+        position: absolute;
+        max-width: 10vw;
+        right: -5vw;
+        top: 10%;
+        /*border-radius: 50%;*/
+    }
+
+    .leftSide.compress{
+        width: 20%;
+    }
+
+    .rightSide.expand{
+        left:20%;
+        width: 80%;
+    }
+}
+
 .workPage .leftSide.transitionEffect{
     /*transition: 0.3s;*/
     /*-webkit-transition: 0.3s;*/
 }
-.workPage .leftSide{
-    border-right: 1px solid #767475;
+#work .leftSide{
+    border-right: 1px solid #d9d7d8;
 }
 
 
 .leftSide.compress{
-    width: 20%;
 }
 
 .chapterTitle{
@@ -164,21 +245,8 @@ footer{
     /*text-orientation: upright;*/
 }
 
-.rightSide{
-    position: relative;
-    top:0;
-    left: 50%;
-    width: 50%;
-    z-index: 100;
-    height:100%;
-    min-height:100vh;
 
-    /*transition: 0.3s;*/
-    /*-webkit-transition: 0.3s;*/
-}
 .rightSide.expand{
-    left:20%;
-    width: 80%;
 }
 
 
@@ -264,24 +332,6 @@ nav > ol li, nav > ul li {
     /*width:100%;*/
 
 /*}*/
-
-footer{
-    position: relative;
-    left: 0;
-    z-index: -1;
-    /*padding-top:400%;*/
-    height:100vh;
-    top:600vh;
-
-    /*overflow: hidden;*/
-
-    /*height: */
-    /*padding-top: 300%;*/
-    /*overflow: hidden;*/
-    /*padding-top: 100%;*/
-
-    /*z-index: -1;*/
-}
 
 .portrait{
     position: absolute;
@@ -474,7 +524,7 @@ footer{
     height: 150px;
     width:100%;
 
-    /*white-space: nowrap; !* this is required unless you put the helper span closely near the img *!*/
+    white-space: nowrap; /* this is required unless you put the helper span closely near the img */
     text-align: center;
     /*margin: 1em 0;*/
 }
@@ -519,7 +569,8 @@ next-project .center-helper {
 .social-nav img{
     max-height: 60px;
     display:inline;
-    padding-right: 18px;
+    padding-right: 20px;
+    padding-bottom: 30px;
 }
 
 #expand-close{
@@ -542,5 +593,12 @@ img.about-logo{
     max-height: 10vw;
     padding-right:40px;
     /*white-space: nowrap;*/
+
+}
+
+#mobile-close-project{
+    /*position: absolute;*/
+    /*right:20%;*/
+    /*top:10%;*/
 
 }

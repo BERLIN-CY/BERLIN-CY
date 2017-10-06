@@ -1,10 +1,26 @@
 $(document).ready(function () {
+    var winWidth = 0;
     var aR,wR,cR,aOffset,
         wOffset,cOffset,winHeight,
         aContentHeight,wContentHeight,cContentHeight;
 
+    var openProjectID = "";
+
+    var projectFire = false;
+
+    // if(winWidth<1200){
+    //     $("#footer-desktop").css({"display":"none"});
+    // }
+
     basicCalculationUpdate();
     function basicCalculationUpdate() {
+        winWidth = $(window).width();
+        console.log("window width"+winWidth);
+
+        if(checkPortrait()=="small"){
+            console.log("is small screen");
+        }
+
         aR = $('#aboutR');
         wR = $('#workR');
         cR = $('#contactR');
@@ -33,59 +49,62 @@ $(document).ready(function () {
         console.log(scrollTop);
         // console.log(scrollTop - aOffset);
         // console.log(scrollTop);
-        var aboutL = "#aboutL";
-        if (scrollTop - aOffset > 0) {
-            startFix(aboutL);
-            basicCalculationUpdate();
+        if(winWidth >= 1200) {
 
-            if ((scrollTop - aOffset) >= (aContentHeight - winHeight)) {
-
-                endFix(aboutL);
-
-                //if content height < winHeight
-                if(aContentHeight >= winHeight){
-                    adjustTop((aboutL))
-                }
-            }
-        } else {
-            endFix(aboutL)
-        }
-
-        var workL = "#workL";
-        if (scrollTop - wOffset > 0) {
-            startFix(workL);
-
-            if ((scrollTop - wOffset) > (wContentHeight - winHeight)) {
-                endFix(workL);
-                adjustTop(workL);
+            var aboutL = "#aboutL";
+            if (scrollTop - aOffset > 0) {
+                startFix(aboutL);
                 basicCalculationUpdate();
-            }
-            //footer image only display when work is end
-            $('.footer-page').css({"display":"inline"});
 
-        } else {
-            endFix(workL)
-            $('.footer-page').css({"display":"none"});
-        }
+                if ((scrollTop - aOffset) >= (aContentHeight - winHeight)) {
 
+                    endFix(aboutL);
 
-        var contactL = "#contactL";
-        if (scrollTop - cOffset > 0) {
-            if(winHeight < cContentHeight){
-                startFix(contactL);
-                // basicCalculationUpdate();
-
-                if ((scrollTop - cOffset) > (cContentHeight - winHeight)) {
-                    endFix(contactL);
-
-                    if(cContentHeight > winHeight){
-                        adjustTop((contactL))
+                    //if content height < winHeight
+                    if (aContentHeight >= winHeight) {
+                        adjustTop((aboutL))
                     }
                 }
+            } else {
+                endFix(aboutL)
             }
-        } else {
-            endFix(contactL)
 
+            var workL = "#workL";
+            if (scrollTop - wOffset > 0) {
+                startFix(workL);
+
+                if ((scrollTop - wOffset) > (wContentHeight - winHeight)) {
+                    endFix(workL);
+                    adjustTop(workL);
+                    basicCalculationUpdate();
+                }
+                //footer image only display when work is end
+                $('.footer-page').css({"display": "inline"});
+
+            } else {
+                endFix(workL)
+                $('.footer-page').css({"display": "none"});
+            }
+
+
+            var contactL = "#contactL";
+            if (scrollTop - cOffset > 0) {
+                if (winHeight < cContentHeight) {
+                    startFix(contactL);
+                    // basicCalculationUpdate();
+
+                    if ((scrollTop - cOffset) > (cContentHeight - winHeight)) {
+                        endFix(contactL);
+
+                        if (cContentHeight > winHeight) {
+                            adjustTop((contactL))
+                        }
+                    }
+                }
+            } else {
+                endFix(contactL)
+
+            }
         }
     });
 
@@ -94,9 +113,15 @@ $(document).ready(function () {
 
     $(window).resize(function () {
         basicCalculationUpdate();
+        if(winWidth<1200){
+            $(".leftSide").removeClass("fixed");
+            $(".leftSide").css({"top":0});
+
+        }
     });
 
     $("#expand-close").on("click", function () {
+
         //add animation
         // $("#work").find(".leftSide").addClass("transitionEffect");
 
@@ -108,12 +133,8 @@ $(document).ready(function () {
         $("#workR").removeClass("expand");
 
         //display recover
-        var project_list = [];
-        project_list = $(".project");
-        project_list.find(".project-content").css({"display":"none"});
-        project_list.removeClass("disappear")
-        project_list.find(".project-header").css({"height":"100vh"})
-        project_list.find(".project-header").find(".more-info").removeClass('disappear');
+        recoverProjects();
+        // project_list.find(".project-header").find(".more-info").removeClass('disappear');
 
         //recalculate
         basicCalculationUpdate()
@@ -129,67 +150,112 @@ $(document).ready(function () {
 
     });
 
-    var openProjectID = "";
+    function recoverProjects(){
+        var project_list = [];
+        project_list = $(".project");
+        project_list.find(".project-content").css({"display":"none"});
+        project_list.removeClass("disappear");
+        project_list.find(".project-header").css({"height":"100vh"});
+    }
 
-    var projectFire = false;
+    $("#mobile-close-project").on("click", function () {
+
+        $("#workL").removeClass("compress");
+        $("#workR").removeClass("expand");
+        // $("#mobile-close-project").css({"display":"none"});
+        recoverProjects();
+
+        //recalculate
+        basicCalculationUpdate()
+
+        //view focus to top project
+        scrollToHash("#"+openProjectID);
+        projectFire = false;
+
+        $("#mobile-close-project").css({"display":"none"});
+        console.log(this);
+    });
+
 
     $("div[id^='project-']").on("click", function () {
 
         if (!projectFire){
             projectFire = true;
-            // event.preventDefault();
-
-
-            //show close button
-
             //assign openProjectID
             openProjectID = this.id;
-            // console.log(openProjectID);
-
-            //add transition Effect fo left side
-            $("#work").find(".leftSide").addClass("transitionEffect");
-
-            //show the cancel expand button
-            $("#expand-close").css({"display":"inline"});
 
             var project_id = this.id.substring(8, this.id.length);
             var currentProject = $("#project-"+project_id);
             //disappear other projects
             projectDisapper(project_id);
 
-            //expand width 75% 25%
+
+            if(winWidth<1200){
+                $("#mobile-close-project").css({"display":"inline"});
+                scrollToHash(".project-header");
+                $("#mobile-close-project").css({"display":"inline"});
+
+
+            }else {
+                // console.log(openProjectID);
+
+                //add transition Effect fo left side
+                // $("#work").find(".leftSide").addClass("transitionEffect");
+
+                //show the cancel expand button
+                $("#expand-close").css({"display":"inline"});
+
+
+
+                //expand width 75% 25%
+                // $("#workL").addClass("compress");
+                // $("#workR").addClass("expand");
+
+                scrollToHash("#work");
+                //recalculate height
+                // basicCalculationUpdate();
+
+                //image container cut to 50% height
+                // currentProject.find(".project-header").css({"height":"70vh"});
+                //
+                // currentProject.find(".project-content").css({"display":"inline"});
+
+                //disappear next button
+                // currentProject.find(".project-header").find(".more-info").addClass('disappear');
+
+                // basicCalculationUpdate();
+                //container height to 100%
+                // $(".project .project-header").css({"height":"100vh"})
+                //fix left side
+                startFix("#workL");
+
+                // $(".ancestors").find("span").css({"color": "red", "border": "2px solid red"});
+
+                //add content to this projects
+
+                //remove transition for left Side
+                // $("#work").find(".leftSide").removeClass("transitionEffect");
+            }
             $("#workL").addClass("compress");
             $("#workR").addClass("expand");
 
-            scrollToHash("#work");
-            //recalculate height
-            // basicCalculationUpdate();
-
-            //image container cut to 50% height
             currentProject.find(".project-header").css({"height":"70vh"});
 
             currentProject.find(".project-content").css({"display":"inline"});
-
-            //disappear next button
-            currentProject.find(".project-header").find(".more-info").addClass('disappear');
-
             basicCalculationUpdate();
-            //container height to 100%
-            // $(".project .project-header").css({"height":"100vh"})
-            //fix left side
-            startFix("#workL");
 
-            // $(".ancestors").find("span").css({"color": "red", "border": "2px solid red"});
 
-            //add content to this projects
 
-            //remove transition for left Side
-            $("#work").find(".leftSide").removeClass("transitionEffect");
         }
 
 
     });
 
+    $(".toMobile").on("click",function(){
+        //hide portrait
+
+        //left side width
+    });
     function projectDisapper(project_id) {
         // console.log("project disappear")
         var project_list = [];
@@ -248,5 +314,12 @@ $(document).ready(function () {
             case "#contactL": topHeight = cContentHeight-winHeight; break;
         }
         $(name).css({"top":topHeight})
+    }
+
+    function checkPortrait(){
+        if($(".portrait").css("display")=="none"){
+            return "small";
+        }
+        return "large";
     }
 });

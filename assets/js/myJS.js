@@ -18,8 +18,9 @@ $(document).ready(function () {
         winWidth = $(window).width();
         console.log("window width"+winWidth);
 
-        if(checkPortrait()=="small"){
-            console.log("is small screen");
+        //desktop css initial
+        if(winWidth>=1200){
+            $('.social-nav img').css({"max-height":"80px","padding-right":"20px"});
         }
 
         aR = $('#aboutR');
@@ -38,9 +39,12 @@ $(document).ready(function () {
 
         $('.chapterTitle').css({"padding-top":winHeight*(1-0.618)});
 
+
         console.log("aOffset:" + aOffset);
         console.log("aContentHeight:" + aContentHeight);
     }
+
+
 
     $(window).scroll(function () {
         // var scrollTop = $('body').scrollTop; //bug cannot detect scroll pos

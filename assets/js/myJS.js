@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    const destopWidth = 1200;
     var winWidth = 0;
     var aR,wR,cR,aOffset,
         wOffset,cOffset,winHeight,
@@ -49,7 +50,7 @@ $(document).ready(function () {
         console.log(scrollTop);
         // console.log(scrollTop - aOffset);
         // console.log(scrollTop);
-        if(winWidth >= 1200) {
+        if(winWidth >= destopWidth) {
 
             var aboutL = "#aboutL";
             if (scrollTop - aOffset > 0) {
@@ -113,10 +114,11 @@ $(document).ready(function () {
 
     $(window).resize(function () {
         basicCalculationUpdate();
-        if(winWidth<1200){
+        if(winWidth<destopWidth){
             $(".leftSide").removeClass("fixed");
             $(".leftSide").css({"top":0});
 
+            $("#expand-close").css({"display":"none"});
         }
     });
 
@@ -190,7 +192,7 @@ $(document).ready(function () {
             projectDisapper(project_id);
 
 
-            if(winWidth<1200){
+            if(winWidth<destopWidth){
                 $("#mobile-close-project").css({"display":"inline"});
                 scrollToHash(".project-header");
                 $("#mobile-close-project").css({"display":"inline"});

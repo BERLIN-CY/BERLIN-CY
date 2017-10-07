@@ -152,6 +152,12 @@ div {
     display: none;
 }
 
+.portrait-mobile{
+    float:left;
+    padding-right:30px;
+    max-width: 200px;
+}
+
 /*}*/
 #contactR {
     margin-bottom: 100vh;
@@ -594,6 +600,11 @@ img.about-logo {
         top: 10%;
         /*border-radius: 50%;*/
     }
+
+    .portrait-mobile{
+        display: none;
+    }
+
 
     .leftSide.compress {
         width: 20%;

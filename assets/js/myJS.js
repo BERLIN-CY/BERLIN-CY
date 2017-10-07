@@ -1,9 +1,9 @@
 $(document).ready(function () {
     const destopWidth = 1023;
     var winWidth = 0;
-    var aR,wR,cR,aOffset,
-        wOffset,cOffset,winHeight,
-        aContentHeight,wContentHeight,cContentHeight;
+    var aR, wR, cR, aOffset,
+        wOffset, cOffset, winHeight,
+        aContentHeight, wContentHeight, cContentHeight;
 
     var openProjectID = "";
 
@@ -14,14 +14,29 @@ $(document).ready(function () {
     // }
 
     basicCalculationUpdate();
+    desktopVSmobile();
+
+    function desktopVSmobile() {
+        if (winWidth >= destopWidth) {
+            $('.social-nav img').css({"max-height": "80px", "padding-right": "20px"});
+            $('#workL').removeClass("bg-color-pink");
+            $('#workL').removeClass("text-color-white");
+
+        } else {
+            $(".leftSide").removeClass("fixed");
+            $(".leftSide").css({"top": 0});
+            $("#expand-close").css({"display": "none"});
+
+            $('#workL').addClass("bg-color-pink");
+            $('#workL').addClass("text-color-white");
+        }
+    }
     function basicCalculationUpdate() {
         winWidth = $(window).width();
-        console.log("window width"+winWidth);
+        console.log("window width" + winWidth);
 
         //desktop css initial
-        if(winWidth>=destopWidth){
-            $('.social-nav img').css({"max-height":"80px","padding-right":"20px"});
-        }
+
 
         aR = $('#aboutR');
         wR = $('#workR');
@@ -37,13 +52,12 @@ $(document).ready(function () {
         wContentHeight = wR.height();
         cContentHeight = cR.height();
 
-        $('.chapterTitle').css({"padding-top":winHeight*(1-0.618)});
+        $('.chapterTitle').css({"padding-top": winHeight * (1 - 0.618)});
 
 
         console.log("aOffset:" + aOffset);
         console.log("aContentHeight:" + aContentHeight);
     }
-
 
 
     $(window).scroll(function () {
@@ -54,12 +68,12 @@ $(document).ready(function () {
         console.log(scrollTop);
         // console.log(scrollTop - aOffset);
         // console.log(scrollTop);
-        if(winWidth >= destopWidth) {
+        if (winWidth >= destopWidth) {
 
             var aboutL = "#aboutL";
             if (scrollTop - aOffset > 0) {
                 startFix(aboutL);
-                basicCalculationUpdate();
+                // basicCalculationUpdate();
 
                 if ((scrollTop - aOffset) >= (aContentHeight - winHeight)) {
 
@@ -118,12 +132,7 @@ $(document).ready(function () {
 
     $(window).resize(function () {
         basicCalculationUpdate();
-        if(winWidth<destopWidth){
-            $(".leftSide").removeClass("fixed");
-            $(".leftSide").css({"top":0});
-
-            $("#expand-close").css({"display":"none"});
-        }
+        desktopVSmobile();
     });
 
     $("#expand-close").on("click", function () {
@@ -132,7 +141,7 @@ $(document).ready(function () {
         // $("#work").find(".leftSide").addClass("transitionEffect");
 
         //disappear the cancel expand button
-        $("#expand-close").css({"display":"none"});
+        $("#expand-close").css({"display": "none"});
 
         //expand width 75% 25%
         $("#workL").removeClass("compress");
@@ -146,7 +155,7 @@ $(document).ready(function () {
         basicCalculationUpdate()
 
         //view focus to top project
-        scrollToHash("#"+openProjectID);
+        scrollToHash("#" + openProjectID);
 
         //remove transition for left Side
         // $("#work").find(".leftSide").removeClass("transitionEffect");
@@ -156,12 +165,12 @@ $(document).ready(function () {
 
     });
 
-    function recoverProjects(){
+    function recoverProjects() {
         var project_list = [];
         project_list = $(".project");
-        project_list.find(".project-content").css({"display":"none"});
+        project_list.find(".project-content").css({"display": "none"});
         project_list.removeClass("disappear");
-        project_list.find(".project-header").css({"height":"100vh"});
+        project_list.find(".project-header").css({"height": "100vh"});
     }
 
     $("#mobile-close-project").on("click", function () {
@@ -175,42 +184,41 @@ $(document).ready(function () {
         basicCalculationUpdate()
 
         //view focus to top project
-        scrollToHash("#"+openProjectID);
+        scrollToHash("#" + openProjectID);
         projectFire = false;
 
-        $("#mobile-close-project").css({"display":"none"});
+        $("#mobile-close-project").css({"display": "none"});
         console.log(this);
     });
 
 
     $("div[id^='project-']").on("click", function () {
 
-        if (!projectFire){
+        if (!projectFire) {
             projectFire = true;
             //assign openProjectID
             openProjectID = this.id;
 
             var project_id = this.id.substring(8, this.id.length);
-            var currentProject = $("#project-"+project_id);
+            var currentProject = $("#project-" + project_id);
             //disappear other projects
             projectDisapper(project_id);
 
 
-            if(winWidth<destopWidth){
-                $("#mobile-close-project").css({"display":"inline"});
+            if (winWidth < destopWidth) {
+                $("#mobile-close-project").css({"display": "inline"});
                 scrollToHash(".project-header");
-                $("#mobile-close-project").css({"display":"inline"});
+                $("#mobile-close-project").css({"display": "inline"});
 
 
-            }else {
+            } else {
                 // console.log(openProjectID);
 
                 //add transition Effect fo left side
                 // $("#work").find(".leftSide").addClass("transitionEffect");
 
                 //show the cancel expand button
-                $("#expand-close").css({"display":"inline"});
-
+                $("#expand-close").css({"display": "inline"});
 
 
                 //expand width 75% 25%
@@ -245,11 +253,10 @@ $(document).ready(function () {
             $("#workL").addClass("compress");
             $("#workR").addClass("expand");
 
-            currentProject.find(".project-header").css({"height":"70vh"});
+            currentProject.find(".project-header").css({"height": "70vh"});
 
-            currentProject.find(".project-content").css({"display":"inline"});
+            currentProject.find(".project-content").css({"display": "inline"});
             basicCalculationUpdate();
-
 
 
         }
@@ -257,11 +264,12 @@ $(document).ready(function () {
 
     });
 
-    $(".toMobile").on("click",function(){
+    $(".toMobile").on("click", function () {
         //hide portrait
 
         //left side width
     });
+
     function projectDisapper(project_id) {
         // console.log("project disappear")
         var project_list = [];
@@ -301,7 +309,7 @@ $(document).ready(function () {
 
     function startFix(name) {
         $(name).addClass("fixed");
-        $(name).css({"top":0});
+        $(name).css({"top": 0});
 
         // $('.chapterTitle').css({"padding-top":"50%"});
     }
@@ -310,20 +318,29 @@ $(document).ready(function () {
         $(name).removeClass("fixed");
         console.log("end fix")
         // $('.chapterTitle').css({"padding-top":"50%","padding-bottom":winHeight/2});
+
+        basicCalculationUpdate();
+
     }
 
     function adjustTop(name) {
-        var topHeight=0;
+        var topHeight = 0;
         switch (name) {
-            case "#aboutL": topHeight = aContentHeight-winHeight; break;
-            case "#workL": topHeight = wContentHeight-winHeight; break;
-            case "#contactL": topHeight = cContentHeight-winHeight; break;
+            case "#aboutL":
+                topHeight = aContentHeight - winHeight;
+                break;
+            case "#workL":
+                topHeight = wContentHeight - winHeight;
+                break;
+            case "#contactL":
+                topHeight = cContentHeight - winHeight;
+                break;
         }
-        $(name).css({"top":topHeight})
+        $(name).css({"top": topHeight})
     }
 
-    function checkPortrait(){
-        if($(".portrait").css("display")=="none"){
+    function checkPortrait() {
+        if ($(".portrait").css("display") == "none") {
             return "small";
         }
         return "large";

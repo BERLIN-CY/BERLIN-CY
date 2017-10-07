@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    const destopWidth = 1200;
+    const destopWidth = 1023;
     var winWidth = 0;
     var aR,wR,cR,aOffset,
         wOffset,cOffset,winHeight,
@@ -19,7 +19,7 @@ $(document).ready(function () {
         console.log("window width"+winWidth);
 
         //desktop css initial
-        if(winWidth>=1200){
+        if(winWidth>=destopWidth){
             $('.social-nav img').css({"max-height":"80px","padding-right":"20px"});
         }
 

@@ -1,23 +1,19 @@
 $(document).ready(function () {
-    const destopWidth = 1023;
+    const desktopWidth = 1023;
     var winWidth = 0;
     var aR, wR, cR, aOffset,
         wOffset, cOffset, winHeight,
         aContentHeight, wContentHeight, cContentHeight;
 
-    var openProjectID = "";
+    var openedProjectID = "";
 
     var projectFire = false;
-
-    // if(winWidth<1200){
-    //     $("#footer-desktop").css({"display":"none"});
-    // }
 
     basicCalculationUpdate();
     desktopVSmobile();
 
     function desktopVSmobile() {
-        if (winWidth >= destopWidth) {
+        if (winWidth >= desktopWidth) {
             $('.social-nav img').css({"max-height": "80px", "padding-right": "20px"});
             $('#workL').removeClass("bg-color-pink");
             $('#workL').removeClass("text-color-white");
@@ -31,12 +27,10 @@ $(document).ready(function () {
             $('#workL').addClass("text-color-white");
         }
     }
+
     function basicCalculationUpdate() {
         winWidth = $(window).width();
         console.log("window width" + winWidth);
-
-        //desktop css initial
-
 
         aR = $('#aboutR');
         wR = $('#workR');
@@ -54,21 +48,20 @@ $(document).ready(function () {
 
         $('.chapterTitle').css({"padding-top": winHeight * (1 - 0.618)});
 
-
         console.log("aOffset:" + aOffset);
         console.log("aContentHeight:" + aContentHeight);
     }
 
 
     $(window).scroll(function () {
-        // var scrollTop = $('body').scrollTop; //bug cannot detect scroll pos
+        // var scrollTop = $('body').scrollTop;
         // var scrollTop = $("html, body").scrollTop();
-        var scrollTop;
-        scrollTop = $(document).scrollTop();
+        var scrollTop = $(document).scrollTop();
         console.log(scrollTop);
         // console.log(scrollTop - aOffset);
         // console.log(scrollTop);
-        if (winWidth >= destopWidth) {
+
+        if (winWidth >= desktopWidth) {
 
             var aboutL = "#aboutL";
             if (scrollTop - aOffset > 0) {
@@ -92,29 +85,29 @@ $(document).ready(function () {
             if (scrollTop - wOffset > 0) {
                 startFix(workL);
 
+                if (projectFire) {
+                    var headerImageTop = scrollTop - wOffset;
+                    $('.header-image').css({"top": headerImageTop});
+                }
+
                 if ((scrollTop - wOffset) > (wContentHeight - winHeight)) {
                     endFix(workL);
                     adjustTop(workL);
                     basicCalculationUpdate();
                 }
-                //footer image only display when work is end
-                $('.footer-page').css({"display": "inline"});
-
             } else {
                 endFix(workL)
-                $('.footer-page').css({"display": "none"});
             }
 
 
             var contactL = "#contactL";
             if (scrollTop - cOffset > 0) {
+                footerPageAppear();
+
                 if (winHeight < cContentHeight) {
                     startFix(contactL);
-                    // basicCalculationUpdate();
-
                     if ((scrollTop - cOffset) > (cContentHeight - winHeight)) {
                         endFix(contactL);
-
                         if (cContentHeight > winHeight) {
                             adjustTop((contactL))
                         }
@@ -122,10 +115,18 @@ $(document).ready(function () {
                 }
             } else {
                 endFix(contactL)
-
+                footerPageDisappear();
             }
         }
     });
+    function footerPageAppear() {
+        $('.footer-page').css({"display": "inline"});
+        console.log("footer page appear");
+    }
+    function footerPageDisappear(){
+        $('.footer-page').css({"display": "none"});
+        console.log("footer page disappear");
+    }
 
     /* go to top after refresh */
     $(window).scrollTop(0);
@@ -135,12 +136,16 @@ $(document).ready(function () {
         desktopVSmobile();
     });
 
+//todo [bug]
+// left side will not show when click the close button
+// at the end of the 1st project
+
     $("#expand-close").on("click", function () {
 
-        //add animation
-        // $("#work").find(".leftSide").addClass("transitionEffect");
+        rightLineDisappear();
+        $('.header-image').css({"top": 0});
 
-        //disappear the cancel expand button
+
         $("#expand-close").css({"display": "none"});
 
         //expand width 75% 25%
@@ -149,18 +154,13 @@ $(document).ready(function () {
 
         //display recover
         recoverProjects();
-        // project_list.find(".project-header").find(".more-info").removeClass('disappear');
 
         //recalculate
         basicCalculationUpdate()
 
         //view focus to top project
-        scrollToHash("#" + openProjectID);
+        scrollToHash("#" + openedProjectID, 0);
 
-        //remove transition for left Side
-        // $("#work").find(".leftSide").removeClass("transitionEffect");
-
-        //
         projectFire = false;
 
     });
@@ -184,71 +184,47 @@ $(document).ready(function () {
         basicCalculationUpdate()
 
         //view focus to top project
-        scrollToHash("#" + openProjectID);
+        scrollToHash("#" + openedProjectID, 0);
         projectFire = false;
 
         $("#mobile-close-project").css({"display": "none"});
         console.log(this);
     });
 
+    function rightLineAppear(){
+        $('#workL').addClass("border-color-grey");
+        console.log("border right show");
+    }
+    function rightLineDisappear(){
+        $('#workL').removeClass("border-color-grey");
+    }
 
     $("div[id^='project-']").on("click", function () {
 
         if (!projectFire) {
             projectFire = true;
-            //assign openProjectID
-            openProjectID = this.id;
 
-            var project_id = this.id.substring(8, this.id.length);
-            var currentProject = $("#project-" + project_id);
+            rightLineAppear();
+
+            //assign openedProjectID
+            openedProjectID = this.id;
+
+            var projectID = this.id.substring(8, this.id.length);
+            var currentProject = $("#project-" + projectID);
             //disappear other projects
-            projectDisapper(project_id);
+            projectDisapper(projectID);
 
 
-            if (winWidth < destopWidth) {
-                $("#mobile-close-project").css({"display": "inline"});
+            if (winWidth < desktopWidth) {
                 scrollToHash(".project-header");
                 $("#mobile-close-project").css({"display": "inline"});
 
 
             } else {
-                // console.log(openProjectID);
-
-                //add transition Effect fo left side
-                // $("#work").find(".leftSide").addClass("transitionEffect");
-
-                //show the cancel expand button
                 $("#expand-close").css({"display": "inline"});
 
-
-                //expand width 75% 25%
-                // $("#workL").addClass("compress");
-                // $("#workR").addClass("expand");
-
-                scrollToHash("#work");
-                //recalculate height
-                // basicCalculationUpdate();
-
-                //image container cut to 50% height
-                // currentProject.find(".project-header").css({"height":"70vh"});
-                //
-                // currentProject.find(".project-content").css({"display":"inline"});
-
-                //disappear next button
-                // currentProject.find(".project-header").find(".more-info").addClass('disappear');
-
-                // basicCalculationUpdate();
-                //container height to 100%
-                // $(".project .project-header").css({"height":"100vh"})
-                //fix left side
+                // scrollToHash(currentProject,9999);
                 startFix("#workL");
-
-                // $(".ancestors").find("span").css({"color": "red", "border": "2px solid red"});
-
-                //add content to this projects
-
-                //remove transition for left Side
-                // $("#work").find(".leftSide").removeClass("transitionEffect");
             }
             $("#workL").addClass("compress");
             $("#workR").addClass("expand");
@@ -257,26 +233,13 @@ $(document).ready(function () {
 
             currentProject.find(".project-content").css({"display": "inline"});
             basicCalculationUpdate();
-
-
         }
-
-
-    });
-
-    $(".toMobile").on("click", function () {
-        //hide portrait
-
-        //left side width
     });
 
     function projectDisapper(project_id) {
         // console.log("project disappear")
         var project_list = [];
         project_list = $(".project");
-        // console.log(object.id);
-        // var project_id = object.id.substring(10, object.id.length);
-        // console.log(project_id);
         for (var i = 1; i <= project_list.length; i++) {
             if (i != project_id) {
                 var project_id_disappear = "#project-" + i;
@@ -284,43 +247,43 @@ $(document).ready(function () {
                 $(project_id_disappear).addClass("disappear");
             }
         }
-
-        //scroll to div top
-        // var currentProject = $("#project-"+project_id);
-        // var dest=0;
-        // var projectOffset = currentProject.offset.top();
-        // dest = wOffset + winHeight-(projectOffset - wOffset - (project_id-1)*winHeight);
-        // currentProject.animate({scrollTop: dest}, 500, 'swing');
     }
 
     function scrollToHash(hashName) {
         // window.location = location.hash;
-        console.log(hashName)
+        console.log(hashName);
         var dest = 0;
         if ($(hashName).offset().top > $(document).height() - $(window).height()) {
             dest = $(document).height() - $(window).height();
         } else {
             dest = $(hashName).offset().top;
         }
-        // dest += $(hashName)
         //go to destination
-        $('html,body').animate({scrollTop: dest}, 0, 'swing');
+        $('html,body').animate({scrollTop: dest}, 1000, 'swing');
+    }
+
+    function scrollToHash(hashName, speed) {
+        // window.location = location.hash;
+        console.log(hashName);
+        var dest = 0;
+        if ($(hashName).offset().top > $(document).height() - $(window).height()) {
+            dest = $(document).height() - $(window).height();
+        } else {
+            dest = $(hashName).offset().top;
+        }
+        $('html,body').animate({scrollTop: dest}, speed, 'swing');
     }
 
     function startFix(name) {
         $(name).addClass("fixed");
         $(name).css({"top": 0});
-
-        // $('.chapterTitle').css({"padding-top":"50%"});
     }
 
     function endFix(name) {
         $(name).removeClass("fixed");
         console.log("end fix")
-        // $('.chapterTitle').css({"padding-top":"50%","padding-bottom":winHeight/2});
 
         basicCalculationUpdate();
-
     }
 
     function adjustTop(name) {
@@ -337,12 +300,5 @@ $(document).ready(function () {
                 break;
         }
         $(name).css({"top": topHeight})
-    }
-
-    function checkPortrait() {
-        if ($(".portrait").css("display") == "none") {
-            return "small";
-        }
-        return "large";
     }
 });

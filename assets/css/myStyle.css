@@ -338,6 +338,7 @@ ul li {
     /*font-family: 'Share Tech Mono', monospace;*/
     font-weight: 700;
     padding-bottom: 1.5em;
+    font-size: 1.3em;
 }
 
 .content a {
@@ -538,6 +539,12 @@ next-project .center-helper {
 }
 
 .openSans-bold {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+}
+
+p.about-statement{
+    padding-bottom: 2em;
     font-family: 'Open Sans', sans-serif;
     font-weight: 700;
 }

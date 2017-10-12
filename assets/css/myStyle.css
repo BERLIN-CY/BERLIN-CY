@@ -312,6 +312,11 @@ nav > ol li, nav > ul li {
     /*letter-spacing: 1px;*/
 }
 
+.i-remember p{
+    padding-bottom:0;
+    margin-bottom: 0.5em;
+
+}
 p.subtitle{
     padding-bottom: 0;
 }

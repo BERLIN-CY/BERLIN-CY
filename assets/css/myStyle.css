@@ -315,7 +315,9 @@ nav > ol li, nav > ul li {
 .i-remember p{
     padding-bottom:0;
     margin-bottom: 0.5em;
-
+}
+.i-remember{
+    padding-bottom: 1.2em;
 }
 p.subtitle{
     padding-bottom: 0;

@@ -25,6 +25,8 @@ $(document).ready(function () {
 
             $('#workL').addClass("bg-color-pink");
             $('#workL').addClass("text-color-white");
+
+            footerPageAppear();
         }
     }
 
@@ -216,7 +218,7 @@ $(document).ready(function () {
 
 
             if (winWidth < desktopWidth) {
-                scrollToHash(".project-header");
+                scrollToHash(currentProject.find(".project-header"),0);
                 $("#mobile-close-project").css({"display": "inline"});
 
 

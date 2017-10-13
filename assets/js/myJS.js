@@ -99,6 +99,7 @@ $(document).ready(function () {
                 }
             } else {
                 endFix(workL)
+                $('.header-image').css({"top": 0});
             }
 
 
@@ -118,6 +119,17 @@ $(document).ready(function () {
             } else {
                 endFix(contactL)
                 footerPageDisappear();
+            }
+        }
+        else{
+
+            if (projectFire) {
+                var headerImageTop = scrollTop - wOffset;
+                $('.header-image').css({"top": headerImageTop});
+
+                if (scrollTop - wOffset < 0) {
+                    $('.header-image').css({"top": 0});
+                }
             }
         }
     });
@@ -176,6 +188,8 @@ $(document).ready(function () {
     }
 
     $("#mobile-close-project").on("click", function () {
+
+        $('.header-image').css({"top": 0});
 
         $("#workL").removeClass("compress");
         $("#workR").removeClass("expand");

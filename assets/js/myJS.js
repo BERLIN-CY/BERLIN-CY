@@ -87,10 +87,10 @@ $(document).ready(function () {
             if (scrollTop - wOffset > 0) {
                 startFix(workL);
 
-                if (projectFire) {
-                    var headerImageTop = scrollTop - wOffset;
-                    $('.header-image').css({"top": headerImageTop});
-                }
+                // if (projectFire) {
+                //     var headerImageTop = scrollTop - wOffset;
+                //     $('.header-image').css({"top": headerImageTop});
+                // }
 
                 if ((scrollTop - wOffset) > (wContentHeight - winHeight)) {
                     endFix(workL);
@@ -125,7 +125,7 @@ $(document).ready(function () {
 
             if (projectFire) {
                 var headerImageTop = scrollTop - wOffset;
-                $('.header-image').css({"top": headerImageTop});
+                // $('.header-image').css({"top": headerImageTop});
 
                 if (scrollTop - wOffset < 0) {
                     $('.header-image').css({"top": 0});

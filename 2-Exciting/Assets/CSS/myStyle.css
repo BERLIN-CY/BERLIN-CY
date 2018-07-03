@@ -1,0 +1,221 @@
+/*::-webkit-scrollbar{*/
+    /*display: none;*/
+/*}*/
+
+*{
+    margin:0;
+    padding:0;
+}
+
+html, body{
+    height:100%;
+
+}
+div {
+    display: block;
+}
+.site-wrapper{
+    position: relative;
+    top: 0;
+    height:100%;
+    /*width: 100%;*/
+    /*overflow: hidden*/
+}
+
+.site-main{
+    position: relative;
+    top:0;
+    height: 100%;
+}
+
+.hero-image{
+    background: url("") left center no-repeat;
+}
+.fullPage{
+    height: 100vh;
+    position: relative;
+    width: 100%;
+}
+
+.welcomePage{
+    z-index: 300;
+    /*overflow: hidden;*/
+    background: lightskyblue;
+}
+
+.splitPage{
+    position: relative;
+    min-height:100%;
+    z-index: 200;
+}
+
+.sticky-wrapper{
+    position: absolute;
+    width: 50%;
+    top: 0;
+    left: 0;
+    z-index: 200;
+
+    height:100vh;
+}
+
+
+.is-sticky{
+    /*position: fixed;*/
+    margin: 0;
+    padding:0;
+    width: 50%;
+    top: 0;
+    left: 0;
+
+    height:100vh;
+}
+
+.leftSide{
+    height:100%;
+    /*animation*/
+    /*-webkit-transition: 1s width cubic-bezier(.77,0,.175,1);*/
+    /*transition: 1s width cubic-bezier(.77,0,.175,1);*/
+}
+
+.aboutPage .leftSide{
+    background: lightcoral;
+}
+.workPage .leftSide{
+    background: lightskyblue;
+}
+/*.workPage .rightSide{*/
+    /*background: #000;*/
+/*}*/
+
+.contactPage .leftSide{
+    background: lightcyan;
+}
+.rightSide{
+    position: relative;
+    top:0;
+    left: 50%;
+    width: 50%;
+    z-index: 100;
+    height:100%;
+}
+
+.aboutContent{
+    padding: 10%;
+    padding-left:15%;
+}
+
+.endPage{
+    height: 100vh;
+    z-index: 200;
+
+    background-color: lightcoral;
+    /*position: relative;*/
+    /*z-index: -1;*/
+}
+
+.firstTitle{
+    /*position: absolute;*/
+    /*padding: 36px 0;*/
+    padding-top: 2%;
+    text-align: center;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.chapterTitle{
+    text-align: center;
+    vertical-align: middle;
+
+}
+
+nav > ol, nav > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0
+}
+
+nav > ol li, nav > ul li {
+    margin: 0;
+    padding: 0
+}
+
+.main-nav {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0
+}
+
+.main-nav ul {
+    padding: 36px 0;
+    text-align: center
+}
+
+.main-nav ul li {
+    display: inline-block
+}
+
+.main-nav ul li:before {
+    content: '/';
+    padding: 0 12px 0 9px
+}
+
+.main-nav ul li:first-child:before {
+    display: none
+}
+
+.main-nav ul li a {
+    color: inherit;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.main-nav ul li a:after {
+    bottom: -.4em;
+    border-width: 2px;
+    display: none
+}
+
+.main-nav ul li a:hover:after {
+    display: block
+}
+
+.text-color--red {
+    color: #f7484e
+}
+
+.underlined--white:after {
+    border-color: #fff
+}
+
+.aboutImg{
+    width:100%;
+    height: 100%;
+    padding-bottom: 5%;
+}
+
+.portrait{
+    max-width: 135px;
+    position: absolute;
+    right: -67px;
+    top: 96px
+}
+
+/*.vertical-align-helper:before {*/
+    /*content: '';*/
+    /*display: inline-block;*/
+    /*height: 100%;*/
+    /*vertical-align: middle;*/
+    /*margin-left: -5px;*/
+
+    /*text-align: center*/
+/*}*/
+
+/*.vertical-align-helper > [class*=vertical-align--] {*/
+    /*display: inline-block;*/
+    /*width: 100%*/
+/*}*/
+

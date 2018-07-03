@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Berlin Chen - Front End Developer & Photographer </title>
+
+    <link rel="stylesheet" href="Assets/CSS/bootstrap.css">
+    <link rel="stylesheet" href="Assets/CSS/myStyle.css">
+
+    <script src="Assets/JS/jquery.js"></script>
+    <script src="Assets/JS/jquery.sticky.js"></script>
+
+</head>
+<body>
+<div class="site-wrapper">
+    <div class="site-main">
+        <div class="fullPage welcomePage hero-image" >
+            <p class="firstTitle text-color--red">FRONT END DEVELOPER & PHOTOGRAPHY</p>
+            <nav class="main-nav text-color--red">
+                <ul>
+                    <li><a class="underlined--white" href="#about">About</a></li>
+                    <li><a class="underlined--white" href="#work">Work</a></li>
+                    <li><a class="underlined--white" href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+        </div>
+
+        <div class="splitPage aboutPage" id="about">
+            <div class="leftSide sticker">
+                <H1 class="chapterTitle">ABOUT</H1>
+
+                <!--<img class="portrait responsive" src="Assets/img/portrait.JPG" alt=""/>-->
+
+            </div>
+            <div class="rightSide">
+                <div class="aboutContent">
+                    <figure>
+                        <img src="Assets/img/portrait.JPG" class="aboutImg" alt="Berlin Chen">
+                        <figcaption style="text-align: center">Berlin Chen</figcaption>
+                    </figure>
+                    <p><b>I am a front-end developer and photographer from China living in Singapore.</b></p>
+                    <ul>
+                        <li>Frontend developer</li>
+                        <p>with a diverse set of skills,HTML + CSS + Javascript…</p>
+                        <p>working on design user interfaces and build user experience…..</p>
+
+                        <li>Photograph</li>
+                        <p> I also take pictures of the world…..</p>
+                    </ul>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="splitPage workPage" id="work" >
+            <div class="leftSide sticker">
+                <H1 class="chapterTitle">WORK</H1>
+            </div>
+            <div class="rightSide">
+                <div class="aboutContent">
+                    <p><b>I am a UX Designer and Art Director from Austria living in Berlin.</b></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="splitPage contactPage" id="contact">
+            <div class="leftSide sticker">
+                <H1 class="chapterTitle">CONTACT</H1>
+            </div>
+            <div class="rightSide">
+                <div class="aboutContent">
+                    <p><b>I am a UX Designer and Art Director from Austria living in Berlin.</b></p>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="fullPage endPage" >
+            <p>FRONT END DEVELOPER & PHOTOGRAPHY</p>
+            <nav>ABOUT/WORK/CONTACT</nav>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+$(document).ready(function(){
+
+    /* go to top after refresh */
+    $(window).scrollTop(0);
+
+    $(".sticker").sticky({ topSpacing: 0});
+
+//    var winScrollTo;
+//    var windowHeight = $(window).height();
+//
+//    $(document).scroll(function () {
+//        winScrollTo = $(window).scrollTop();
+//        console.log(winScrollTo);
+//    });
+//
+//    $('.sticker').on('sticky-start', function() {
+//        console.log("Sticky Started");
+//
+//        var contentHeight = $(".aboutContent").outerHeight();
+//        console.log(contentHeight);
+//        var contentScrollPos = $(".aboutContent").offset().top;
+//        console.log(contentScrollPos);
+//
+//        if((winScrollTo) > (contentHeight)){
+//            $(".sticker").unstick();
+//        }
+//
+//
+//    });
+//    $('.sticker').on('sticky-end', function() { console.log("Ended"); });
+//    $('.sticker').on('sticky-update', function() { console.log("Update"); });
+//    $('.sticker').on('sticky-bottom-reached', function() { console.log("Bottom reached"); });
+//    $('.sticker').on('sticky-bottom-unreached', function() { console.log("Bottom unreached"); });
+
+//    $(window).scroll(function () {
+//        var scrollTo = $(window).scrollTop();
+//        var docHeight = $(document).height();
+//        var windowHeight = $(window).height();
+//
+//
+//        if (scrollTo <= windowHeight){
+//            $(".rightSide").scroll(function(event){
+//                console.log(scrollTo + " " + windowHeight);
+//
+//                event.preventDefault();
+//            });
+//        }
+////        $(".rightSide").scrollTop($(".leftSide").scrollTop());
+//    });
+});
+</script>
+</body>
+</html>

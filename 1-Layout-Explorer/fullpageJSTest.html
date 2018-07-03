@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fullpage JS test</title>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+
+    <script type="text/javascript" src="Assets/JS/scrolloverflow.js"></script>
+
+    <script type="text/javascript" src="Assets/JS/jquery.fullPage.js"></script>
+
+    <style>
+        ::-webkit-scrollbar{
+            display: none;
+        }
+
+        *{
+            margin:0;
+        }
+
+        html, body{
+            height:100%;
+        }
+
+        .section {
+            text-align:center;
+        }
+
+        #section2{
+            height:100%;
+            overflow: hidden;
+        }
+
+        .leftSide{
+            float: left;
+            width: 50%;
+            background: lightgoldenrodyellow;
+            height: 100%;
+        }
+        .rightSide{
+            float: left;
+            width: 50%;
+            background: white;
+            height: 100%;
+            overflow: auto;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="wrapper">
+        <div class="section">fist page</div>
+        <div class="section">
+            <div class="leftSide">About</div>
+            <div class="rightSide">
+                <div class="selfIntro">
+                    <h1>I am a UX Designer and Art Director from Austria living in Berlin.</h1>
+
+                    <p>Artworks and illustrations were my gateway to the creative industry which led to the foundation of my own studio and to first steps in the digital world.
+                        Art Direction</p>
+                    <p>Starting with basic websites several years ago I found myself working as an Art Director for complex projects with a holistic approach soon. Visually appealing designs, subtle details and brand guidelines combined to innovative interfaces across various touch points became my daily companion.</p>
+                    <p>Out of this love for aesthetic design my passion for functionality and structure evolved. Jumping right into Photoshop didn’t feel accurate anymore and skipping the steps of building a framework based on functionality and usability became inevitable.</p>
+                    <h1>UX Design</h1>
+                    <h1>A user-centered mindset and sensitivity for design turned out to be the perfect fit when collaborating with agencies, clients and brands to develop digital concepts and solve problems together.</h1>
+                    <b>This rough framework outlines my process of developing digital experiences:</b>
+                    <ul>
+                        <li>1. RESEARCH and gather the present state</li>
+                        <li>2. STRUCTURE setup and content of the project</li>
+                        <li>3. CONCEPT AND STRATEGY</li>
+                        <li>4. CREATE, evaluate and iterate deliverables like</li>
+                    </ul>
+
+                    Personas</br>
+                    Site maps</br>
+                    Use cases and scenarios</br>
+                    User flow</br>
+                    Sketches and Infographics</br>
+                    Wireframes</br>
+                    Communicating the conceptual approach/UX strategy and reasoning behind it, is present during the whole process.</br>
+                    <hr>
+                    To achieve the goal of making the web a better place I trust in teamwork, latest technology and intuition.</br>
+                </div>
+            </div>
+        </div>
+        <div class="section"></div>
+    </div>
+
+    <script>
+        $(function(){
+           $("#wrapper").fullpage({
+               autoScrolling: false,
+               sectionsColor: ['pink','blanchedalmond','lightcoral'],
+               scrollOverflow: true,
+               normalScrollElements: '.rightSide'
+//               normalScrollElements: '.leftSide'
+           });
+        });
+    </script>
+</body>
+
+</html>

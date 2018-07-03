@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="Assets/CSS/splitPageDemo.css">
+
+    <script src="Assets/JS/jquery.js"></script>
+    <!--<script src="Assets/JS/jquery.sticky.js"></script>-->
+
+</head>
+<body>
+<div class="site-wrapper">
+<section class="one">
+    <div class="left-half">
+        <span>&#x2663;&#xFE0E;</span>
+    </div>
+    <div class="right-half">
+        <div>
+            <h1>This Panel Scrolls</h1>
+            <p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p>            <p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p>
+
+        </div>
+    </div>
+</section>
+
+<section class="two">
+    <div class="left-half">
+        <span>&#x2666;&#xFE0E;</span>
+    </div>
+    <div class="right-half">
+        <div>
+            <h1>This Panel Scrolls</h1>
+            <p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p>            <p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p>
+
+        </div>
+    </div>
+</section>
+
+<section class="three">
+    <div class="left-half">
+        <span>&#x2665;&#xFE0E;</span>
+    </div>
+    <div class="right-half">
+        <div>
+            <h1>This Panel Scrolls</h1>
+            <p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p><p>blah</p>
+        </div>
+    </div>
+</section>
+</div>
+</body>
+
+
+
+<!--<script src="Assets/JS/jquery.stickem.js"></script>-->
+<script>
+    $(document).ready(function() {
+        $(window).scroll(function(){
+            var scrollPos = $(window).scrollTop(),
+                windHeight = $(window).height(),
+                sectOffset = $(".one").offset().top,
+                secRSHeight = $(".one .right-half").outerHeight;
+
+            if(scrollPos >= sectOffset) {
+                $(".one .left-half").addClass("fixed");
+
+                if(scrollPos - sectOffset - secRSHeight > 0){
+                    $(".one .left-half").removeClass("fixed");
+                }
+            }
+        });
+    });
+</script>
+</html>

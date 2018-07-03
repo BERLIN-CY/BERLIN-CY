@@ -1,0 +1,28 @@
+body{
+    display: block;
+    font-size: 1em;
+}
+
+div{
+    display:block;
+}
+
+a, a:visited{
+    color: #2aabd2;
+    text-decoration: underline;
+}
+
+body.loaded{
+    overflow:auto
+}
+
+.preloading .site-wrapper {
+    top: 50vh
+}
+
+.site-wrapper {
+    position: relative;
+    top: 0;
+    width: 100%;
+    overflow: hidden
+}

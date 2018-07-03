@@ -1,0 +1,163 @@
+/*
+ * Curtain reveal effect using CSS
+ * http://www.thecssninja.com/css/reveal-effect
+ *
+ * Copyright (c) 2012 Ryan Seddon 
+ * Dual-licensed under the BSD and MIT licenses.
+ * http://thecssninja.com/demo/license.txt
+ */
+
+/* Just some base styles not needed for example to function */
+*, html {
+    font-family: Ubuntu, sans-serif;
+    -moz-box-sizing: border-box;
+}
+
+body, form, ul, li, p, h1, h2, h3, h4, h5 {
+    margin: 0;
+    padding: 0;
+    color: #fff;
+}
+
+body {
+    margin-top: 40px;
+}
+
+img {
+    border: none;
+}
+
+p {
+    font-size: 1em;
+    margin: 0 0 1em 0;
+    line-height: 20px;
+}
+
+h1 {
+    margin: 0 0 1em;
+    font-size: 26px;
+}
+
+/* Branding */
+#cssninja {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #18191d;
+    width: 100%;
+    height: 40px;
+}
+
+#cssninja p {
+    color: #ffffff;
+    text-align: center;
+    margin: 10px 0 0 0;
+}
+
+#cssninja a {
+    color: #ffffff;
+    text-decoration: none;
+    background: url(../assets/ico_ninja.gif) 0 0 no-repeat;
+    padding: 4px 0 9px 28px;
+}
+
+#cssninja a:hover {
+    text-decoration: underline;
+}
+
+/* Colour scheme stolen from http://cheddarapp.com/ cause it's pretty */
+
+header {
+    padding: 26px;
+    background: #FF7243;
+    min-height: 200px;
+}
+
+header h1 {
+    font-size: 60px;
+}
+
+header h2 {
+    font-size: 40px;
+}
+
+section {
+    background: #0881B3;
+    padding: 26px;
+    margin-bottom: 350px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+}
+
+header, section {
+    position: relative;
+    z-index: 2;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 300px;
+    background: #fff;
+    color: #999999;
+    padding: 26px;
+    z-index: 1;
+}
+
+footer h1 {
+    color: #999999;
+}
+
+.container {
+    width: 80%;
+    max-width: 960px;
+    margin: 0 auto 40px;
+}
+
+p {
+    -webkit-columns: 3;
+    -moz-columns: 3;
+    columns: 3;
+}
+
+.field {
+    width: 45%;
+    float: left;
+    margin: 0 5% 16px 0;
+}
+
+.field label {
+    display: block;
+    font-size: 16px;
+    color: #999;
+    margin-bottom: 5px;
+}
+
+.field input {
+    -moz-box-sizing: border-box;
+    background-color: white;
+    border: 1px solid #B8BBC2;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1) inset;
+    padding: 5px;
+    width: 100%;
+}
+
+.btn {
+    background: #2C7AD0;
+    color: #FFFFFF;
+    padding: 6px;
+    text-decoration: none;
+    border: 1px solid #4c4c4c;
+    border-radius: 5px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+
+.btn:hover,
+.btn:active {
+    background-color: #0055cc;
+}

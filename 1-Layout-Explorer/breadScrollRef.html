@@ -1,0 +1,96 @@
+<!DOCTYPE html5>
+<html>
+<head>
+    <style>
+        .bread-slide {
+            height: 100%;
+            background: pink;
+            width: 100%;
+            margin: 5px;
+        }
+        .bread-buttons {
+            position: fixed;
+            right: 0px;
+            bottom: 100px;
+        }
+        .bread-button {
+            margin: 2px;
+            background: lightcoral;
+            height: 45px;
+            width: 100px;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+<body>
+<div class="bread-slide"></div>
+<div class="bread-slide"></div>
+<div class="bread-slide"></div>
+<div class="bread-buttons">
+    <div class="bread-button"></div>
+    <div class="bread-button"></div>
+    <div class="bread-button"></div>
+</div>
+<script src="script.js"></script>
+<script>
+    (function ($) {
+        'use strict'; //This strict context prevents certain actions from being taken and throws more exceptions.
+        var slides,
+            currentSlide,
+            numberOfSlides;
+        init();
+        function init () {
+            /* After page refresh to go top of the page */
+            $(window).scrollTop(0);
+            slides = $('.bread-slide');
+//            console.log(slides);
+            currentSlide = 0;
+            numberOfSlides = slides.length;
+            registerEventListeners();
+        }
+        function handleButtonEvent (i) {
+            return function () {
+                currentSlide = i;
+                scrollToElem(slides.eq(currentSlide));
+            };
+        }
+        function handleWheelEvent () {
+            return function (event) {
+                event.preventDefault();
+                /* Clear all events except the last one */
+                clearTimeout($.data(this, 'timer'));
+                $.data(this, 'timer', setTimeout(function () {
+                    if (event.originalEvent.deltaY > 0) {
+                        moveToNextSlide() ? scrollToElem(slides.eq(currentSlide)) : null;
+                        return;
+                    }
+                    moveToPreviousSlide() ? scrollToElem(slides.eq(currentSlide)) : null;
+                }, 250));
+            };
+        }
+        function registerEventListeners () {
+            var buttons = $('.bread-button');
+            for (var i = 0; i < numberOfSlides; i++) {
+                buttons.eq(i).click(handleButtonEvent(i));
+            }
+            $(window).on('wheel', handleWheelEvent());
+        }
+        function moveToNextSlide () {
+            if (currentSlide < numberOfSlides - 1) {
+                currentSlide++;
+                return true;
+            }
+        }
+        function moveToPreviousSlide () {
+            if (currentSlide > 0) {
+                currentSlide--;
+                return true;
+            }
+        }
+        function scrollToElem (elem) {
+            $('body').animate({ scrollTop: $(elem).offset().top }, 'slow');
+        }
+    })(jQuery);
+</script>
+</body>
+</html>

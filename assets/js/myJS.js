@@ -11,6 +11,7 @@ $(document).ready(function () {
 
     basicCalculationUpdate();
     desktopVSmobile();
+    loadImage();
 
     function desktopVSmobile() {
         if (winWidth >= desktopWidth) {
@@ -59,7 +60,7 @@ $(document).ready(function () {
         // var scrollTop = $('body').scrollTop;
         // var scrollTop = $("html, body").scrollTop();
         var scrollTop = $(document).scrollTop();
-        console.log(scrollTop);
+        // console.log(scrollTop);
         // console.log(scrollTop - aOffset);
         // console.log(scrollTop);
 
@@ -137,10 +138,7 @@ $(document).ready(function () {
         $('.footer-page').css({"display": "inline"});
         console.log("footer page appear");
     }
-    function footerPageDisappear(){
-        $('.footer-page').css({"display": "none"});
-        console.log("footer page disappear");
-    }
+
 
     /* go to top after refresh */
     $(window).scrollTop(0);
@@ -148,14 +146,20 @@ $(document).ready(function () {
     $(window).resize(function () {
         basicCalculationUpdate();
         desktopVSmobile();
+        loadImage();
+
+        // if (winWidth >= desktopWidth) {
+        // }
     });
 
-//todo [bug]
 // left side will not show when click the close button
 // at the end of the 1st project
 
     $("#expand-close").on("click", function () {
+        expandClose();
+    });
 
+    function expandClose() {
         rightLineDisappear();
         $('.header-image').css({"top": 0});
 
@@ -176,16 +180,12 @@ $(document).ready(function () {
         scrollToHash("#" + openedProjectID, 0);
 
         projectFire = false;
+    }
 
+    $("#next-project").on("click", function () {
+        recoverProjects();
     });
 
-    function recoverProjects() {
-        var project_list = [];
-        project_list = $(".project");
-        project_list.find(".project-content").css({"display": "none"});
-        project_list.removeClass("disappear");
-        project_list.find(".project-header").css({"height": "100vh"});
-    }
 
     $("#mobile-close-project").on("click", function () {
 
@@ -206,14 +206,6 @@ $(document).ready(function () {
         $("#mobile-close-project").css({"display": "none"});
         console.log(this);
     });
-
-    function rightLineAppear(){
-        $('#workL').addClass("border-color-grey");
-        console.log("border right show");
-    }
-    function rightLineDisappear(){
-        $('#workL').removeClass("border-color-grey");
-    }
 
     $("div[id^='project-']").on("click", function () {
 
@@ -263,6 +255,28 @@ $(document).ready(function () {
                 $(project_id_disappear).addClass("disappear");
             }
         }
+    }
+
+    function footerPageDisappear(){
+        $('.footer-page').css({"display": "none"});
+        console.log("footer page disappear");
+    }
+
+    function recoverProjects() {
+        var project_list = [];
+        project_list = $(".project");
+        project_list.find(".project-content").css({"display": "none"});
+        project_list.removeClass("disappear");
+        project_list.find(".project-header").css({"height": "100vh"});
+    }
+
+    function rightLineAppear(){
+        $('#workL').addClass("border-color-grey");
+        console.log("border right show");
+    }
+
+    function rightLineDisappear(){
+        $('#workL').removeClass("border-color-grey");
     }
 
     function scrollToHash(hashName) {
@@ -317,4 +331,78 @@ $(document).ready(function () {
         }
         $(name).css({"top": topHeight})
     }
+
+    function loadImage(){
+        var project1 = $("#project-1 .project-details");
+        var project2 = $("#project-2 .project-details");
+        var project3 = $("#project-3 .project-details");
+        var project4 = $("#project-4 .project-details");
+
+        $("#project-1 .project-details > img").remove();
+        $("#project-2 .project-details > img").remove();
+        $("#project-3 .project-details > img").remove();
+        $("#project-4 .project-details > img").remove();
+
+        if(winWidth > desktopWidth){
+            var dir1 = "assets/img/project/bali/web/";
+            for(var i=1; i<=4; i++){
+                project1.append("<img src='" + dir1 + i + '.jpg' + "'>");
+            }
+
+            var dir2 = "assets/img/project/jeju/web/";
+            for(var i=1; i<=5; i++){
+                project2.append("<img src='" + dir2 + i + '.jpg' + "'>");
+            }
+
+            var dir3 = "assets/img/project/taipei/web/";
+            for(var i=1; i<=7; i++){
+                project3.append("<img src='" + dir3 + i + '.jpg' + "'>");
+            }
+
+            var dir4 = "assets/img/project/turkey/web/";
+            for(var i=1; i<=12; i++){
+                project4.append("<img src='" + dir4 + i + '.jpg' + "'>");
+            }
+
+        }else {
+            var dir1 = "assets/img/project/bali/mobile/";
+            for(var i=1; i<=4; i++){
+                project1.append("<img src='" + dir1 + i + '.jpg' + "'>");
+            }
+
+            var dir2 = "assets/img/project/jeju/mobile/";
+            for(var i=1; i<=5; i++){
+                project2.append("<img src='" + dir2 + i + '.jpg' + "'>");
+            }
+
+            var dir3 = "assets/img/project/taipei/mobile/";
+            for(var i=1; i<=7; i++){
+                project3.append("<img src='" + dir3 + i + '.jpg' + "'>");
+            }
+
+            var dir4 = "assets/img/project/turkey/mobile/";
+            for(var i=1; i<=12; i++){
+                project4.append("<img src='" + dir4 + i + '.jpg' + "'>");
+            }
+        }
+        // var fileExtension = ".jpg";
+        // $.ajax({
+        //     //This will retrieve the contents of the folder if the folder is configured as 'browsable'
+        //     url: dir,
+        //     success: function (data) {
+        //         //List all .png file names in the page
+        //         $(data).each(function () {
+        //             var filename = this.href.replace(window.location, "").replace("http://", "");
+        //             $("#project-1 .project-details").append("<img src='" + dir + filename + "'>");
+        //             console.log(filename);
+        //         });
+        //     },
+        //     error: function (er) {
+        //         console.log('error', er.message);
+        //
+        //     }
+        // });
+    }
+
+
 });

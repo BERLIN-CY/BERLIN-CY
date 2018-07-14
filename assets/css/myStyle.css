@@ -89,7 +89,7 @@ div {
     position: relative;
     z-index: 300;
 
-    background-image: url("../../assets/img/footer-image.jpg");
+    background-image: url("../../assets/img/header-image-mobile.jpg");
 }
 
 .split-page {
@@ -195,23 +195,12 @@ div {
 }
 
 .chapterTitle {
-    /*text-align: center;*/
     vertical-align: middle;
-    /*padding-top: 50%;*/
     text-transform: uppercase;
     font-family: 'Share Tech Mono', monospace;
     font-weight: 700;
     display: inline-block;
     font-size: 2.5em;
-    /*color:white;*/
-    /*display: flex;*/
-    /*justify-content: center;*/
-    /*align-items: center;*/
-    /*display: table-cell;*/
-    /*height:100%;*/
-
-    /*writing-mode: vertical-rl;*/
-    /*text-orientation: upright;*/
 }
 
 .rightSide.expand {
@@ -380,7 +369,7 @@ ul li {
 }
 
 .project {
-    overflow: hidden;
+    /*overflow: hidden;*/
     position: relative;
     width: 100%;
     left: 0;
@@ -432,6 +421,27 @@ ul li {
     /*box-shadow: 0 0 11px rgba(33,33,33,.2);*/
 }
 
+#project-1 .header-image{
+    background-image: url("../../assets/img/project/bali/header-bali-mobile.jpg");
+    /*style="background-image: url(assets/img/project/bali/header-bali.jpg);"*/
+}
+
+#project-2 .header-image{
+    background-image: url("../../assets/img/project/jeju/header-jeju-mobile.jpg");
+}
+
+#project-3 .header-image{
+    background-image: url("../../assets/img/project/taipei/header-taipei-mobile.jpg");
+}
+
+#project-4 .header-image{
+    background-image: url("../../assets/img/project/turkey/header-turkey-mobile.jpg");
+}
+
+.footer-page .footer-page-image {
+    background-image: url("../../assets/img/footer-image-mobile.jpg");
+}
+
 .header-image .more-info {
     /*display:none;*/
     padding-left: 48%;
@@ -472,13 +482,14 @@ ul li {
     /*border-bottom: 1px solid darkgrey;*/
 }
 
+
 #workL.border-color-grey{
     border-right: 0.3px solid #dfddde;
 }
 
 
 .project-details img {
-    padding-top: 10px;
+    padding-top: 15px;
     /*padding-bottom: 2%;*/
     position: relative;
     width: 100%;
@@ -492,31 +503,61 @@ ul li {
     padding-top: 10%;
 }
 
-.next-project {
-    /*position: relative;*/
-    height: 150px;
+.project-footer {
+    position: relative;
+    height: 20vh;
     width: 100%;
+}
 
-    white-space: nowrap; /* this is required unless you put the helper span closely near the img */
+.more-breadTrip-area {
+    float:left;
+    width: 50%;
     text-align: center;
-    /*margin: 1em 0;*/
 }
 
-.next-project img {
-    max-height: 50px;
-    vertical-align: middle
+.project-footer-title{
+    vertical-align: middle;
+    text-transform: uppercase;
+    font-family: 'Share Tech Mono', monospace;
+    font-weight: 400;
+    display: inline-block;
+    font-size: 1.8em;
 }
 
-.next-project img:hover {
+.project-footer-disc{
+    text-transform: uppercase;
+
+}
+
+.more-breadTrip-area img{
+    padding-top: 2%;
+    max-width: 40px;
+}
+
+.more-breadTrip-area img:hover {
     -webkit-transform: scale3d(1.1, 1.1, 1);
     transform: scale3d(1.1, 1.1, 1);
 }
 
-next-project .center-helper {
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
+.more-breadTrip-area.next-project-area {
+    float:right;
 }
+
+/*.project-footer img {*/
+    /*max-height: 50px;*/
+    /*vertical-align: middle*/
+/*}*/
+
+/*.project-footer img:hover {*/
+    /*-webkit-transform: scale3d(1.1, 1.1, 1);*/
+    /*transform: scale3d(1.1, 1.1, 1);*/
+/*}*/
+
+/*next-project .center-helper {*/
+    /*display: inline-block;*/
+    /*height: 100%;*/
+    /*vertical-align: middle;*/
+/*}*/
 
 .work-nav {
     text-align: center;
@@ -529,14 +570,14 @@ next-project .center-helper {
 /*}*/
 
 .social-nav img {
-    max-height: 100px;
+    /*max-height: 5vw;*/
     display: inline;
     padding-right: 30px;
     padding-bottom: 30px;
 }
 
 #expand-close {
-    max-width: 50px;
+    max-width: 40px;
     padding-top: 15%;
 }
 
@@ -675,7 +716,7 @@ img.about-logo {
     .portrait {
         display: inline;
         position: absolute;
-        max-width: 12vw;
+        max-width: 10vw;
         right: -5vw;
         top: 10%;
     }
@@ -702,8 +743,8 @@ img.about-logo {
     }
 
     .project-details img {
-        padding-top: 4%;
-        /*padding-bottom: 2%;*/
+        padding-top: 2%;
+        padding-bottom: 2%;
         position: relative;
         width: 100%;
         height: 100vh;
@@ -730,5 +771,26 @@ img.about-logo {
         font-family: 'Open Sans', sans-serif;
         font-weight: 700;
         text-align: left;
+    }
+
+    #project-1 .header-image{
+        background-image: url("../../assets/img/project/bali/header-bali.jpg");
+        /*style="background-image: url(assets/img/project/bali/header-bali.jpg);"*/
+    }
+
+    #project-2 .header-image{
+        background-image: url("../../assets/img/project/jeju/header-jeju.jpg");
+    }
+
+    #project-3 .header-image{
+        background-image: url("../../assets/img/project/taipei/header-taipei.jpg");
+    }
+
+    #project-4 .header-image{
+        background-image: url("../../assets/img/project/turkey/header-turkey.jpg");
+    }
+
+    .footer-page .footer-page-image {
+        background-image: url("../../assets/img/footer-image.jpg");
     }
 }

@@ -99,7 +99,7 @@ $(document).ready(function () {
                     basicCalculationUpdate();
                 }
             } else {
-                endFix(workL)
+                endFix(workL);
                 $('.header-image').css({"top": 0});
             }
 
@@ -118,7 +118,7 @@ $(document).ready(function () {
                     }
                 }
             } else {
-                endFix(contactL)
+                endFix(contactL);
                 footerPageDisappear();
             }
         }
@@ -174,7 +174,7 @@ $(document).ready(function () {
         recoverProjects();
 
         //recalculate
-        basicCalculationUpdate()
+        basicCalculationUpdate();
 
         //view focus to top project
         scrollToHash("#" + openedProjectID, 0);
@@ -197,7 +197,7 @@ $(document).ready(function () {
         recoverProjects();
 
         //recalculate
-        basicCalculationUpdate()
+        basicCalculationUpdate();
 
         //view focus to top project
         scrollToHash("#" + openedProjectID, 0);

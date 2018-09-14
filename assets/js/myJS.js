@@ -13,6 +13,7 @@ var aR,
   wContentHeight,
   cContentHeight,
   openedProjectID,
+  currentProject,
   projectFire;
 
 var commonPath = `/assets/img/project/`;
@@ -31,7 +32,6 @@ var init = () => {
         $(document).ready(function() {
           basicCalculationUpdate();
           desktopVSmobile();
-          // loadImage();
 
           //#region 'events'
           $(window).scroll(function() {
@@ -120,10 +120,6 @@ var init = () => {
             // }
           });
 
-          $("#expand-close").on("click", function() {
-            projectClose();
-          });
-
           // console.log($("div[id^='project-']"));
           $("div[id^='project-']").on("click", function() {
             // console.log("project cliked");
@@ -138,7 +134,7 @@ var init = () => {
               var projectID = this.id.substring(8, this.id.length);
               var currentProject = $("#project-" + projectID);
               projectDisapper(projectID);
-              openIconDisappear(currentProject);
+              moreInfoLogoDisappear(currentProject);
 
               if (winWidth < desktopWidth) {
                 scrollToHash(currentProject.find(".project-header"), 0);
@@ -154,8 +150,20 @@ var init = () => {
             }
           });
 
-          $("#next-project").on("click", function() {
+          $("img[id^='next-project']").on("click", function() {
             // recoverProjects();
+            console.log("next project btn");
+            // projectClose();
+            projectFire = false;
+            rightLineDisappear();
+            setDisplay(false, "#expand-close");
+            // setDisplay(true, "#more-info-logo");
+            projectOpenCloseAnimation(false);
+            recoverProjects();
+            scrollToHash("#" + openedProjectID, 0);
+          });
+
+          $("#expand-close").on("click", function() {
             projectClose();
           });
 
@@ -371,15 +379,15 @@ function setDisplay(isDisplay, id, type) {
   }
 }
 
-function openIconAppear(currentProject) {
+function moreInfoLogoAppear(currentProject) {
   $(currentProject)
-    .find(".more-info-logo")
+    .find("div[id^='more-info-logo']")
     .css({ display: "block" });
 }
 
-function openIconDisappear(currentProject) {
+function moreInfoLogoDisappear(currentProject) {
   $(currentProject)
-    .find(".more-info-logo")
+    .find("div[id^='more-info-logo']")
     .css({ display: "none" });
 }
 
@@ -436,6 +444,8 @@ function projectClose() {
   rightLineDisappear();
   setDisplay(false, "#expand-close");
   // setDisplay(true, "#more-info-logo");
+  moreInfoLogoAppear(currentProject)
+
   projectOpenCloseAnimation(false);
   recoverProjects();
   scrollToHash("#" + openedProjectID, 0);

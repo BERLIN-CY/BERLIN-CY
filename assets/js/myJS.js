@@ -18,13 +18,168 @@ var aR,
 var commonPath = `/assets/img/project/`;
 var configDict;
 
-var getProjectJson = () => {
+var init = () => {
+  // load configs
   $.ajax({
     dataType: "json",
     url: `${commonPath}config.json`,
     success: data => {
+      // save data gloably
       configDict = data;
-      insertDom();
+      // append dom with configDict
+      appendDom().then(() => {
+        $(document).ready(function() {
+          basicCalculationUpdate();
+          desktopVSmobile();
+          // loadImage();
+
+          //#region 'events'
+          $(window).scroll(function() {
+            // var scrollTop = $('body').scrollTop;
+            // var scrollTop = $("html, body").scrollTop();
+            var scrollTop = $(document).scrollTop();
+            // console.log(scrollTop);
+            // console.log(scrollTop - aOffset);
+            // console.log(scrollTop);
+
+            if (winWidth >= desktopWidth) {
+              var aboutL = "#aboutL";
+              if (scrollTop - aOffset > 0) {
+                startFix(aboutL);
+                // basicCalculationUpdate();
+
+                if (scrollTop - aOffset >= aContentHeight - winHeight) {
+                  endFix(aboutL);
+
+                  //if content height < winHeight
+                  if (aContentHeight >= winHeight) {
+                    adjustTop(aboutL);
+                  }
+                }
+              } else {
+                endFix(aboutL);
+              }
+
+              var workL = "#workL";
+              if (scrollTop - wOffset > 0) {
+                startFix(workL);
+
+                // if (projectFire) {
+                //     var headerImageTop = scrollTop - wOffset;
+                //     $('.header-image').css({"top": headerImageTop});
+                // }
+
+                if (scrollTop - wOffset > wContentHeight - winHeight) {
+                  endFix(workL);
+                  adjustTop(workL);
+                  basicCalculationUpdate();
+                }
+              } else {
+                endFix(workL);
+                $(".header-image").css({ top: 0 });
+              }
+
+              var contactL = "#contactL";
+              if (scrollTop - cOffset > 0) {
+                footerPageAppear();
+
+                if (winHeight < cContentHeight) {
+                  startFix(contactL);
+                  if (scrollTop - cOffset > cContentHeight - winHeight) {
+                    endFix(contactL);
+                    if (cContentHeight > winHeight) {
+                      adjustTop(contactL);
+                    }
+                  }
+                }
+              } else {
+                endFix(contactL);
+                footerPageDisappear();
+              }
+            } else {
+              if (projectFire) {
+                var headerImageTop = scrollTop - wOffset;
+                // $('.header-image').css({"top": headerImageTop});
+
+                if (scrollTop - wOffset < 0) {
+                  $(".header-image").css({ top: 0 });
+                }
+              }
+            }
+          });
+
+          /* go to top after refresh */
+          // $(window).scrollTop(0);
+
+          $(window).resize(function() {
+            basicCalculationUpdate();
+            desktopVSmobile();
+            // loadImage();
+
+            // if (winWidth >= desktopWidth) {
+            // }
+          });
+
+          $("#expand-close").on("click", function() {
+            projectClose();
+          });
+
+          // console.log($("div[id^='project-']"));
+          $("div[id^='project-']").on("click", function() {
+            // console.log("project cliked");
+            if (!projectFire) {
+              projectFire = true;
+              rightLineAppear();
+              // setDisplay(false, "#more-info-logo");
+
+              //disappear other projects
+              //assign openedProjectID
+              openedProjectID = this.id;
+              var projectID = this.id.substring(8, this.id.length);
+              var currentProject = $("#project-" + projectID);
+              projectDisapper(projectID);
+              openIconDisappear(currentProject);
+
+              if (winWidth < desktopWidth) {
+                scrollToHash(currentProject.find(".project-header"), 0);
+                $("#mobile-close-project").css({ display: "inline" });
+              } else {
+                // only show close button on desktop
+                setDisplay(true, "#expand-close", "inline");
+                startFix("#workL");
+              }
+
+              projectOpenCloseAnimation(true);
+              projectShowContent(true, currentProject);
+            }
+          });
+
+          $("#next-project").on("click", function() {
+            // recoverProjects();
+            projectClose();
+          });
+
+          $("#mobile-close-project").on("click", function() {
+            $(".header-image").css({ top: 0 });
+
+            $("#workL").removeClass("compress");
+            $("#workR").removeClass("expand");
+            // $("#mobile-close-project").css({"display":"none"});
+            recoverProjects();
+
+            //recalculate
+            basicCalculationUpdate();
+
+            //view focus to top project
+            scrollToHash("#" + openedProjectID, 0);
+            projectFire = false;
+
+            $("#mobile-close-project").css({ display: "none" });
+            console.log(this);
+          });
+          //#endregion
+        });
+      });
     },
     error: e => {
       console.error("getProjectJson Error", e);
@@ -32,39 +187,41 @@ var getProjectJson = () => {
   });
 };
 
-function insertDom() {
-  var projectVirDom = [];
+init();
 
-  // generate projects dom
-  $.each(configDict["project"], async (projectKey, projectVal) => {
-    // console.log(projectTemplate(projectKey, projectVal));
-    var imagesTemplateString = await loadImagsForEach(
-      projectKey,
-      projectVal,
-      "web"
-    );
-    projectVirDom.push(
-      generateProjectsTemplate(projectKey, projectVal, imagesTemplateString)
-    );
-    console.log(projectVirDom);
+//#region 'DOM related'
+function appendDom() {
+  return new Promise((resolve, reject) => {
+    var projectsTemaplateArr = [];
+
+    // generate projects dom
+    $.each(configDict["project"], async (projectKey, projectVal) => {
+      // wait to load images tempate string
+      var imagesTemplateString = await loadContentImagsTemplate(
+        projectKey,
+        projectVal,
+        "web"
+      );
+
+      // load project template
+      // insert images template string to project template
+      // push to projectsTemaplateArr
+      projectsTemaplateArr.push(
+        generateProjectsTemplate(projectKey, projectVal, imagesTemplateString)
+      );
+    });
+
+    // wait projectsTemaplateArr resolved
+    setTimeout(() => {
+      // console.log(projectsTemaplateArr);
+      $("#workR").append(projectsTemaplateArr.join(""));
+      resolve(true);
+    }, 500);
   });
-
-  console.log(projectVirDom);
-  $("#workR").append(projectVirDom.join(""));
 }
 
-getProjectJson();
-
-// var generateProjectTemplate = async () => {
-//   try {
-//     await getProjectJson();
-//   } catch (error) {}
-// };
-
-// generateProjectTemplate();
-var loadImagsForEach = (key, obj, type) => {
+var loadContentImagsTemplate = (key, obj, type) => {
   var imagesTemplate = [];
-  // <img src="assets/img/project/web-bali/FullSizeRender-2-4.jpg"></img>
   var folder = `${commonPath}${obj["projectName"]}/${type}/`;
 
   return new Promise((resolve, reject) => {
@@ -75,7 +232,9 @@ var loadImagsForEach = (key, obj, type) => {
           .find("a")
           .attr("href", function(i, val) {
             if (val.match(/\.(jpe?g|png|gif)$/)) {
-              imagesTemplate.push(`<img src=${folder}${val}></img>`);
+              //assets/img/project/turkey/web/11.jpg
+              //<img src="assets/img/project/web-bali/FullSizeRender-2-4.jpg"></img>
+              imagesTemplate.push(`<img src=${val}></img>`);
             }
           });
       },
@@ -84,11 +243,13 @@ var loadImagsForEach = (key, obj, type) => {
         reject(error);
       }
     }).done(() => {
-      console.log("imgesTemplate", imagesTemplate.length);
+      console.log(`${key} images count: `, imagesTemplate.length);
       resolve(imagesTemplate.join(""));
     });
   });
 };
+
+var loadHeaderImageTemplate = (key, obj, type) => {};
 
 var generateProjectsTemplate = (key, obj, imagesTemplateString) => {
   var projectsTemplateString = `<!--${key}-->
@@ -139,157 +300,7 @@ var generateProjectsTemplate = (key, obj, imagesTemplateString) => {
                     `;
   return projectsTemplateString;
 };
-
-$(document).ready(function() {
-  basicCalculationUpdate();
-  desktopVSmobile();
-  // loadImage();
-
-  //#region 'events'
-  $(window).scroll(function() {
-    // var scrollTop = $('body').scrollTop;
-    // var scrollTop = $("html, body").scrollTop();
-    var scrollTop = $(document).scrollTop();
-    // console.log(scrollTop);
-    // console.log(scrollTop - aOffset);
-    // console.log(scrollTop);
-
-    if (winWidth >= desktopWidth) {
-      var aboutL = "#aboutL";
-      if (scrollTop - aOffset > 0) {
-        startFix(aboutL);
-        // basicCalculationUpdate();
-
-        if (scrollTop - aOffset >= aContentHeight - winHeight) {
-          endFix(aboutL);
-
-          //if content height < winHeight
-          if (aContentHeight >= winHeight) {
-            adjustTop(aboutL);
-          }
-        }
-      } else {
-        endFix(aboutL);
-      }
-
-      var workL = "#workL";
-      if (scrollTop - wOffset > 0) {
-        startFix(workL);
-
-        // if (projectFire) {
-        //     var headerImageTop = scrollTop - wOffset;
-        //     $('.header-image').css({"top": headerImageTop});
-        // }
-
-        if (scrollTop - wOffset > wContentHeight - winHeight) {
-          endFix(workL);
-          adjustTop(workL);
-          basicCalculationUpdate();
-        }
-      } else {
-        endFix(workL);
-        $(".header-image").css({ top: 0 });
-      }
-
-      var contactL = "#contactL";
-      if (scrollTop - cOffset > 0) {
-        footerPageAppear();
-
-        if (winHeight < cContentHeight) {
-          startFix(contactL);
-          if (scrollTop - cOffset > cContentHeight - winHeight) {
-            endFix(contactL);
-            if (cContentHeight > winHeight) {
-              adjustTop(contactL);
-            }
-          }
-        }
-      } else {
-        endFix(contactL);
-        footerPageDisappear();
-      }
-    } else {
-      if (projectFire) {
-        var headerImageTop = scrollTop - wOffset;
-        // $('.header-image').css({"top": headerImageTop});
-
-        if (scrollTop - wOffset < 0) {
-          $(".header-image").css({ top: 0 });
-        }
-      }
-    }
-  });
-
-  /* go to top after refresh */
-  // $(window).scrollTop(0);
-
-  $(window).resize(function() {
-    basicCalculationUpdate();
-    desktopVSmobile();
-    loadImage();
-
-    // if (winWidth >= desktopWidth) {
-    // }
-  });
-
-  $("#expand-close").on("click", function() {
-    projectClose();
-  });
-
-  $("div[id^='project-']").on("click", function() {
-    console.log("project cliked");
-    if (!projectFire) {
-      projectFire = true;
-      rightLineAppear();
-      // setDisplay(false, "#more-info-logo");
-
-      //disappear other projects
-      //assign openedProjectID
-      openedProjectID = this.id;
-      var projectID = this.id.substring(8, this.id.length);
-      var currentProject = $("#project-" + projectID);
-      projectDisapper(projectID);
-      openIconDisappear(currentProject);
-
-      if (winWidth < desktopWidth) {
-        scrollToHash(currentProject.find(".project-header"), 0);
-        $("#mobile-close-project").css({ display: "inline" });
-      } else {
-        // only show close button on desktop
-        setDisplay(true, "#expand-close", "inline");
-        startFix("#workL");
-      }
-
-      projectOpenCloseAnimation(true);
-      projectShowContent(true, currentProject);
-    }
-  });
-
-  $("#next-project").on("click", function() {
-    // recoverProjects();
-    projectClose();
-  });
-
-  $("#mobile-close-project").on("click", function() {
-    $(".header-image").css({ top: 0 });
-
-    $("#workL").removeClass("compress");
-    $("#workR").removeClass("expand");
-    // $("#mobile-close-project").css({"display":"none"});
-    recoverProjects();
-
-    //recalculate
-    basicCalculationUpdate();
-
-    //view focus to top project
-    scrollToHash("#" + openedProjectID, 0);
-    projectFire = false;
-
-    $("#mobile-close-project").css({ display: "none" });
-    console.log(this);
-  });
-  //#endregion
-});
+//#endregion
 
 //#region 'support functions'
 function desktopVSmobile() {
@@ -470,89 +481,75 @@ function scrollToHash(hashName, speed) {
 //#endregion
 
 //#region 'loadImages'
-async function loadImage() {
-  try {
-    projectNameArr = await getProjectName();
-    console.log(projectNameArr);
+// async function loadImage() {
+//   try {
+//     projectNameArr = await getProjectName();
+//     console.log(projectNameArr);
 
-    projectNameArr.forEach((name, index) => {});
-  } catch (e) {
-    console.log(e);
-  }
-}
+//     projectNameArr.forEach((name, index) => {});
+//   } catch (e) {
+//     console.log(e);
+//   }
+// }
 
-function getProjectName() {
-  dir = `./${commonPath}`;
-  projectNameArr = [];
+// function getProjectName() {
+//   dir = `./${commonPath}`;
+//   projectNameArr = [];
 
-  return new Promise((resolve, reject) => {
-    $.ajax({
-      url: dir,
-      success: data => {
-        $(data)
-          .find("a")
-          .attr("href", function(i, val) {
-            // console.log(val, i);
-            if (val.indexOf(commonPath) !== -1) {
-              projectNameArr.push(val.replace(commonPath, ""));
-            }
-          });
-      },
-      error: data => {
-        reject(data);
-      }
-    }).done(data => {
-      resolve(projectNameArr);
-    });
-  });
-}
-
-async function loadImageForEach(projectName, type, projectDom) {
-  var dir = `${commonPath}${projectName}/${type}/`;
-  var max = 20;
-
-  try {
-    for (var i = 0; i <= max; i++) {
-      var image_url = `${dir}${i + 1}.jpg`;
-
-      // if not exist will throw to cacth
-      var res = await checkImageExist(image_url);
-
-      projectDom.append(`<img src=${image_url}>`);
-    }
-  } catch (error) {
-    // error.responseText = "Cannot GET /assets/img/project/bali/web/5.jpg"
-    var projectImagesCount = getProjectImagesCount(error.responseText);
-    appendProjectObj(projectName, projectImagesCount);
-
-    console.log(`${projectName} has ${projectImagesCount} images`);
-  }
-
-  function getProjectImagesCount(str) {
-    return str.substring(str.lastIndexOf("/") + 1).replace(".jpg", "") - 1;
-  }
-
-  function appendProjectObj() {}
-}
-
-function checkImageExist(image_url) {
-  return new Promise((resolve, reject) => {
-    $.ajax({
-      url: image_url,
-      success: data => {
-        resolve(true);
-      },
-      error: e => {
-        reject(e);
-      }
-    });
-  });
-}
-
-// function getProjectJson(path) {
 //   return new Promise((resolve, reject) => {
 //     $.ajax({
-//       url: path,
+//       url: dir,
+//       success: data => {
+//         $(data)
+//           .find("a")
+//           .attr("href", function(i, val) {
+//             // console.log(val, i);
+//             if (val.indexOf(commonPath) !== -1) {
+//               projectNameArr.push(val.replace(commonPath, ""));
+//             }
+//           });
+//       },
+//       error: data => {
+//         reject(data);
+//       }
+//     }).done(data => {
+//       resolve(projectNameArr);
+//     });
+//   });
+// }
+
+// async function loadImageForEach(projectName, type, projectDom) {
+//   var dir = `${commonPath}${projectName}/${type}/`;
+//   var max = 20;
+
+//   try {
+//     for (var i = 0; i <= max; i++) {
+//       var image_url = `${dir}${i + 1}.jpg`;
+
+//       // if not exist will throw to cacth
+//       var res = await checkImageExist(image_url);
+
+//       projectDom.append(`<img src=${image_url}>`);
+//     }
+//   } catch (error) {
+//     // error.responseText = "Cannot GET /assets/img/project/bali/web/5.jpg"
+//     var projectImagesCount = getProjectImagesCount(error.responseText);
+//     appendProjectObj(projectName, projectImagesCount);
+
+//     console.log(`${projectName} has ${projectImagesCount} images`);
+//   }
+
+//   function getProjectImagesCount(str) {
+//     return str.substring(str.lastIndexOf("/") + 1).replace(".jpg", "") - 1;
+//   }
+
+//   function appendProjectObj() {}
+// }
+
+// function checkImageExist(image_url) {
+//   return new Promise((resolve, reject) => {
+//     $.ajax({
+//       url: image_url,
 //       success: data => {
 //         resolve(true);
 //       },
@@ -562,8 +559,18 @@ function checkImageExist(image_url) {
 //     });
 //   });
 // }
-//#endregion
 
-//#region 'generate project'
-// function generateProject(projectName)
+// // function getProjectJson(path) {
+// //   return new Promise((resolve, reject) => {
+// //     $.ajax({
+// //       url: path,
+// //       success: data => {
+// //         resolve(true);
+// //       },
+// //       error: e => {
+// //         reject(e);
+// //       }
+// //     });
+// //   });
+// // }
 //#endregion

@@ -420,23 +420,6 @@ h5 {
   /*box-shadow: 0 0 11px rgba(33,33,33,.2);*/
 }
 
-#project-1 .header-image {
-  background-image: url("../../assets/img/project/bali/header-bali-mobile.jpg");
-  /*style="background-image: url(assets/img/project/bali/header-bali.jpg);"*/
-}
-
-#project-2 .header-image {
-  background-image: url("../../assets/img/project/jeju/header-jeju-mobile.jpg");
-}
-
-#project-3 .header-image {
-  background-image: url("../../assets/img/project/taipei/header-taipei-mobile.jpg");
-}
-
-#project-4 .header-image {
-  background-image: url("../../assets/img/project/turkey/header-turkey-mobile.jpg");
-}
-
 .footer-page .footer-page-image {
   background-image: url("../../assets/img/footer-image-mobile.jpg");
 }
@@ -753,22 +736,9 @@ img.about-logo {
     text-align: left;
   }
 
-  #project-1 .header-image {
-    background-image: url("../../assets/img/project/bali/header-bali.jpg");
-    /*style="background-image: url(assets/img/project/bali/header-bali.jpg);"*/
-  }
-
-  #project-2 .header-image {
-    background-image: url("../../assets/img/project/jeju/header-jeju.jpg");
-  }
-
-  #project-3 .header-image {
-    background-image: url("../../assets/img/project/taipei/header-taipei.jpg");
-  }
-
-  #project-4 .header-image {
+  /* #project-4 .header-image {
     background-image: url("../../assets/img/project/turkey/header-turkey.jpg");
-  }
+  } */
 
   .footer-page .footer-page-image {
     background-image: url("../../assets/img/footer-image.jpg");

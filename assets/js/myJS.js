@@ -205,7 +205,7 @@ function appendDom() {
     // generate projects dom
     $.each(configDict["project"], async (projectKey, projectVal) => {
       // wait to load images tempate string
-      var imagesTemplateString = await loadContentImagsTemplate(
+      var imagesTemplateString = await loadContentImagesTemplate(
         projectKey,
         projectVal,
         "web"
@@ -223,12 +223,18 @@ function appendDom() {
     setTimeout(() => {
       // console.log(projectsTemaplateArr);
       $("#workR").append(projectsTemaplateArr.join(""));
+
+      // add background image css for each project
+      $.each(configDict["project"], (projectKey, projectVal) => {
+        loadHeaderImageTemplate(projectKey, projectVal, "web");
+      });
+
       resolve(true);
     }, 500);
   });
 }
 
-var loadContentImagsTemplate = (key, obj, type) => {
+var loadContentImagesTemplate = (key, obj, type) => {
   var imagesTemplate = [];
   var folder = `${commonPath}${obj["projectName"]}/${type}/`;
 
@@ -257,7 +263,14 @@ var loadContentImagsTemplate = (key, obj, type) => {
   });
 };
 
-var loadHeaderImageTemplate = (key, obj, type) => {};
+var loadHeaderImageTemplate = (key, obj, type) => {
+  var imageUrl = `assets/img/project/${obj.projectName}/header-${type}.jpg`;
+
+  $(`#project-${obj.projectID} .header-image`).css({
+    // background-image: url("../../assets/img/project/bali/header-web.jpg");
+    "background-image": `url(${imageUrl})`
+  });
+};
 
 var generateProjectsTemplate = (key, obj, imagesTemplateString) => {
   var projectsTemplateString = `<!--${key}-->
@@ -444,7 +457,7 @@ function projectClose() {
   rightLineDisappear();
   setDisplay(false, "#expand-close");
   // setDisplay(true, "#more-info-logo");
-  moreInfoLogoAppear(currentProject)
+  moreInfoLogoAppear(currentProject);
 
   projectOpenCloseAnimation(false);
   recoverProjects();

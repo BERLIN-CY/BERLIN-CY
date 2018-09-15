@@ -1,90 +1,67 @@
-$(document).ready(function () {
-    const desktopWidth = 1023;
-    var winWidth = 0;
-    var aR, wR, cR, aOffset,
-        wOffset, cOffset, winHeight,
-        aContentHeight, wContentHeight, cContentHeight;
+"use strict";
 
-    var openedProjectID = "";
+var desktopWidth = 1023;
+var winWidth = 0;
+var aR,
+  wR,
+  cR,
+  aOffset,
+  wOffset,
+  cOffset,
+  winHeight,
+  aContentHeight,
+  wContentHeight,
+  cContentHeight,
+  openedProjectID,
+  currentProject,
+  projectFire;
 
-    var projectFire = false;
+var commonPath = `/assets/img/project/`;
+var configDict;
 
-    basicCalculationUpdate();
-    desktopVSmobile();
+var init = () => {
+  // load configs
+  $.ajax({
+    dataType: "json",
+    url: `${commonPath}config.json`,
+    success: data => {
+      // save data gloably
+      configDict = data;
+      // append dom with configDict
+      appendDom().then(() => {
+        $(document).ready(function() {
+          basicCalculationUpdate();
+          desktopVSmobile();
 
-    function desktopVSmobile() {
-        if (winWidth >= desktopWidth) {
-            $('.social-nav img').css({"max-height": "80px", "padding-right": "20px"});
-            $('#workL').removeClass("bg-color-pink");
-            $('#workL').removeClass("text-color-white");
+          //#region 'events'
+          $(window).scroll(function() {
+            // var scrollTop = $('body').scrollTop;
+            // var scrollTop = $("html, body").scrollTop();
+            var scrollTop = $(document).scrollTop();
+            // console.log(scrollTop);
+            // console.log(scrollTop - aOffset);
+            // console.log(scrollTop);
 
-        } else {
-            $(".leftSide").removeClass("fixed");
-            $(".leftSide").css({"top": 0});
-            $("#expand-close").css({"display": "none"});
-
-            $('#workL').addClass("bg-color-pink");
-            $('#workL').addClass("text-color-white");
-
-            footerPageAppear();
-        }
-    }
-
-    function basicCalculationUpdate() {
-        winWidth = $(window).width();
-        console.log("window width" + winWidth);
-
-        aR = $('#aboutR');
-        wR = $('#workR');
-        cR = $('#contactR');
-
-        aOffset = aR.offset().top;
-        wOffset = wR.offset().top;
-        cOffset = cR.offset().top;
-
-        winHeight = $(window).height();
-
-        aContentHeight = aR.height();
-        wContentHeight = wR.height();
-        cContentHeight = cR.height();
-
-        $('.chapterTitle').css({"padding-top": winHeight * (1 - 0.618)});
-
-        console.log("aOffset:" + aOffset);
-        console.log("aContentHeight:" + aContentHeight);
-    }
-
-
-    $(window).scroll(function () {
-        // var scrollTop = $('body').scrollTop;
-        // var scrollTop = $("html, body").scrollTop();
-        var scrollTop = $(document).scrollTop();
-        console.log(scrollTop);
-        // console.log(scrollTop - aOffset);
-        // console.log(scrollTop);
-
-        if (winWidth >= desktopWidth) {
-
-            var aboutL = "#aboutL";
-            if (scrollTop - aOffset > 0) {
+            if (winWidth >= desktopWidth) {
+              var aboutL = "#aboutL";
+              if (scrollTop - aOffset > 0) {
                 startFix(aboutL);
                 // basicCalculationUpdate();
 
-                if ((scrollTop - aOffset) >= (aContentHeight - winHeight)) {
+                if (scrollTop - aOffset >= aContentHeight - winHeight) {
+                  endFix(aboutL);
 
-                    endFix(aboutL);
-
-                    //if content height < winHeight
-                    if (aContentHeight >= winHeight) {
-                        adjustTop((aboutL))
-                    }
+                  //if content height < winHeight
+                  if (aContentHeight >= winHeight) {
+                    adjustTop(aboutL);
+                  }
                 }
-            } else {
-                endFix(aboutL)
-            }
+              } else {
+                endFix(aboutL);
+              }
 
-            var workL = "#workL";
-            if (scrollTop - wOffset > 0) {
+              var workL = "#workL";
+              if (scrollTop - wOffset > 0) {
                 startFix(workL);
 
                 // if (projectFire) {
@@ -92,229 +69,436 @@ $(document).ready(function () {
                 //     $('.header-image').css({"top": headerImageTop});
                 // }
 
-                if ((scrollTop - wOffset) > (wContentHeight - winHeight)) {
-                    endFix(workL);
-                    adjustTop(workL);
-                    basicCalculationUpdate();
+                if (scrollTop - wOffset > wContentHeight - winHeight) {
+                  endFix(workL);
+                  adjustTop(workL);
+                  basicCalculationUpdate();
                 }
-            } else {
-                endFix(workL)
-                $('.header-image').css({"top": 0});
-            }
+              } else {
+                endFix(workL);
+                $(".header-image").css({ top: 0 });
+              }
 
-
-            var contactL = "#contactL";
-            if (scrollTop - cOffset > 0) {
+              var contactL = "#contactL";
+              if (scrollTop - cOffset > 0) {
                 footerPageAppear();
 
                 if (winHeight < cContentHeight) {
-                    startFix(contactL);
-                    if ((scrollTop - cOffset) > (cContentHeight - winHeight)) {
-                        endFix(contactL);
-                        if (cContentHeight > winHeight) {
-                            adjustTop((contactL))
-                        }
+                  startFix(contactL);
+                  if (scrollTop - cOffset > cContentHeight - winHeight) {
+                    endFix(contactL);
+                    if (cContentHeight > winHeight) {
+                      adjustTop(contactL);
                     }
+                  }
                 }
-            } else {
-                endFix(contactL)
+              } else {
+                endFix(contactL);
                 footerPageDisappear();
-            }
-        }
-        else{
-
-            if (projectFire) {
+              }
+            } else {
+              if (projectFire) {
                 var headerImageTop = scrollTop - wOffset;
                 // $('.header-image').css({"top": headerImageTop});
 
                 if (scrollTop - wOffset < 0) {
-                    $('.header-image').css({"top": 0});
+                  $(".header-image").css({ top: 0 });
                 }
+              }
             }
-        }
-    });
-    function footerPageAppear() {
-        $('.footer-page').css({"display": "inline"});
-        console.log("footer page appear");
-    }
-    function footerPageDisappear(){
-        $('.footer-page').css({"display": "none"});
-        console.log("footer page disappear");
-    }
+          });
 
-    /* go to top after refresh */
-    $(window).scrollTop(0);
+          /* go to top after refresh */
+          // $(window).scrollTop(0);
 
-    $(window).resize(function () {
-        basicCalculationUpdate();
-        desktopVSmobile();
-    });
-
-//todo [bug]
-// left side will not show when click the close button
-// at the end of the 1st project
-
-    $("#expand-close").on("click", function () {
-
-        rightLineDisappear();
-        $('.header-image').css({"top": 0});
-
-
-        $("#expand-close").css({"display": "none"});
-
-        //expand width 75% 25%
-        $("#workL").removeClass("compress");
-        $("#workR").removeClass("expand");
-
-        //display recover
-        recoverProjects();
-
-        //recalculate
-        basicCalculationUpdate()
-
-        //view focus to top project
-        scrollToHash("#" + openedProjectID, 0);
-
-        projectFire = false;
-
-    });
-
-    function recoverProjects() {
-        var project_list = [];
-        project_list = $(".project");
-        project_list.find(".project-content").css({"display": "none"});
-        project_list.removeClass("disappear");
-        project_list.find(".project-header").css({"height": "100vh"});
-    }
-
-    $("#mobile-close-project").on("click", function () {
-
-        $('.header-image').css({"top": 0});
-
-        $("#workL").removeClass("compress");
-        $("#workR").removeClass("expand");
-        // $("#mobile-close-project").css({"display":"none"});
-        recoverProjects();
-
-        //recalculate
-        basicCalculationUpdate()
-
-        //view focus to top project
-        scrollToHash("#" + openedProjectID, 0);
-        projectFire = false;
-
-        $("#mobile-close-project").css({"display": "none"});
-        console.log(this);
-    });
-
-    function rightLineAppear(){
-        $('#workL').addClass("border-color-grey");
-        console.log("border right show");
-    }
-    function rightLineDisappear(){
-        $('#workL').removeClass("border-color-grey");
-    }
-
-    $("div[id^='project-']").on("click", function () {
-
-        if (!projectFire) {
-            projectFire = true;
-
-            rightLineAppear();
-
-            //assign openedProjectID
-            openedProjectID = this.id;
-
-            var projectID = this.id.substring(8, this.id.length);
-            var currentProject = $("#project-" + projectID);
-            //disappear other projects
-            projectDisapper(projectID);
-
-
-            if (winWidth < desktopWidth) {
-                scrollToHash(currentProject.find(".project-header"),0);
-                $("#mobile-close-project").css({"display": "inline"});
-
-
-            } else {
-                $("#expand-close").css({"display": "inline"});
-
-                // scrollToHash(currentProject,9999);
-                startFix("#workL");
-            }
-            $("#workL").addClass("compress");
-            $("#workR").addClass("expand");
-
-            currentProject.find(".project-header").css({"height": "70vh"});
-
-            currentProject.find(".project-content").css({"display": "inline"});
+          $(window).resize(function() {
             basicCalculationUpdate();
-        }
+            desktopVSmobile();
+            // loadImage();
+
+            // if (winWidth >= desktopWidth) {
+            // }
+          });
+
+          // console.log($("div[id^='project-']"));
+          $("div[id^='project-']").on("click", function() {
+            // console.log("project cliked");
+            if (!projectFire) {
+              projectFire = true;
+              rightLineAppear();
+              // setDisplay(false, "#more-info-logo");
+
+              //disappear other projects
+              //assign openedProjectID
+              openedProjectID = this.id;
+              var projectID = this.id.substring(8, this.id.length);
+              var currentProject = $("#project-" + projectID);
+              projectDisapper(projectID);
+              moreInfoLogoDisappear(currentProject);
+
+              if (winWidth < desktopWidth) {
+                scrollToHash(currentProject.find(".project-header"), 0);
+                $("#mobile-close-project").css({ display: "inline" });
+              } else {
+                // only show close button on desktop
+                setDisplay(true, "#expand-close", "inline");
+                startFix("#workL");
+              }
+
+              projectOpenCloseAnimation(true);
+              projectShowContent(true, currentProject);
+            }
+          });
+
+          $("img[id^='next-project']").on("click", function() {
+            // recoverProjects();
+            console.log("next project btn");
+            // projectClose();
+            projectFire = false;
+            rightLineDisappear();
+            setDisplay(false, "#expand-close");
+            // setDisplay(true, "#more-info-logo");
+            projectOpenCloseAnimation(false);
+            recoverProjects();
+            scrollToHash("#" + openedProjectID, 0);
+          });
+
+          $("#expand-close").on("click", function() {
+            projectClose();
+          });
+
+          $("#mobile-close-project").on("click", function() {
+            $(".header-image").css({ top: 0 });
+
+            $("#workL").removeClass("compress");
+            $("#workR").removeClass("expand");
+            // $("#mobile-close-project").css({"display":"none"});
+            recoverProjects();
+
+            //recalculate
+            basicCalculationUpdate();
+
+            //view focus to top project
+            scrollToHash("#" + openedProjectID, 0);
+            projectFire = false;
+
+            $("#mobile-close-project").css({ display: "none" });
+            console.log(this);
+          });
+          //#endregion
+        });
+      });
+    },
+    error: e => {
+      console.error("getProjectJson Error", e);
+    }
+  });
+};
+
+init();
+
+//#region 'DOM related'
+function appendDom() {
+  return new Promise((resolve, reject) => {
+    var projectsTemaplateArr = [];
+
+    // generate projects dom
+    $.each(configDict["project"], async (projectKey, projectVal) => {
+      // wait to load images tempate string
+      var imagesTemplateString = await loadContentImagesTemplate(
+        projectKey,
+        projectVal,
+        "web"
+      );
+
+      // load project template
+      // insert images template string to project template
+      // push to projectsTemaplateArr
+      projectsTemaplateArr.push(
+        generateProjectsTemplate(projectKey, projectVal, imagesTemplateString)
+      );
     });
 
-    function projectDisapper(project_id) {
-        // console.log("project disappear")
-        var project_list = [];
-        project_list = $(".project");
-        for (var i = 1; i <= project_list.length; i++) {
-            if (i != project_id) {
-                var project_id_disappear = "#project-" + i;
-                // console.log(project_id_disappear);
-                $(project_id_disappear).addClass("disappear");
+    // wait projectsTemaplateArr resolved
+    setTimeout(() => {
+      // console.log(projectsTemaplateArr);
+      $("#workR").append(projectsTemaplateArr.join(""));
+
+      // add background image css for each project
+      $.each(configDict["project"], (projectKey, projectVal) => {
+        loadHeaderImageTemplate(projectKey, projectVal, "web");
+      });
+
+      resolve(true);
+    }, 500);
+  });
+}
+
+var loadContentImagesTemplate = (key, obj, type) => {
+  var imagesTemplate = [];
+  var folder = `${commonPath}${obj["projectName"]}/${type}/`;
+
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: folder,
+      success: function(data) {
+        $(data)
+          .find("a")
+          .attr("href", function(i, val) {
+            if (val.match(/\.(jpe?g|png|gif)$/)) {
+              //assets/img/project/turkey/web/11.jpg
+              //<img src="assets/img/project/web-bali/FullSizeRender-2-4.jpg"></img>
+              imagesTemplate.push(`<img src=${val}></img>`);
             }
-        }
-    }
+          });
+      },
+      error: error => {
+        console.error(error);
+        reject(error);
+      }
+    }).done(() => {
+      console.log(`${key} images count: `, imagesTemplate.length);
+      resolve(imagesTemplate.join(""));
+    });
+  });
+};
 
-    function scrollToHash(hashName) {
-        // window.location = location.hash;
-        console.log(hashName);
-        var dest = 0;
-        if ($(hashName).offset().top > $(document).height() - $(window).height()) {
-            dest = $(document).height() - $(window).height();
-        } else {
-            dest = $(hashName).offset().top;
-        }
-        //go to destination
-        $('html,body').animate({scrollTop: dest}, 1000, 'swing');
-    }
+var loadHeaderImageTemplate = (key, obj, type) => {
+  var imageUrl = `assets/img/project/${obj.projectName}/header-${type}.jpg`;
 
-    function scrollToHash(hashName, speed) {
-        // window.location = location.hash;
-        console.log(hashName);
-        var dest = 0;
-        if ($(hashName).offset().top > $(document).height() - $(window).height()) {
-            dest = $(document).height() - $(window).height();
-        } else {
-            dest = $(hashName).offset().top;
-        }
-        $('html,body').animate({scrollTop: dest}, speed, 'swing');
-    }
+  $(`#project-${obj.projectID} .header-image`).css({
+    // background-image: url("../../assets/img/project/bali/header-web.jpg");
+    "background-image": `url(${imageUrl})`
+  });
+};
 
-    function startFix(name) {
-        $(name).addClass("fixed");
-        $(name).css({"top": 0});
-    }
+var generateProjectsTemplate = (key, obj, imagesTemplateString) => {
+  var projectsTemplateString = `<!--${key}-->
+                    <div class="project" id="project-${obj.projectID}">
+                        <a href="#project-${
+                          obj.projectID
+                        }" class="project-header">
+                            <div class="header-image">
+                                <div class="more-info" id="more-info-logo">
+                                    <img src="assets/img/icon/next-right-white.png">
+                                </div>
+                            </div>
+                        </a>
 
-    function endFix(name) {
-        $(name).removeClass("fixed");
-        console.log("end fix")
+                        <div class="project-content">
+                            <div class="quotation-part">
+                                <p>${obj.projectQuotation}</p>
+                                <p class="quotation-date">${
+                                  obj.projectQuotationDate
+                                }</p>
+                            </div>
 
-        basicCalculationUpdate();
-    }
+                            <div class="project-details">
+                                ${imagesTemplateString}
+                            </div>
 
-    function adjustTop(name) {
-        var topHeight = 0;
-        switch (name) {
-            case "#aboutL":
-                topHeight = aContentHeight - winHeight;
-                break;
-            case "#workL":
-                topHeight = wContentHeight - winHeight;
-                break;
-            case "#contactL":
-                topHeight = cContentHeight - winHeight;
-                break;
-        }
-        $(name).css({"top": topHeight})
+                            <div class="project-footer">
+                                <div class="more-breadTrip-area">
+                                    <p class="project-footer-disc">More</p>
+                                    <a href="${
+                                      obj.projectBreadLink
+                                    }" target="_blank">
+                                        <img src="assets/img/icon/more-breadTrip.png">
+                                    </a>
+                                </div>
+
+                                <div class="more-breadTrip-area next-project-area">
+                                    <p class="project-footer-disc">Next</p>
+                                    <div>
+                                        <img src="assets/img/icon/next-right-1.png" id="next-project">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    `;
+  return projectsTemplateString;
+};
+//#endregion
+
+//#region 'support functions'
+function desktopVSmobile() {
+  if (winWidth >= desktopWidth) {
+    $(".social-nav img").css({
+      "max-height": "80px",
+      "padding-right": "20px"
+    });
+    $("#workL").removeClass("bg-color-pink");
+    $("#workL").removeClass("text-color-white");
+  } else {
+    $(".leftSide").removeClass("fixed");
+    $(".leftSide").css({ top: 0 });
+    $("#expand-close").css({ display: "none" });
+
+    $("#workL").addClass("bg-color-pink");
+    $("#workL").addClass("text-color-white");
+
+    footerPageAppear();
+  }
+}
+
+function basicCalculationUpdate() {
+  winWidth = $(window).width();
+  // console.log("window width" + winWidth);
+
+  aR = $("#aboutR");
+  wR = $("#workR");
+  cR = $("#contactR");
+
+  aOffset = aR.offset().top;
+  wOffset = wR.offset().top;
+  cOffset = cR.offset().top;
+
+  winHeight = $(window).height();
+
+  aContentHeight = aR.height();
+  wContentHeight = wR.height();
+  cContentHeight = cR.height();
+
+  $(".chapterTitle").css({ "padding-top": winHeight * (1 - 0.618) });
+
+  // console.log("aOffset:" + aOffset);
+  // console.log("aContentHeight:" + aContentHeight);
+}
+
+function startFix(name) {
+  $(name).addClass("fixed");
+  $(name).css({ top: 0 });
+}
+
+function endFix(name) {
+  $(name).removeClass("fixed");
+  // console.log("end fix");
+
+  basicCalculationUpdate();
+}
+
+function setDisplay(isDisplay, id, type) {
+  if (isDisplay) {
+    if (type) {
+      $(id).css({ display: type });
+    } else {
+      $(id).css({ display: "block" });
     }
-});
+  } else {
+    $(id).css({ display: "none" });
+  }
+}
+
+function moreInfoLogoAppear(currentProject) {
+  $(currentProject)
+    .find("div[id^='more-info-logo']")
+    .css({ display: "block" });
+}
+
+function moreInfoLogoDisappear(currentProject) {
+  $(currentProject)
+    .find("div[id^='more-info-logo']")
+    .css({ display: "none" });
+}
+
+function rightLineAppear() {
+  $("#workL").addClass("border-color-grey");
+}
+
+function rightLineDisappear() {
+  $("#workL").removeClass("border-color-grey");
+}
+
+function projectOpenCloseAnimation(isOpen) {
+  //expand width 75% 25%-+
+  if (isOpen) {
+    $("#workL").addClass("compress");
+    $("#workR").addClass("expand");
+  } else {
+    $("#workL").removeClass("compress");
+    $("#workR").removeClass("expand");
+  }
+}
+
+function projectShowContent(isShow, currentProject) {
+  if (isShow) {
+    // set header image for 70% view height
+    currentProject.find(".project-header").css({ height: "70vh" });
+    // show project content
+    currentProject.find(".project-content").css({ display: "inline" });
+  }
+}
+
+function projectDisapper(projectID) {
+  var projectList = $(".project");
+
+  for (var i = 1; i <= projectList.length; i++) {
+    if (i != projectID) {
+      var projectIdDisappear = "#project-" + i;
+      // console.log(project_id_disappear);
+      $(projectIdDisappear).addClass("disappear");
+    }
+  }
+}
+
+function recoverProjects() {
+  var project_list = $(".project");
+
+  project_list.find(".project-content").css({ display: "none" });
+  project_list.removeClass("disappear");
+  project_list.find(".project-header").css({ height: "100vh" });
+}
+
+function projectClose() {
+  projectFire = false;
+  rightLineDisappear();
+  setDisplay(false, "#expand-close");
+  // setDisplay(true, "#more-info-logo");
+  moreInfoLogoAppear(currentProject);
+
+  projectOpenCloseAnimation(false);
+  recoverProjects();
+  scrollToHash("#" + openedProjectID, 0);
+}
+
+function footerPageDisappear() {
+  $(".footer-page").css({ display: "none" });
+  // console.log("footer page disappear");
+}
+
+function footerPageAppear() {
+  $(".footer-page").css({ display: "inline" });
+  // console.log("footer page appear");
+}
+
+function adjustTop(name) {
+  var topHeight = 0;
+  switch (name) {
+    case "#aboutL":
+      topHeight = aContentHeight - winHeight;
+      break;
+    case "#workL":
+      topHeight = wContentHeight - winHeight;
+      break;
+    case "#contactL":
+      topHeight = cContentHeight - winHeight;
+      break;
+  }
+  $(name).css({ top: topHeight });
+}
+
+function scrollToHash(hashName, speed) {
+  // window.location = location.hash;
+  // console.log(hashName);
+  var dest = 0;
+  if ($(hashName).offset().top > $(document).height() - $(window).height()) {
+    dest = $(document).height() - $(window).height();
+  } else {
+    dest = $(hashName).offset().top;
+  }
+  $("html,body").animate({ scrollTop: dest }, speed, "swing");
+}
+//#endregion

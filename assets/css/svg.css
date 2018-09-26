@@ -1,0 +1,10 @@
+body {
+  height: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: darkblue;
+}
+
+.moon-container {
+}

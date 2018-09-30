@@ -1,6 +1,6 @@
 var r1 = 40;
 var r2 = r1;
-var innerHeight = 522;
+var innerHeight = 500;
 
 var cy = 50;
 var cx1 = 100;
@@ -14,14 +14,6 @@ $(window).scroll(function() {
   r2 = Math.sqrt(r1 * r1 - d * d);
 
   cx2 = cx1 + d;
-  console.log(cx2);
-
-  //   $("#r2")
-  //     .setAttribute("d")
-  //     .replace("px", d);
-  //   $("#r2")
-  //     .setAttribute("r")
-  //     .replace("px", r2);
 
   $("#r2").attr("d", d);
   $("#r2").attr("r", r2);

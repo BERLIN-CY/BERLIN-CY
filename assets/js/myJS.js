@@ -20,12 +20,19 @@ var commonPath = `/assets/img/project/`;
 var configDict;
 
 // moon init
-var r1 = 40;
-var r2 = r1;
-// var innerHeight = 500;
-var cy = 50;
-var cx1 = 100;
-var cx2 = cx1;
+var circle1 = {
+  id: "r1",
+  cx: 100,
+  cy: 50,
+  r: 40
+};
+
+var circle2 = {
+  id: "r2",
+  cx: 115,
+  cy: 50,
+  r: 40
+};
 
 var init = () => {
   // load configs
@@ -40,6 +47,9 @@ var init = () => {
         $(document).ready(function() {
           basicCalculationUpdate();
           desktopVSmobile();
+
+          ininMoon(circle1);
+          ininMoon(circle2);
 
           //#region 'events'
           $(window).scroll(function() {
@@ -105,7 +115,8 @@ var init = () => {
                       scrollTop - cOffset - (cContentHeight - winHeight);
                     console.log(
                       "Footer page relative scrollTop",
-                      scrollTopFooter
+                      scrollTopFooter,
+                      innerHeight
                     );
                     // moon control start
                     moonScroll(scrollTopFooter);
@@ -531,15 +542,49 @@ function scrollToHash(hashName, speed) {
   $("html,body").animate({ scrollTop: dest }, speed, "swing");
 }
 
+// about moon
 function moonScroll(scrollTop) {
-  // mapped distance for r2 circle to move
-  var d = (r1 * scrollTop) / innerHeight;
-  // get r2 with r1 and d
-  r2 = Math.sqrt(r1 * r1 - d * d);
+  updateMoonContainerPostion(scrollTop);
 
-  cx2 = cx1 + d;
+  var d = (circle1.r * scrollTop) / innerHeight;
 
-  $("#r2").attr("d", d);
-  $("#r2").attr("r", r2);
+  if (scrollTop <= innerHeight * (2 / 3)) {
+    circle2.cx = circle1.cx + d;
+    circle2.r = Math.sqrt(circle1.r * circle1.r - d * d);
+    updateMoonShape(circle2);
+  } else {
+    // only update c2.cx, the rate is divided by left innerheight
+    // relative scrollTop from this point: scrollTop - innerHeight * (2 / 3)
+    // devide 1/3 to slow down the speed
+    circle2.cx =
+      circle1.cx +
+      d +
+      (((scrollTop - innerHeight * (2 / 3)) * scrollTop) / innerHeight) *
+        (1 / 3);
+    // circle2.cx = circle1.cx + d;
+
+    updateMoonPosition(circle2);
+  }
 }
+
+function ininMoon(circle) {
+  $(`#${circle.id}`).attr("cx", circle.cx);
+  $(`#${circle.id}`).attr("cy", circle.cy);
+  $(`#${circle.id}`).attr("r", circle.r);
+  $(`svg`).attr("transform", "rotate(-120)");
+}
+
+function updateMoonShape(circle) {
+  $(`#${circle.id}`).attr("cx", circle.cx);
+  $(`#${circle.id}`).attr("r", circle.r);
+}
+
+function updateMoonPosition(circle) {
+  $(`#${circle.id}`).attr("cx", circle.cx);
+}
+
+function updateMoonContainerPostion(scrollTop) {
+  $(`.moon-container`).css("padding-top", innerHeight - scrollTop);
+}
+
 //#endregion

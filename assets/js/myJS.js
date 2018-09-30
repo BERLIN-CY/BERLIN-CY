@@ -151,16 +151,25 @@ var init = () => {
           });
 
           $("img[id^='next-project']").on("click", function() {
+            // // recoverProjects();
+            // console.log("next project btn");
+            // scrollToHash("#" + openedProjectID, 0);
+            // setTimeout(() => {
+            //   recoverProjects();
+            //   projectOpenCloseAnimation(false);
+            //   projectFire = false;
+            // }, 200);
+            // setTimeout(() => {
+            // }, timeout);
+            // // projectClose();
             // recoverProjects();
-            console.log("next project btn");
-            // projectClose();
-            projectFire = false;
-            rightLineDisappear();
-            setDisplay(false, "#expand-close");
-            // setDisplay(true, "#more-info-logo");
-            projectOpenCloseAnimation(false);
-            recoverProjects();
-            scrollToHash("#" + openedProjectID, 0);
+            // rightLineDisappear();
+            // setDisplay(false, "#expand-close");
+            // // setDisplay(true, "#more-info-logo");
+            // projectOpenCloseAnimation(false);
+            // scrollToHash("#" + openedProjectID, 0);
+            // projectFire = true;
+            // // projectFire = false;
           });
 
           $("#expand-close").on("click", function() {

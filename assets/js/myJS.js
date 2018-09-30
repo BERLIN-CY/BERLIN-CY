@@ -245,7 +245,7 @@ var loadContentImagesTemplate = (key, obj, type) => {
         $(data)
           .find("a")
           .attr("href", function(i, val) {
-            if (val.match(/\.(jpe?g|png|gif)$/)) {
+            if (val.match(/\.(jpe?g|png|gif|JPE?G|PNG|GIF)$/)) {
               //assets/img/project/turkey/web/11.jpg
               //<img src="assets/img/project/web-bali/FullSizeRender-2-4.jpg"></img>
               imagesTemplate.push(`<img src=${val}></img>`);

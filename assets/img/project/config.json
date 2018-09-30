@@ -16,7 +16,7 @@
     },
     "kyoto": {
       "projectID": 3,
-      "projectName": "taipei",
+      "projectName": "kyoto",
       "projectQuotation": "I saw the most beautiful culture and people here",
       "projectQuotationDate": "2018 April",
       "projectBreadLink": "http://web.breadtrip.com/trips/2387401521/"
@@ -27,14 +27,7 @@
       "projectQuotation": "Let’s fly over this lonely planet",
       "projectQuotationDate": "2015 June",
       "projectBreadLink": "http://web.breadtrip.com/trips/2386608340/"
-    },
-    // "test": {
-    //   "projectID": 5,
-    //   "projectName": "test",
-    //   "projectQuotation": "testing",
-    //   "projectQuotationDate": "2018 September",
-    //   "projectBreadLink": "http://web.breadtrip.com/trips/2386608340/"
-    // }
+    }
   },
   "about": {
     "themeBy": ["leo", "berlin-cy"],

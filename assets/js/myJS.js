@@ -19,6 +19,14 @@ var aR,
 var commonPath = `/assets/img/project/`;
 var configDict;
 
+// moon init
+var r1 = 40;
+var r2 = r1;
+// var innerHeight = 500;
+var cy = 50;
+var cx1 = 100;
+var cx2 = cx1;
+
 var init = () => {
   // load configs
   $.ajax({
@@ -40,8 +48,9 @@ var init = () => {
             var scrollTop = $(document).scrollTop();
             // console.log(scrollTop);
             // console.log(scrollTop - aOffset);
-            // console.log(scrollTop);
+            console.log(scrollTop);
 
+            //#region 'layout scroll control'
             if (winWidth >= desktopWidth) {
               var aboutL = "#aboutL";
               if (scrollTop - aOffset > 0) {
@@ -87,9 +96,19 @@ var init = () => {
                   startFix(contactL);
                   if (scrollTop - cOffset > cContentHeight - winHeight) {
                     endFix(contactL);
+
                     if (cContentHeight > winHeight) {
                       adjustTop(contactL);
                     }
+
+                    var scrollTopFooter =
+                      scrollTop - cOffset - (cContentHeight - winHeight);
+                    console.log(
+                      "Footer page relative scrollTop",
+                      scrollTopFooter
+                    );
+                    // moon control start
+                    moonScroll(scrollTopFooter);
                   }
                 }
               } else {
@@ -106,6 +125,7 @@ var init = () => {
                 }
               }
             }
+            //#endregion
           });
 
           /* go to top after refresh */
@@ -479,7 +499,7 @@ function footerPageDisappear() {
 }
 
 function footerPageAppear() {
-  $(".footer-page").css({ display: "inline" });
+  $(".footer-page").css({ display: "flex" });
   // console.log("footer page appear");
 }
 
@@ -509,5 +529,17 @@ function scrollToHash(hashName, speed) {
     dest = $(hashName).offset().top;
   }
   $("html,body").animate({ scrollTop: dest }, speed, "swing");
+}
+
+function moonScroll(scrollTop) {
+  // mapped distance for r2 circle to move
+  var d = (r1 * scrollTop) / innerHeight;
+  // get r2 with r1 and d
+  r2 = Math.sqrt(r1 * r1 - d * d);
+
+  cx2 = cx1 + d;
+
+  $("#r2").attr("d", d);
+  $("#r2").attr("r", r2);
 }
 //#endregion

@@ -126,7 +126,16 @@ div {
   /*color: #999999;*/
   /*padding: 26px;*/
   z-index: -1;
-  display: none;
+  /* display: none; */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: darkblue;
+}
+
+.footer-page svg {
+  transform: rotate(60);
 }
 
 .leftSide.fixed {
@@ -421,7 +430,8 @@ h5 {
 }
 
 .footer-page .footer-page-image {
-  background-image: url("../../assets/img/footer-image-mobile.jpg");
+  /* background-image: url("../../assets/img/footer-image-mobile.jpg"); */
+  /* background-color: darkblue; */
 }
 
 .header-image .more-info {
@@ -741,6 +751,7 @@ img.about-logo {
   } */
 
   .footer-page .footer-page-image {
-    background-image: url("../../assets/img/footer-image.jpg");
+    /* background-image: url("../../assets/img/footer-image.jpg"); */
+    /* background-color: darkblue; */
   }
 }

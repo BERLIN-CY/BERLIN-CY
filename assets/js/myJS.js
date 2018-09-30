@@ -19,6 +19,21 @@ var aR,
 var commonPath = `/assets/img/project/`;
 var configDict;
 
+// moon init
+var circle1 = {
+  id: "r1",
+  cx: 100,
+  cy: 50,
+  r: 40
+};
+
+var circle2 = {
+  id: "r2",
+  cx: 115,
+  cy: 50,
+  r: 40
+};
+
 var init = () => {
   // load configs
   $.ajax({
@@ -33,6 +48,9 @@ var init = () => {
           basicCalculationUpdate();
           desktopVSmobile();
 
+          ininMoon(circle1);
+          ininMoon(circle2);
+
           //#region 'events'
           $(window).scroll(function() {
             // var scrollTop = $('body').scrollTop;
@@ -40,8 +58,9 @@ var init = () => {
             var scrollTop = $(document).scrollTop();
             // console.log(scrollTop);
             // console.log(scrollTop - aOffset);
-            // console.log(scrollTop);
+            console.log(scrollTop);
 
+            //#region 'layout scroll control'
             if (winWidth >= desktopWidth) {
               var aboutL = "#aboutL";
               if (scrollTop - aOffset > 0) {
@@ -87,9 +106,20 @@ var init = () => {
                   startFix(contactL);
                   if (scrollTop - cOffset > cContentHeight - winHeight) {
                     endFix(contactL);
+
                     if (cContentHeight > winHeight) {
                       adjustTop(contactL);
                     }
+
+                    var scrollTopFooter =
+                      scrollTop - cOffset - (cContentHeight - winHeight);
+                    console.log(
+                      "Footer page relative scrollTop",
+                      scrollTopFooter,
+                      innerHeight
+                    );
+                    // moon control start
+                    moonScroll(scrollTopFooter);
                   }
                 }
               } else {
@@ -106,6 +136,7 @@ var init = () => {
                 }
               }
             }
+            //#endregion
           });
 
           /* go to top after refresh */
@@ -254,7 +285,7 @@ var loadContentImagesTemplate = (key, obj, type) => {
         $(data)
           .find("a")
           .attr("href", function(i, val) {
-            if (val.match(/\.(jpe?g|png|gif)$/)) {
+            if (val.match(/\.(jpe?g|png|gif|JPE?G|PNG|GIF)$/)) {
               //assets/img/project/turkey/web/11.jpg
               //<img src="assets/img/project/web-bali/FullSizeRender-2-4.jpg"></img>
               imagesTemplate.push(`<img src=${val}></img>`);
@@ -479,7 +510,7 @@ function footerPageDisappear() {
 }
 
 function footerPageAppear() {
-  $(".footer-page").css({ display: "inline" });
+  $(".footer-page").css({ display: "flex" });
   // console.log("footer page appear");
 }
 
@@ -510,4 +541,50 @@ function scrollToHash(hashName, speed) {
   }
   $("html,body").animate({ scrollTop: dest }, speed, "swing");
 }
+
+// about moon
+function moonScroll(scrollTop) {
+  updateMoonContainerPostion(scrollTop);
+
+  var d = (circle1.r * scrollTop) / innerHeight;
+
+  if (scrollTop <= innerHeight * (2 / 3)) {
+    circle2.cx = circle1.cx + d;
+    circle2.r = Math.sqrt(circle1.r * circle1.r - d * d);
+    updateMoonShape(circle2);
+  } else {
+    // only update c2.cx, the rate is divided by left innerheight
+    // relative scrollTop from this point: scrollTop - innerHeight * (2 / 3)
+    // devide 1/3 to slow down the speed
+    circle2.cx =
+      circle1.cx +
+      d +
+      (((scrollTop - innerHeight * (2 / 3)) * scrollTop) / innerHeight) *
+        (1 / 3);
+    // circle2.cx = circle1.cx + d;
+
+    updateMoonPosition(circle2);
+  }
+}
+
+function ininMoon(circle) {
+  $(`#${circle.id}`).attr("cx", circle.cx);
+  $(`#${circle.id}`).attr("cy", circle.cy);
+  $(`#${circle.id}`).attr("r", circle.r);
+  $(`svg`).attr("transform", "rotate(-120)");
+}
+
+function updateMoonShape(circle) {
+  $(`#${circle.id}`).attr("cx", circle.cx);
+  $(`#${circle.id}`).attr("r", circle.r);
+}
+
+function updateMoonPosition(circle) {
+  $(`#${circle.id}`).attr("cx", circle.cx);
+}
+
+function updateMoonContainerPostion(scrollTop) {
+  $(`.moon-container`).css("padding-top", innerHeight - scrollTop);
+}
+
 //#endregion

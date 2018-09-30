@@ -14,25 +14,18 @@
       "projectQuotationDate": "2016 June",
       "projectBreadLink": "http://web.breadtrip.com/trips/2387276516/"
     },
-    "taipei": {
+    "kyoto": {
       "projectID": 3,
-      "projectName": "taipei",
+      "projectName": "kyoto",
       "projectQuotation": "I saw the most beautiful culture and people here",
-      "projectQuotationDate": "2017 July",
-      "projectBreadLink": "http://web.breadtrip.com/trips/2387461656/"
+      "projectQuotationDate": "2018 April",
+      "projectBreadLink": "http://web.breadtrip.com/trips/2387401521/"
     },
     "turkey": {
       "projectID": 4,
       "projectName": "turkey",
       "projectQuotation": "Let’s fly over this lonely planet",
       "projectQuotationDate": "2015 June",
-      "projectBreadLink": "http://web.breadtrip.com/trips/2386608340/"
-    },
-    "test": {
-      "projectID": 5,
-      "projectName": "test",
-      "projectQuotation": "testing",
-      "projectQuotationDate": "2018 September",
       "projectBreadLink": "http://web.breadtrip.com/trips/2386608340/"
     }
   },

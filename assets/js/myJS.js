@@ -104,25 +104,24 @@ var init = () => {
               if (scrollTop - cOffset > 0) {
                 footerPageAppear();
 
+                var scrollTopFooter =
+                  scrollTop - cOffset - (cContentHeight - winHeight);
+                console.log(
+                  "Footer page relative scrollTop",
+                  scrollTopFooter,
+                  innerHeight
+                );
+                // moon control start
+                moonScroll(scrollTopFooter);
+
                 if (winHeight < cContentHeight) {
                   startFix(contactL);
-                  if (scrollTop - cOffset > cContentHeight - winHeight) {
+                  if (scrollTop - cOffset >= cContentHeight - winHeight) {
                     endFix(contactL);
 
                     if (cContentHeight > winHeight) {
                       adjustTop(contactL);
                     }
-
-                    basicCalculationUpdate();
-                    var scrollTopFooter =
-                      scrollTop - cOffset - (cContentHeight - winHeight);
-                    console.log(
-                      "Footer page relative scrollTop",
-                      scrollTopFooter,
-                      innerHeight
-                    );
-                    // moon control start
-                    moonScroll(scrollTopFooter);
                   }
                 }
               } else {
@@ -593,11 +592,14 @@ function scrollToHash(hashName, speed) {
 
 // about moon
 function moonScroll(scrollTop) {
+  // basicCalculationUpdate();
+  console.log("moonScrolling");
+
   updateMoonContainerPostion(scrollTop);
 
-  var d = (circle1.r * scrollTop) / innerHeight;
+  var d = (circle1.r * scrollTop) / winHeight;
 
-  if (scrollTop <= innerHeight * (2 / 3)) {
+  if (scrollTop <= winHeight * (2 / 3)) {
     circle2.cx = circle1.cx + d;
     circle2.r = Math.sqrt(circle1.r * circle1.r - d * d);
     updateMoonShape(circle2);
@@ -608,8 +610,7 @@ function moonScroll(scrollTop) {
     circle2.cx =
       circle1.cx +
       d +
-      (((scrollTop - innerHeight * (2 / 3)) * scrollTop) / innerHeight) *
-        (1 / 3);
+      (((scrollTop - winHeight * (2 / 3)) * scrollTop) / winHeight) * (1 / 3);
     // circle2.cx = circle1.cx + d;
 
     updateMoonPosition(circle2);

@@ -73,7 +73,7 @@ div {
 }
 
 .text-color-pink {
-  color: rgba(246, 202, 204, 1);
+  color: rgba(246, 202, 204, 1) !important;
 }
 
 .text-color-white {
@@ -274,7 +274,7 @@ nav > ul li {
 
 .my-nav ul li:before {
   content: "/";
-  padding: 0 6px 0 6px;
+  /* padding: 0 6px 0 6px; */
 }
 
 .main ui li::before {

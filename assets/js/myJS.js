@@ -58,7 +58,7 @@ var init = () => {
             var scrollTop = $(document).scrollTop();
             // console.log(scrollTop);
             // console.log(scrollTop - aOffset);
-            console.log(scrollTop);
+            // console.log(scrollTop);
 
             //#region 'layout scroll control'
             if (winWidth >= desktopWidth) {
@@ -155,6 +155,12 @@ var init = () => {
           // console.log($("div[id^='project-']"));
           $("div[id^='project-']").on("click", function() {
             // console.log("project cliked");
+            openProject(this);
+            highLightNav();
+          });
+
+          function openProject(that) {
+            console.log(that.id);
             if (!projectFire) {
               projectFire = true;
               rightLineAppear();
@@ -162,15 +168,19 @@ var init = () => {
 
               //disappear other projects
               //assign openedProjectID
-              openedProjectID = this.id;
-              var projectID = this.id.substring(8, this.id.length);
-              var currentProject = $("#project-" + projectID);
-              projectDisapper(projectID);
+              // project-4
+              // openedProjectID = that.id;
+              openedProjectID = that.id.slice(that.id.lastIndexOf("-") + 1);
+              // var openedProjectID = that.id.slice(that.id.lastIndexOf("-") + 1);
+              var currentProject = $("#project-" + openedProjectID);
+              projectDisapper(openedProjectID);
               // moreInfoLogoDisappear(currentProject);
 
               if (winWidth < desktopWidth) {
                 scrollToHash(currentProject.find(".project-header"), 0);
-                $("#mobile-close-project").css({ display: "inline" });
+                $("#mobile-close-project").css({
+                  display: "inline"
+                });
               } else {
                 // only show close button on desktop
                 setDisplay(true, "#expand-close", "inline");
@@ -179,8 +189,10 @@ var init = () => {
 
               projectOpenCloseAnimation(true);
               projectShowContent(true, currentProject);
+            } else {
+              // projectFire = false;
             }
-          });
+          }
 
           $("img[id^='next-project']").on("click", function() {
             // // recoverProjects();
@@ -204,6 +216,12 @@ var init = () => {
             // // projectFire = false;
           });
 
+          // click work-nav
+          $("a[id^='work-nav-']").on("click", function() {
+            openProject(this);
+            highLightNav();
+          });
+
           $("#expand-close").on("click", function() {
             projectClose();
           });
@@ -220,7 +238,7 @@ var init = () => {
             basicCalculationUpdate();
 
             //view focus to top project
-            scrollToHash("#" + openedProjectID, 0);
+            scrollToHash("#project-" + openedProjectID, 0);
             projectFire = false;
 
             $("#mobile-close-project").css({ display: "none" });
@@ -245,10 +263,10 @@ function appendDom() {
     var workNavTemplateArr = [];
 
     // generate projects dom
-    $.each(configDict["project"], async (projectKey, projectVal) => {
+    $.each(configDict["project"], async (index, projectVal) => {
       // wait to load images tempate string
       var imagesTemplateString = await loadContentImagesTemplate(
-        projectKey,
+        index,
         projectVal,
         "web"
       );
@@ -257,7 +275,7 @@ function appendDom() {
       // insert images template string to project template
       // push to projectsTemaplateArr
       projectsTemaplateArr.push(
-        generateProjectsTemplate(projectKey, projectVal, imagesTemplateString)
+        generateProjectsTemplate(index, projectVal, imagesTemplateString)
       );
 
       workNavTemplateArr.push(generateWorkNavTemplate(projectVal));
@@ -279,9 +297,9 @@ function appendDom() {
   });
 }
 
-var loadContentImagesTemplate = (key, obj, type) => {
+var loadContentImagesTemplate = (index, obj, type) => {
   var imagesTemplate = [];
-  var folder = `${commonPath}${obj["projectName"]}/${type}/`;
+  var folder = `${commonPath}${obj.projectName}/${type}/`;
 
   return new Promise((resolve, reject) => {
     $.ajax({
@@ -302,7 +320,7 @@ var loadContentImagesTemplate = (key, obj, type) => {
         reject(error);
       }
     }).done(() => {
-      console.log(`${key} images count: `, imagesTemplate.length);
+      console.log(`${index + 1} images count: `, imagesTemplate.length);
       resolve(imagesTemplate.join(""));
     });
   });
@@ -317,8 +335,8 @@ var loadHeaderImageTemplate = (key, obj, type) => {
   });
 };
 
-var generateProjectsTemplate = (key, obj, imagesTemplateString) => {
-  var projectsTemplateString = `<!--${key}-->
+var generateProjectsTemplate = (index, obj, imagesTemplateString) => {
+  var projectsTemplateString = `<!--${index}-->
                     <div class="project" id="project-${obj.projectID}">
                         <a href="#project-${
                           obj.projectID
@@ -371,7 +389,7 @@ var generateProjectsTemplate = (key, obj, imagesTemplateString) => {
 
 var generateWorkNavTemplate = obj => {
   return `
-    <li><a href="#project-${obj.projectID}" class="work-nav-${obj.projectID}">
+    <li><a href="#project-${obj.projectID}" id="work-nav-${obj.projectID}">
       ${obj.projectName.charAt(0).toUpperCase() + obj.projectName.slice(1)}
     </a></li>`;
 };
@@ -457,6 +475,13 @@ function setDisplay(isDisplay, id, type) {
 //     .find("div[id^='more-info-logo']")
 //     .css({ display: "none" });
 // }
+function highLightNav() {
+  $(`#work-nav-${openedProjectID}`).addClass("text-color-pink");
+}
+
+function hideLightNav() {
+  $(`#work-nav-${openedProjectID}`).removeClass("text-color-pink");
+}
 
 function rightLineAppear() {
   $("#workL").addClass("border-color-grey");
@@ -508,6 +533,7 @@ function recoverProjects() {
 
 function projectClose() {
   projectFire = false;
+  hideLightNav();
   rightLineDisappear();
   setDisplay(false, "#expand-close");
   // setDisplay(true, "#more-info-logo");
@@ -515,7 +541,7 @@ function projectClose() {
 
   projectOpenCloseAnimation(false);
   recoverProjects();
-  scrollToHash("#" + openedProjectID, 0);
+  scrollToHash("#project-" + openedProjectID, 0);
 }
 
 function footerPageDisappear() {

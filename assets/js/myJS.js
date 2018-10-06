@@ -242,6 +242,7 @@ init();
 function appendDom() {
   return new Promise((resolve, reject) => {
     var projectsTemaplateArr = [];
+    var workNavTemplateArr = [];
 
     // generate projects dom
     $.each(configDict["project"], async (projectKey, projectVal) => {
@@ -258,12 +259,15 @@ function appendDom() {
       projectsTemaplateArr.push(
         generateProjectsTemplate(projectKey, projectVal, imagesTemplateString)
       );
+
+      workNavTemplateArr.push(generateWorkNavTemplate(projectVal));
     });
 
     // wait projectsTemaplateArr resolved
     setTimeout(() => {
       // console.log(projectsTemaplateArr);
       $("#workR").append(projectsTemaplateArr.join(""));
+      $("#work-nav").append(`<ul>${workNavTemplateArr.join("")}</ul>`);
 
       // add background image css for each project
       $.each(configDict["project"], (projectKey, projectVal) => {
@@ -363,6 +367,13 @@ var generateProjectsTemplate = (key, obj, imagesTemplateString) => {
 
                     `;
   return projectsTemplateString;
+};
+
+var generateWorkNavTemplate = obj => {
+  return `
+    <li><a href="#project-${obj.projectID}" class="work-nav-${obj.projectID}">
+      ${obj.projectName.charAt(0).toUpperCase() + obj.projectName.slice(1)}
+    </a></li>`;
 };
 //#endregion
 

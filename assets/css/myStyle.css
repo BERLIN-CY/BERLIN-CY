@@ -221,7 +221,7 @@ div {
 .rightSide.expand {
 }
 
-nav > ol,
+/* nav > ol,
 nav > ul {
   list-style: none;
   padding: 0;
@@ -232,35 +232,61 @@ nav > ol li,
 nav > ul li {
   margin: 0;
   padding: 0;
-}
+} */
 
 .main-nav {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
+}
+
+.work-nav {
+  position: relative;
+  padding: 16px;
+}
+
+.font-title {
   font-family: "Share Tech Mono", monospace;
 }
 
-.main-nav ul {
-  padding: 36px 0;
+.font-main {
+  font-family: "Open Sans", sans-serif;
+}
+
+.font-project {
+  font-family: "PT Sans", sans-serif;
+}
+
+.my-nav ul {
+  padding: 0px 8px;
   text-align: center;
 }
 
-.main-nav ul li {
+.main-nav ul {
+  padding: 32px 0;
+  text-align: center;
+}
+
+.my-nav ul li {
   display: inline-block;
 }
 
-.main-nav ul li:before {
+.my-nav ul li:before {
+  content: "/";
+  padding: 0 6px 0 6px;
+}
+
+.main ui li::before {
   content: "/";
   padding: 0 12px 0 9px;
 }
 
-.main-nav ul li:first-child:before {
+.my-nav ul li:first-child:before {
   display: none;
 }
 
-.main-nav ul li a {
+.my-nav ul li a {
   color: inherit;
   text-transform: uppercase;
   text-decoration: none;
@@ -268,13 +294,13 @@ nav > ul li {
   font-weight: 700;
 }
 
-.main-nav ul li a:after {
+.my-nav ul li a:after {
   bottom: -0.4em;
   border-width: 2px;
   display: none;
 }
 
-.main-nav ul li a:hover:after {
+.my-nav ul li a:hover:after {
   display: block;
 }
 

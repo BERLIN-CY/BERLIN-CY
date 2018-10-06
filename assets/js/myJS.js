@@ -111,6 +111,7 @@ var init = () => {
                       adjustTop(contactL);
                     }
 
+                    basicCalculationUpdate();
                     var scrollTopFooter =
                       scrollTop - cOffset - (cContentHeight - winHeight);
                     console.log(
@@ -165,7 +166,7 @@ var init = () => {
               var projectID = this.id.substring(8, this.id.length);
               var currentProject = $("#project-" + projectID);
               projectDisapper(projectID);
-              moreInfoLogoDisappear(currentProject);
+              // moreInfoLogoDisappear(currentProject);
 
               if (winWidth < desktopWidth) {
                 scrollToHash(currentProject.find(".project-header"), 0);
@@ -319,9 +320,11 @@ var generateProjectsTemplate = (key, obj, imagesTemplateString) => {
                           obj.projectID
                         }" class="project-header">
                             <div class="header-image">
+                                <!-- 
                                 <div class="more-info" id="more-info-logo">
                                     <img src="assets/img/icon/next-right-white.png">
                                 </div>
+                                -->
                             </div>
                         </a>
 
@@ -432,17 +435,17 @@ function setDisplay(isDisplay, id, type) {
   }
 }
 
-function moreInfoLogoAppear(currentProject) {
-  $(currentProject)
-    .find("div[id^='more-info-logo']")
-    .css({ display: "block" });
-}
+// function moreInfoLogoAppear(currentProject) {
+//   $(currentProject)
+//     .find("div[id^='more-info-logo']")
+//     .css({ display: "block" });
+// }
 
-function moreInfoLogoDisappear(currentProject) {
-  $(currentProject)
-    .find("div[id^='more-info-logo']")
-    .css({ display: "none" });
-}
+// function moreInfoLogoDisappear(currentProject) {
+//   $(currentProject)
+//     .find("div[id^='more-info-logo']")
+//     .css({ display: "none" });
+// }
 
 function rightLineAppear() {
   $("#workL").addClass("border-color-grey");
@@ -497,7 +500,7 @@ function projectClose() {
   rightLineDisappear();
   setDisplay(false, "#expand-close");
   // setDisplay(true, "#more-info-logo");
-  moreInfoLogoAppear(currentProject);
+  // moreInfoLogoAppear(currentProject);
 
   projectOpenCloseAnimation(false);
   recoverProjects();

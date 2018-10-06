@@ -18,6 +18,8 @@ var aR,
 
 var commonPath = `/assets/img/project/`;
 var configDict;
+var projectsTemaplateArr = [];
+var workNavTemplateArr = [];
 
 // moon init
 var circle1 = {
@@ -152,15 +154,14 @@ var init = () => {
             // }
           });
 
-          // console.log($("div[id^='project-']"));
-          $("div[id^='project-']").on("click", function() {
-            // console.log("project cliked");
+          $("div[id^='header-image-']").on("click", function() {
+            console.log("project open cliked");
             openProject(this);
             highLightNav();
           });
 
           function openProject(that) {
-            console.log(that.id);
+            console.log(that);
             if (!projectFire) {
               projectFire = true;
               rightLineAppear();
@@ -170,7 +171,9 @@ var init = () => {
               //assign openedProjectID
               // project-4
               // openedProjectID = that.id;
-              openedProjectID = that.id.slice(that.id.lastIndexOf("-") + 1);
+              openedProjectID = that
+                ? that.id.slice(that.id.lastIndexOf("-") + 1)
+                : openedProjectID;
               // var openedProjectID = that.id.slice(that.id.lastIndexOf("-") + 1);
               var currentProject = $("#project-" + openedProjectID);
               projectDisapper(openedProjectID);
@@ -195,35 +198,31 @@ var init = () => {
           }
 
           $("img[id^='next-project']").on("click", function() {
-            // // recoverProjects();
-            // console.log("next project btn");
-            // scrollToHash("#" + openedProjectID, 0);
-            // setTimeout(() => {
-            //   recoverProjects();
-            //   projectOpenCloseAnimation(false);
-            //   projectFire = false;
-            // }, 200);
-            // setTimeout(() => {
-            // }, timeout);
-            // // projectClose();
-            // recoverProjects();
-            // rightLineDisappear();
-            // setDisplay(false, "#expand-close");
-            // // setDisplay(true, "#more-info-logo");
-            // projectOpenCloseAnimation(false);
-            // scrollToHash("#" + openedProjectID, 0);
-            // projectFire = true;
-            // // projectFire = false;
+            nextProjectFuns();
           });
+
+          function nextProjectFuns(that) {
+            projectClose();
+            scrollToHash(`#${getNextID()}`, 0);
+
+            openProject(that ? that : undefined);
+            scrollToHash(`#project-${openedProjectID}`, 0);
+            highLightNav();
+          }
 
           // click work-nav
           $("a[id^='work-nav-']").on("click", function() {
-            openProject(this);
-            highLightNav();
+            if (!projectFire) {
+              openProject(this);
+              highLightNav();
+            } else {
+              nextProjectFuns(this);
+            }
           });
 
           $("#expand-close").on("click", function() {
             projectClose();
+            scrollToHash(`#${getNextID()}`, 1000);
           });
 
           $("#mobile-close-project").on("click", function() {
@@ -259,9 +258,6 @@ init();
 //#region 'DOM related'
 function appendDom() {
   return new Promise((resolve, reject) => {
-    var projectsTemaplateArr = [];
-    var workNavTemplateArr = [];
-
     // generate projects dom
     $.each(configDict["project"], async (index, projectVal) => {
       // wait to load images tempate string
@@ -341,7 +337,9 @@ var generateProjectsTemplate = (index, obj, imagesTemplateString) => {
                         <a href="#project-${
                           obj.projectID
                         }" class="project-header">
-                            <div class="header-image">
+                            <div class="header-image" id="header-image-${
+                              obj.projectID
+                            }">
                                 <!-- 
                                 <div class="more-info" id="more-info-logo">
                                     <img src="assets/img/icon/next-right-white.png">
@@ -532,6 +530,8 @@ function recoverProjects() {
 }
 
 function projectClose() {
+  scrollToHash(`#project-${openedProjectID}`, 0);
+
   projectFire = false;
   hideLightNav();
   rightLineDisappear();
@@ -541,7 +541,16 @@ function projectClose() {
 
   projectOpenCloseAnimation(false);
   recoverProjects();
-  scrollToHash("#project-" + openedProjectID, 0);
+}
+
+function getNextID() {
+  console.log(projectsTemaplateArr);
+  if (openedProjectID > projectsTemaplateArr.length - 1) {
+    openedProjectID = 1;
+  } else {
+    openedProjectID++;
+  }
+  return `project-${openedProjectID}`;
 }
 
 function footerPageDisappear() {

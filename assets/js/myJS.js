@@ -18,6 +18,8 @@ var aR,
 
 var commonPath = `/assets/img/project/`;
 var configDict;
+var projectsTemaplateArr = [];
+var workNavTemplateArr = [];
 
 // moon init
 var circle1 = {
@@ -58,7 +60,7 @@ var init = () => {
             var scrollTop = $(document).scrollTop();
             // console.log(scrollTop);
             // console.log(scrollTop - aOffset);
-            console.log(scrollTop);
+            // console.log(scrollTop);
 
             //#region 'layout scroll control'
             if (winWidth >= desktopWidth) {
@@ -102,24 +104,24 @@ var init = () => {
               if (scrollTop - cOffset > 0) {
                 footerPageAppear();
 
+                var scrollTopFooter =
+                  scrollTop - cOffset - (cContentHeight - winHeight);
+                console.log(
+                  "Footer page relative scrollTop",
+                  scrollTopFooter,
+                  innerHeight
+                );
+                // moon control start
+                moonScroll(scrollTopFooter);
+
                 if (winHeight < cContentHeight) {
                   startFix(contactL);
-                  if (scrollTop - cOffset > cContentHeight - winHeight) {
+                  if (scrollTop - cOffset >= cContentHeight - winHeight) {
                     endFix(contactL);
 
                     if (cContentHeight > winHeight) {
                       adjustTop(contactL);
                     }
-
-                    var scrollTopFooter =
-                      scrollTop - cOffset - (cContentHeight - winHeight);
-                    console.log(
-                      "Footer page relative scrollTop",
-                      scrollTopFooter,
-                      innerHeight
-                    );
-                    // moon control start
-                    moonScroll(scrollTopFooter);
                   }
                 }
               } else {
@@ -151,9 +153,14 @@ var init = () => {
             // }
           });
 
-          // console.log($("div[id^='project-']"));
-          $("div[id^='project-']").on("click", function() {
-            // console.log("project cliked");
+          $("div[id^='header-image-']").on("click", function() {
+            console.log("project open cliked");
+            openProject(this);
+            highLightNav();
+          });
+
+          function openProject(that) {
+            console.log(that);
             if (!projectFire) {
               projectFire = true;
               rightLineAppear();
@@ -161,15 +168,21 @@ var init = () => {
 
               //disappear other projects
               //assign openedProjectID
-              openedProjectID = this.id;
-              var projectID = this.id.substring(8, this.id.length);
-              var currentProject = $("#project-" + projectID);
-              projectDisapper(projectID);
-              moreInfoLogoDisappear(currentProject);
+              // project-4
+              // openedProjectID = that.id;
+              openedProjectID = that
+                ? that.id.slice(that.id.lastIndexOf("-") + 1)
+                : openedProjectID;
+              // var openedProjectID = that.id.slice(that.id.lastIndexOf("-") + 1);
+              var currentProject = $("#project-" + openedProjectID);
+              projectDisapper(openedProjectID);
+              // moreInfoLogoDisappear(currentProject);
 
               if (winWidth < desktopWidth) {
                 scrollToHash(currentProject.find(".project-header"), 0);
-                $("#mobile-close-project").css({ display: "inline" });
+                $("#mobile-close-project").css({
+                  display: "inline"
+                });
               } else {
                 // only show close button on desktop
                 setDisplay(true, "#expand-close", "inline");
@@ -178,33 +191,37 @@ var init = () => {
 
               projectOpenCloseAnimation(true);
               projectShowContent(true, currentProject);
+            } else {
+              // projectFire = false;
             }
-          });
+          }
 
           $("img[id^='next-project']").on("click", function() {
-            // // recoverProjects();
-            // console.log("next project btn");
-            // scrollToHash("#" + openedProjectID, 0);
-            // setTimeout(() => {
-            //   recoverProjects();
-            //   projectOpenCloseAnimation(false);
-            //   projectFire = false;
-            // }, 200);
-            // setTimeout(() => {
-            // }, timeout);
-            // // projectClose();
-            // recoverProjects();
-            // rightLineDisappear();
-            // setDisplay(false, "#expand-close");
-            // // setDisplay(true, "#more-info-logo");
-            // projectOpenCloseAnimation(false);
-            // scrollToHash("#" + openedProjectID, 0);
-            // projectFire = true;
-            // // projectFire = false;
+            nextProjectFuns();
+          });
+
+          function nextProjectFuns(that) {
+            projectClose();
+            scrollToHash(`#${getNextID()}`, 0);
+
+            openProject(that ? that : undefined);
+            scrollToHash(`#project-${openedProjectID}`, 0);
+            highLightNav();
+          }
+
+          // click work-nav
+          $("a[id^='work-nav-']").on("click", function() {
+            if (!projectFire) {
+              openProject(this);
+              highLightNav();
+            } else {
+              nextProjectFuns(this);
+            }
           });
 
           $("#expand-close").on("click", function() {
             projectClose();
+            scrollToHash(`#${getNextID()}`, 1000);
           });
 
           $("#mobile-close-project").on("click", function() {
@@ -219,7 +236,7 @@ var init = () => {
             basicCalculationUpdate();
 
             //view focus to top project
-            scrollToHash("#" + openedProjectID, 0);
+            scrollToHash("#project-" + openedProjectID, 0);
             projectFire = false;
 
             $("#mobile-close-project").css({ display: "none" });
@@ -240,13 +257,11 @@ init();
 //#region 'DOM related'
 function appendDom() {
   return new Promise((resolve, reject) => {
-    var projectsTemaplateArr = [];
-
     // generate projects dom
-    $.each(configDict["project"], async (projectKey, projectVal) => {
+    $.each(configDict["project"], async (index, projectVal) => {
       // wait to load images tempate string
       var imagesTemplateString = await loadContentImagesTemplate(
-        projectKey,
+        index,
         projectVal,
         "web"
       );
@@ -255,14 +270,17 @@ function appendDom() {
       // insert images template string to project template
       // push to projectsTemaplateArr
       projectsTemaplateArr.push(
-        generateProjectsTemplate(projectKey, projectVal, imagesTemplateString)
+        generateProjectsTemplate(index, projectVal, imagesTemplateString)
       );
+
+      workNavTemplateArr.push(generateWorkNavTemplate(projectVal));
     });
 
     // wait projectsTemaplateArr resolved
     setTimeout(() => {
       // console.log(projectsTemaplateArr);
       $("#workR").append(projectsTemaplateArr.join(""));
+      $("#work-nav").append(`<ul>${workNavTemplateArr.join("")}</ul>`);
 
       // add background image css for each project
       $.each(configDict["project"], (projectKey, projectVal) => {
@@ -274,9 +292,9 @@ function appendDom() {
   });
 }
 
-var loadContentImagesTemplate = (key, obj, type) => {
+var loadContentImagesTemplate = (index, obj, type) => {
   var imagesTemplate = [];
-  var folder = `${commonPath}${obj["projectName"]}/${type}/`;
+  var folder = `${commonPath}${obj.projectName}/${type}/`;
 
   return new Promise((resolve, reject) => {
     $.ajax({
@@ -297,7 +315,7 @@ var loadContentImagesTemplate = (key, obj, type) => {
         reject(error);
       }
     }).done(() => {
-      console.log(`${key} images count: `, imagesTemplate.length);
+      console.log(`${index + 1} images count: `, imagesTemplate.length);
       resolve(imagesTemplate.join(""));
     });
   });
@@ -312,16 +330,20 @@ var loadHeaderImageTemplate = (key, obj, type) => {
   });
 };
 
-var generateProjectsTemplate = (key, obj, imagesTemplateString) => {
-  var projectsTemplateString = `<!--${key}-->
+var generateProjectsTemplate = (index, obj, imagesTemplateString) => {
+  var projectsTemplateString = `<!--${index}-->
                     <div class="project" id="project-${obj.projectID}">
                         <a href="#project-${
                           obj.projectID
                         }" class="project-header">
-                            <div class="header-image">
+                            <div class="header-image" id="header-image-${
+                              obj.projectID
+                            }">
+                                <!-- 
                                 <div class="more-info" id="more-info-logo">
                                     <img src="assets/img/icon/next-right-white.png">
                                 </div>
+                                -->
                             </div>
                         </a>
 
@@ -360,6 +382,13 @@ var generateProjectsTemplate = (key, obj, imagesTemplateString) => {
 
                     `;
   return projectsTemplateString;
+};
+
+var generateWorkNavTemplate = obj => {
+  return `
+    <li><a href="#project-${obj.projectID}" id="work-nav-${obj.projectID}">
+      ${obj.projectName.charAt(0).toUpperCase() + obj.projectName.slice(1)}
+    </a></li>`;
 };
 //#endregion
 
@@ -432,16 +461,23 @@ function setDisplay(isDisplay, id, type) {
   }
 }
 
-function moreInfoLogoAppear(currentProject) {
-  $(currentProject)
-    .find("div[id^='more-info-logo']")
-    .css({ display: "block" });
+// function moreInfoLogoAppear(currentProject) {
+//   $(currentProject)
+//     .find("div[id^='more-info-logo']")
+//     .css({ display: "block" });
+// }
+
+// function moreInfoLogoDisappear(currentProject) {
+//   $(currentProject)
+//     .find("div[id^='more-info-logo']")
+//     .css({ display: "none" });
+// }
+function highLightNav() {
+  $(`#work-nav-${openedProjectID}`).addClass("text-color-pink");
 }
 
-function moreInfoLogoDisappear(currentProject) {
-  $(currentProject)
-    .find("div[id^='more-info-logo']")
-    .css({ display: "none" });
+function hideLightNav() {
+  $(`#work-nav-${openedProjectID}`).removeClass("text-color-pink");
 }
 
 function rightLineAppear() {
@@ -493,15 +529,27 @@ function recoverProjects() {
 }
 
 function projectClose() {
+  scrollToHash(`#project-${openedProjectID}`, 0);
+
   projectFire = false;
+  hideLightNav();
   rightLineDisappear();
   setDisplay(false, "#expand-close");
   // setDisplay(true, "#more-info-logo");
-  moreInfoLogoAppear(currentProject);
+  // moreInfoLogoAppear(currentProject);
 
   projectOpenCloseAnimation(false);
   recoverProjects();
-  scrollToHash("#" + openedProjectID, 0);
+}
+
+function getNextID() {
+  console.log(projectsTemaplateArr);
+  if (openedProjectID > projectsTemaplateArr.length - 1) {
+    openedProjectID = 1;
+  } else {
+    openedProjectID++;
+  }
+  return `project-${openedProjectID}`;
 }
 
 function footerPageDisappear() {
@@ -544,11 +592,14 @@ function scrollToHash(hashName, speed) {
 
 // about moon
 function moonScroll(scrollTop) {
+  // basicCalculationUpdate();
+  console.log("moonScrolling");
+
   updateMoonContainerPostion(scrollTop);
 
-  var d = (circle1.r * scrollTop) / innerHeight;
+  var d = (circle1.r * scrollTop) / winHeight;
 
-  if (scrollTop <= innerHeight * (2 / 3)) {
+  if (scrollTop <= winHeight * (2 / 3)) {
     circle2.cx = circle1.cx + d;
     circle2.r = Math.sqrt(circle1.r * circle1.r - d * d);
     updateMoonShape(circle2);
@@ -559,8 +610,7 @@ function moonScroll(scrollTop) {
     circle2.cx =
       circle1.cx +
       d +
-      (((scrollTop - innerHeight * (2 / 3)) * scrollTop) / innerHeight) *
-        (1 / 3);
+      (((scrollTop - winHeight * (2 / 3)) * scrollTop) / winHeight) * (1 / 3);
     // circle2.cx = circle1.cx + d;
 
     updateMoonPosition(circle2);

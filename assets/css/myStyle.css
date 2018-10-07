@@ -221,19 +221,6 @@ div {
 .rightSide.expand {
 }
 
-/* nav > ol,
-nav > ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-nav > ol li,
-nav > ul li {
-  margin: 0;
-  padding: 0;
-} */
-
 .main-nav {
   position: absolute;
   bottom: 0;
@@ -302,6 +289,10 @@ nav > ul li {
 
 .my-nav ul li a:hover:after {
   display: block;
+}
+
+.work-nav ul li a:hover {
+  color: rgba(246, 202, 204, 1);
 }
 
 /* The hero image */

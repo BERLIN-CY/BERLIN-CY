@@ -1,4 +1,6 @@
-"use strict";
+import "@babel/polyfill";
+import "@babel/core";
+import $ from "jquery";
 
 var desktopWidth = 1023;
 var winWidth = 0;
@@ -16,7 +18,7 @@ var aR,
   currentProject,
   projectFire;
 
-var commonPath = `/assets/img/project/`;
+var commonPath = `/src/assets/img/project/`;
 var configDict;
 var projectsTemaplateArr = [];
 var workNavTemplateArr = [];
@@ -328,7 +330,7 @@ var loadContentImagesTemplate = (index, obj, type) => {
 };
 
 var loadHeaderImageTemplate = (key, obj, type) => {
-  var imageUrl = `assets/img/project/${obj.projectName}/header-${type}.jpg`;
+  var imageUrl = `${commonPath}${obj.projectName}/header-${type}.jpg`;
 
   $(`#project-${obj.projectID} .header-image`).css({
     // background-image: url("../../assets/img/project/bali/header-web.jpg");

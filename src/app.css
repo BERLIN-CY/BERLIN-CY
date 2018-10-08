@@ -88,7 +88,7 @@ div {
   position: relative;
   z-index: 300;
 
-  background-image: url("../../assets/img/header-image-mobile.jpg");
+  background-image: url("../src/assets/img/header-image-mobile.jpg");
 }
 
 .split-page {
@@ -685,7 +685,7 @@ img.about-logo {
     position: relative;
     z-index: 300;
 
-    background-image: url("../../assets/img/header-image.jpg");
+    background-image: url("../src/assets/img/header-image.jpg");
   }
 
   .contact-page {

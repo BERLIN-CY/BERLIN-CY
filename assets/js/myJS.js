@@ -221,7 +221,13 @@ var init = () => {
 
           $("#expand-close").on("click", function() {
             projectClose();
-            scrollToHash(`#${getNextID()}`, 1000);
+
+            // put the hash ancor to the previous project with 0 speed
+            var nextProject = getNextID();
+            if (openedProjectID != 1) {
+              scrollToHash(`#project-${openedProjectID - 1}`, 0);
+            }
+            scrollToHash(`#${nextProject}`, 1000);
           });
 
           $("#mobile-close-project").on("click", function() {
@@ -529,6 +535,7 @@ function recoverProjects() {
 }
 
 function projectClose() {
+  // scroll to current headerImage
   scrollToHash(`#project-${openedProjectID}`, 0);
 
   projectFire = false;

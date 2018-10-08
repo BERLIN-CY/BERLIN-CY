@@ -1,5 +1,4 @@
 import "@babel/polyfill";
-import "@babel/core";
 import $ from "jquery";
 
 var desktopWidth = 1023;

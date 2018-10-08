@@ -10,3 +10,7 @@ to view portoflio webistie, please go https://github.com/BERLIN-CY/portfolio
 ## Notice
 
 Install `Live Server` in vs code and restart, then follow its document to Launch a development local Server.
+
+## Dev
+
+`npm install`

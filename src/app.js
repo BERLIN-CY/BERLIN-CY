@@ -352,6 +352,12 @@ var generateProjectsTemplate = (index, obj, imagesTemplateString) => {
                                 </div>
                                 -->
                             </div>
+
+                            <div class="header-title" id="header-title-${
+                              obj.projectID
+                            }">
+                            ${obj.projectName}s
+                            </div>
                         </a>
 
                         <div class="project-content">

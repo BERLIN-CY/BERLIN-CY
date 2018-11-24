@@ -1,0 +1,13 @@
+.idea/
+.idea/workspace.xml
+.DS_Store
+thumbs.db
+*.log
+node_modules/
+dist
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json

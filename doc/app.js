@@ -17,7 +17,7 @@ var aR,
   currentProject,
   projectFire;
 
-var commonPath = `/doc/assets/img/project/`;
+var commonPath = `/docs/assets/img/project/`;
 var configDict;
 var projectsTemaplateArr = [];
 var workNavTemplateArr = [];

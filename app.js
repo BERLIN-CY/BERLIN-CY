@@ -41,7 +41,9 @@ var circle2 = {
 var init = () => {
   // load configs
   $.ajax({
-    dataType: "json",
+    // dataType: "json",
+    crossDomain: true,
+    dataType: "jsonp",
     url: `${commonPath}config.json`,
     success: data => {
       // save data gloably
@@ -306,6 +308,8 @@ var loadContentImagesTemplate = (index, obj, type) => {
 
   return new Promise((resolve, reject) => {
     $.ajax({
+      crossDomain: true,
+      dataType: "jsonp",
       url: folder,
       success: function(data) {
         $(data)

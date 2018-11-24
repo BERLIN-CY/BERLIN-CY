@@ -16,6 +16,7 @@ var aR,
   currentProject,
   projectFire;
 
+//https://raw.githubusercontent.com/BERLIN-CY/portfolio/master/assets/img/header-image.jpg
 var commonPath = `/assets/img/project/`;
 var configDict;
 var projectsTemaplateArr = [];
@@ -328,7 +329,7 @@ var loadContentImagesTemplate = (index, obj, type) => {
 };
 
 var loadHeaderImageTemplate = (key, obj, type) => {
-  var imageUrl = `assets/img/project/${obj.projectName}/header-${type}.jpg`;
+  var imageUrl = `${commonPath}${obj.projectName}/header-${type}.jpg`;
 
   $(`#project-${obj.projectID} .header-image`).css({
     // background-image: url("../../assets/img/project/bali/header-web.jpg");

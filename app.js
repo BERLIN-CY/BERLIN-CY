@@ -17,7 +17,8 @@ var aR,
   currentProject,
   projectFire;
 
-var commonPath = `/assets/img/project/`;
+// var commonPath = `/assets/img/project/`;
+var commonPath = `https://github.com/BERLIN-CY/portfolio/blob/master/assets/img/project/`;
 var configDict;
 var projectsTemaplateArr = [];
 var workNavTemplateArr = [];

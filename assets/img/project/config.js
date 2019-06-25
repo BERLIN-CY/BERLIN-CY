@@ -1,4 +1,4 @@
-{
+const configDic = {
   "project": [
     {
       "projectID": 1,
@@ -34,3 +34,5 @@
     "photographer": "berlin-cy"
   }
 }
+
+module.exports = configDic;

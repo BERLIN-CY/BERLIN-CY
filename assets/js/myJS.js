@@ -16,9 +16,7 @@ var aR,
   currentProject,
   projectFire;
 
-//https://raw.githubusercontent.com/BERLIN-CY/portfolio/master/assets/img/header-image.jpg
 var commonPath = `/assets/img/project/`;
-var configDict;
 var projectsTemaplateArr = [];
 var workNavTemplateArr = [];
 
@@ -39,296 +37,232 @@ var circle2 = {
 
 var init = () => {
   // load configs
-  $.ajax({
-    dataType: "json",
-    url: `${commonPath}config.json`,
-    success: data => {
-      // save data gloably
-      configDict = data;
-      // append dom with configDict
-      appendDom().then(() => {
-        $(document).ready(function() {
-          basicCalculationUpdate();
-          desktopVSmobile();
 
-          ininMoon(circle1);
-          ininMoon(circle2);
+  // save data gloably
+  // configDict = data;
+  // append dom with configDict
+  appendDom().then(() => {
+    $(document).ready(function() {
+      basicCalculationUpdate();
+      desktopVSmobile();
 
-          //#region 'events'
-          $(window).scroll(function() {
-            // var scrollTop = $('body').scrollTop;
-            // var scrollTop = $("html, body").scrollTop();
-            var scrollTop = $(document).scrollTop();
-            // console.log(scrollTop);
-            // console.log(scrollTop - aOffset);
-            // console.log(scrollTop);
+      ininMoon(circle1);
+      ininMoon(circle2);
 
-            //#region 'layout scroll control'
-            if (winWidth >= desktopWidth) {
-              var aboutL = "#aboutL";
-              if (scrollTop - aOffset > 0) {
-                startFix(aboutL);
-                // basicCalculationUpdate();
+      //#region 'events'
+      $(window).scroll(function() {
+        // var scrollTop = $('body').scrollTop;
+        // var scrollTop = $("html, body").scrollTop();
+        var scrollTop = $(document).scrollTop();
+        // console.log(scrollTop);
+        // console.log(scrollTop - aOffset);
+        // console.log(scrollTop);
 
-                if (scrollTop - aOffset >= aContentHeight - winHeight) {
-                  endFix(aboutL);
+        //#region 'layout scroll control'
+        if (winWidth >= desktopWidth) {
+          var aboutL = "#aboutL";
+          if (scrollTop - aOffset > 0) {
+            startFix(aboutL);
+            // basicCalculationUpdate();
 
-                  //if content height < winHeight
-                  if (aContentHeight >= winHeight) {
-                    adjustTop(aboutL);
-                  }
-                }
-              } else {
-                endFix(aboutL);
-              }
+            if (scrollTop - aOffset >= aContentHeight - winHeight) {
+              endFix(aboutL);
 
-              var workL = "#workL";
-              if (scrollTop - wOffset > 0) {
-                startFix(workL);
-
-                // if (projectFire) {
-                //     var headerImageTop = scrollTop - wOffset;
-                //     $('.header-image').css({"top": headerImageTop});
-                // }
-
-                if (scrollTop - wOffset > wContentHeight - winHeight) {
-                  endFix(workL);
-                  adjustTop(workL);
-                  basicCalculationUpdate();
-                }
-              } else {
-                endFix(workL);
-                $(".header-image").css({ top: 0 });
-              }
-
-              var contactL = "#contactL";
-              if (scrollTop - cOffset > 0) {
-                footerPageAppear();
-
-                var scrollTopFooter =
-                  scrollTop - cOffset - (cContentHeight - winHeight);
-                console.log(
-                  "Footer page relative scrollTop",
-                  scrollTopFooter,
-                  innerHeight
-                );
-                // moon control start
-                moonScroll(scrollTopFooter);
-
-                if (winHeight < cContentHeight) {
-                  startFix(contactL);
-                  if (scrollTop - cOffset >= cContentHeight - winHeight) {
-                    endFix(contactL);
-
-                    if (cContentHeight > winHeight) {
-                      adjustTop(contactL);
-                    }
-                  }
-                }
-              } else {
-                endFix(contactL);
-                footerPageDisappear();
-              }
-            } else {
-              if (projectFire) {
-                var headerImageTop = scrollTop - wOffset;
-                // $('.header-image').css({"top": headerImageTop});
-
-                if (scrollTop - wOffset < 0) {
-                  $(".header-image").css({ top: 0 });
-                }
+              //if content height < winHeight
+              if (aContentHeight >= winHeight) {
+                adjustTop(aboutL);
               }
             }
-            //#endregion
-          });
+          } else {
+            endFix(aboutL);
+          }
 
-          /* go to top after refresh */
-          // $(window).scrollTop(0);
+          var workL = "#workL";
+          if (scrollTop - wOffset > 0) {
+            startFix(workL);
 
-          $(window).resize(function() {
-            basicCalculationUpdate();
-            desktopVSmobile();
-            // loadImage();
-
-            // if (winWidth >= desktopWidth) {
+            // if (projectFire) {
+            //     var headerImageTop = scrollTop - wOffset;
+            //     $('.header-image').css({"top": headerImageTop});
             // }
-          });
 
-          $("div[id^='header-image-']").on("click", function() {
-            console.log("project open cliked");
-            openProject(this);
-            highLightNav();
-          });
-
-          function openProject(that) {
-            console.log(that);
-            if (!projectFire) {
-              projectFire = true;
-              rightLineAppear();
-              // setDisplay(false, "#more-info-logo");
-
-              //disappear other projects
-              //assign openedProjectID
-              // project-4
-              // openedProjectID = that.id;
-              openedProjectID = that
-                ? that.id.slice(that.id.lastIndexOf("-") + 1)
-                : openedProjectID;
-              // var openedProjectID = that.id.slice(that.id.lastIndexOf("-") + 1);
-              var currentProject = $("#project-" + openedProjectID);
-              projectDisapper(openedProjectID);
-              // moreInfoLogoDisappear(currentProject);
-
-              if (winWidth < desktopWidth) {
-                scrollToHash(currentProject.find(".project-header"), 0);
-                $("#mobile-close-project").css({
-                  display: "inline"
-                });
-              } else {
-                // only show close button on desktop
-                setDisplay(true, "#expand-close", "inline");
-                startFix("#workL");
-              }
-
-              projectOpenCloseAnimation(true);
-              projectShowContent(true, currentProject);
-            } else {
-              // projectFire = false;
+            if (scrollTop - wOffset > wContentHeight - winHeight) {
+              endFix(workL);
+              adjustTop(workL);
+              basicCalculationUpdate();
             }
-          }
-
-          $("img[id^='next-project']").on("click", function() {
-            nextProjectFuns();
-          });
-
-          function nextProjectFuns(that) {
-            projectClose();
-            scrollToHash(`#${getNextID()}`, 0);
-
-            openProject(that ? that : undefined);
-            scrollToHash(`#project-${openedProjectID}`, 0);
-            highLightNav();
-          }
-
-          // click work-nav
-          $("a[id^='work-nav-']").on("click", function() {
-            if (!projectFire) {
-              openProject(this);
-              highLightNav();
-            } else {
-              nextProjectFuns(this);
-            }
-          });
-
-          $("#expand-close").on("click", function() {
-            projectClose();
-
-            // put the hash ancor to the previous project with 0 speed
-            var nextProject = getNextID();
-            if (openedProjectID != 1) {
-              scrollToHash(`#project-${openedProjectID - 1}`, 0);
-            }
-            scrollToHash(`#${nextProject}`, 1000);
-          });
-
-          $("#mobile-close-project").on("click", function() {
+          } else {
+            endFix(workL);
             $(".header-image").css({ top: 0 });
+          }
 
-            $("#workL").removeClass("compress");
-            $("#workR").removeClass("expand");
-            // $("#mobile-close-project").css({"display":"none"});
-            recoverProjects();
+          var contactL = "#contactL";
+          if (scrollTop - cOffset > 0) {
+            footerPageAppear();
 
-            //recalculate
-            basicCalculationUpdate();
+            var scrollTopFooter =
+              scrollTop - cOffset - (cContentHeight - winHeight);
+            console.log(
+              "Footer page relative scrollTop",
+              scrollTopFooter,
+              innerHeight
+            );
+            // moon control start
+            moonScroll(scrollTopFooter);
 
-            //view focus to top project
-            scrollToHash("#project-" + openedProjectID, 0);
-            projectFire = false;
+            if (winHeight < cContentHeight) {
+              startFix(contactL);
+              if (scrollTop - cOffset >= cContentHeight - winHeight) {
+                endFix(contactL);
 
-            $("#mobile-close-project").css({ display: "none" });
-            console.log(this);
-          });
-          //#endregion
-        });
+                if (cContentHeight > winHeight) {
+                  adjustTop(contactL);
+                }
+              }
+            }
+          } else {
+            endFix(contactL);
+            footerPageDisappear();
+          }
+        } else {
+          if (projectFire) {
+            var headerImageTop = scrollTop - wOffset;
+            // $('.header-image').css({"top": headerImageTop});
+
+            if (scrollTop - wOffset < 0) {
+              $(".header-image").css({ top: 0 });
+            }
+          }
+        }
+        //#endregion
       });
-    },
-    error: e => {
-      console.error("getProjectJson Error", e);
-    }
+
+      /* go to top after refresh */
+      // $(window).scrollTop(0);
+
+      $(window).resize(function() {
+        basicCalculationUpdate();
+        desktopVSmobile();
+        // loadImage();
+
+        // if (winWidth >= desktopWidth) {
+        // }
+      });
+
+      $("div[id^='header-image-']").on("click", function() {
+        console.log("project open cliked");
+        openProject(this);
+        highLightNav();
+      });
+
+      function openProject(that) {
+        console.log(that);
+        if (!projectFire) {
+          projectFire = true;
+          rightLineAppear();
+          // setDisplay(false, "#more-info-logo");
+
+          //disappear other projects
+          //assign openedProjectID
+          // project-4
+          // openedProjectID = that.id;
+          openedProjectID = that
+            ? that.id.slice(that.id.lastIndexOf("-") + 1)
+            : openedProjectID;
+          // var openedProjectID = that.id.slice(that.id.lastIndexOf("-") + 1);
+          var currentProject = $("#project-" + openedProjectID);
+          projectDisapper(openedProjectID);
+          // moreInfoLogoDisappear(currentProject);
+
+          if (winWidth < desktopWidth) {
+            scrollToHash(currentProject.find(".project-header"), 0);
+            $("#mobile-close-project").css({
+              display: "inline"
+            });
+          } else {
+            // only show close button on desktop
+            setDisplay(true, "#expand-close", "inline");
+            startFix("#workL");
+          }
+
+          projectOpenCloseAnimation(true);
+          projectShowContent(true, currentProject);
+        } else {
+          // projectFire = false;
+        }
+      }
+
+      $("img[id^='next-project']").on("click", function() {
+        nextProjectFuns();
+      });
+
+      function nextProjectFuns(that) {
+        projectClose();
+        scrollToHash(`#${getNextID()}`, 0);
+
+        openProject(that ? that : undefined);
+        scrollToHash(`#project-${openedProjectID}`, 0);
+        highLightNav();
+      }
+
+      // click work-nav
+      $("a[id^='work-nav-']").on("click", function() {
+        if (!projectFire) {
+          openProject(this);
+          highLightNav();
+        } else {
+          nextProjectFuns(this);
+        }
+      });
+
+      $("#expand-close").on("click", function() {
+        projectClose();
+
+        // put the hash ancor to the previous project with 0 speed
+        var nextProject = getNextID();
+        if (openedProjectID != 1) {
+          scrollToHash(`#project-${openedProjectID - 1}`, 0);
+        }
+        scrollToHash(`#${nextProject}`, 1000);
+      });
+
+      $("#mobile-close-project").on("click", function() {
+        $(".header-image").css({ top: 0 });
+
+        $("#workL").removeClass("compress");
+        $("#workR").removeClass("expand");
+        // $("#mobile-close-project").css({"display":"none"});
+        recoverProjects();
+
+        //recalculate
+        basicCalculationUpdate();
+
+        //view focus to top project
+        scrollToHash("#project-" + openedProjectID, 0);
+        projectFire = false;
+
+        $("#mobile-close-project").css({ display: "none" });
+        console.log(this);
+      });
+      //#endregion
+    });
   });
 };
 
 init();
 
 //#region 'DOM related'
-function appendDom() {
-  return new Promise((resolve, reject) => {
-    // generate projects dom
-    $.each(configDict["project"], async (index, projectVal) => {
-      // wait to load images tempate string
-      var imagesTemplateString = await loadContentImagesTemplate(
-        index,
-        projectVal,
-        "web"
-      );
-
-      // load project template
-      // insert images template string to project template
-      // push to projectsTemaplateArr
-      projectsTemaplateArr.push(
-        generateProjectsTemplate(index, projectVal, imagesTemplateString)
-      );
-
-      workNavTemplateArr.push(generateWorkNavTemplate(projectVal));
-    });
-
-    // wait projectsTemaplateArr resolved
-    setTimeout(() => {
-      // console.log(projectsTemaplateArr);
-      $("#workR").append(projectsTemaplateArr.join(""));
-      $("#work-nav").append(`<ul>${workNavTemplateArr.join("")}</ul>`);
-
-      // add background image css for each project
-      $.each(configDict["project"], (projectKey, projectVal) => {
-        loadHeaderImageTemplate(projectKey, projectVal, "web");
-      });
-
-      resolve(true);
-    }, 500);
-  });
-}
-
-var loadContentImagesTemplate = (index, obj, type) => {
+function loadContentImagesTemplate (index, obj, type){
   var imagesTemplate = [];
-  var folder = `${commonPath}${obj.projectName}/${type}/`;
 
-  return new Promise((resolve, reject) => {
-    $.ajax({
-      url: folder,
-      success: function(data) {
-        $(data)
-          .find("a")
-          .attr("href", function(i, val) {
-            if (val.match(/\.(jpe?g|png|gif|JPE?G|PNG|GIF)$/)) {
-              //assets/img/project/turkey/web/11.jpg
-              //<img src="assets/img/project/web-bali/FullSizeRender-2-4.jpg"></img>
-              imagesTemplate.push(`<img src=${val}></img>`);
-            }
-          });
-      },
-      error: error => {
-        console.error(error);
-        reject(error);
-      }
-    }).done(() => {
-      console.log(`${index + 1} images count: `, imagesTemplate.length);
-      resolve(imagesTemplate.join(""));
-    });
+  obj.projectImages.forEach(url => {
+    imagesTemplate.push(`<img src=${url}></img>`);
   });
+
+  return imagesTemplate.join("");
 };
 
-var loadHeaderImageTemplate = (key, obj, type) => {
+function loadHeaderImageTemplate (key, obj, type) {
   var imageUrl = `${commonPath}${obj.projectName}/header-${type}.jpg`;
 
   $(`#project-${obj.projectID} .header-image`).css({
@@ -337,7 +271,7 @@ var loadHeaderImageTemplate = (key, obj, type) => {
   });
 };
 
-var generateProjectsTemplate = (index, obj, imagesTemplateString) => {
+function generateProjectsTemplate (index, obj, imagesTemplateString) {
   var projectsTemplateString = `<!--${index}-->
                     <div class="project" id="project-${obj.projectID}">
                         <a href="#project-${
@@ -391,12 +325,49 @@ var generateProjectsTemplate = (index, obj, imagesTemplateString) => {
   return projectsTemplateString;
 };
 
-var generateWorkNavTemplate = obj => {
+function generateWorkNavTemplate ( obj) {
   return `
     <li><a href="#project-${obj.projectID}" id="work-nav-${obj.projectID}">
       ${obj.projectName.charAt(0).toUpperCase() + obj.projectName.slice(1)}
     </a></li>`;
 };
+
+function appendDom() {
+  return new Promise((resolve, reject) => {
+    // generate projects dom
+    $.each(configDict["project"], (index, projectVal) => {
+      // wait to load images tempate string
+      var imagesTemplateString = loadContentImagesTemplate(
+        index,
+        projectVal,
+        "web"
+      );
+
+      // load project template
+      // insert images template string to project template
+      // push to projectsTemaplateArr
+      projectsTemaplateArr.push(
+        generateProjectsTemplate(index, projectVal, imagesTemplateString)
+      );
+
+      workNavTemplateArr.push(generateWorkNavTemplate(projectVal));
+    });
+
+    // wait projectsTemaplateArr resolved
+    setTimeout(() => {
+      // console.log(projectsTemaplateArr);
+      $("#workR").append(projectsTemaplateArr.join(""));
+      $("#work-nav").append(`<ul>${workNavTemplateArr.join("")}</ul>`);
+
+      // add background image css for each project
+      $.each(configDict["project"], (projectKey, projectVal) => {
+        loadHeaderImageTemplate(projectKey, projectVal, "web");
+      });
+
+      resolve(true);
+    }, 500);
+  });
+}
 //#endregion
 
 //#region 'support functions'

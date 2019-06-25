@@ -32,7 +32,7 @@ const generateProjectImages = ()=>{
                             if(err) throw err;
     
                             files.forEach(file=>{
-                                const imgRelativePath = path.join(webProjectPath, file).replace(currentWorkingDir, '');
+                                const imgRelativePath = path.join(webProjectPath, file).replace(currentWorkingDir+'/', '');
     
                                 if(!projectImages[projectName]){
                                     projectImages[projectName] = [];

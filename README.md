@@ -1,6 +1,6 @@
 # portfolio
 
-to view portoflio webistie, please go https://github.com/BERLIN-CY/portfolio
+to view portoflio webistie, please go https://berlin-cy.github.io/portfolio
 
 # update project
 
